@@ -1,4 +1,4 @@
-import PlaceList from '../../components/offer-list/places-list';
+import PlaceList from '../../components/places-list/places-list';
 import { Offers } from '../../types/offer';
 
 type MainScreenProps = {

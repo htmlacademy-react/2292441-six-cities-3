@@ -2,11 +2,11 @@ import PlaceCard from '../place-card/place-card';
 import { Offers } from '../../types/offer';
 import { useState } from 'react';
 
-type PlaceListProps = {
+type PlacesListProps = {
   offers: Offers;
 }
 
-function PlaceList({offers}: PlaceListProps): JSX.Element {
+function PlacesList({offers}: PlacesListProps): JSX.Element {
   const [, setActiveCardId] = useState(0);
   return (
     <>
@@ -18,4 +18,4 @@ function PlaceList({offers}: PlaceListProps): JSX.Element {
   );
 }
 
-export default PlaceList;
+export default PlacesList;
