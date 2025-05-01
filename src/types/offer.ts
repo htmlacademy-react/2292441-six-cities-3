@@ -5,17 +5,22 @@ type Review = {
   };
   stars: number;
   comment: string;
+  date: string;
 };
 
 type Reviews = Review[];
 
-type Offer = {
+export type Offer = {
   id: number;
+  city: string;
   images: string[];
   title: string;
-  stars: number;
+  rating: {
+    stars: number;
+    value: number;
+  };
   type: string;
-  rooms: number;
+  bedrooms: number;
   capacity: number;
   price: number;
   premium: boolean;
@@ -34,11 +39,14 @@ type Offer = {
   host: {
     name: string;
     avatar: string;
-    status: string;
+    pro: boolean;
   };
-  description: string;
+  description: string[];
   reviews: Reviews;
-  location: string;
+  location: {
+    lat: number;
+    lng: number;
+  };
 };
 
 export type Offers = Offer[];
