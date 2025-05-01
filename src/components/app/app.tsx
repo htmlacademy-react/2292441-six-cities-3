@@ -29,7 +29,7 @@ function App({offersCount, offers}: AppScreenProps): JSX.Element {
           path={AppRoute.Favorites}
           element={
             <PrivateRoute
-              authorizationStatus={AuthorizationStatus.NoAuth}
+              authorizationStatus={AuthorizationStatus.Auth}
             >
               <FavoritesScreen offers={offers} />
             </PrivateRoute>
@@ -37,7 +37,7 @@ function App({offersCount, offers}: AppScreenProps): JSX.Element {
         />
         <Route
           path={AppRoute.Offer}
-          element={<OfferScreen offer={offers[3]}/>}
+          element={<OfferScreen offers={offers}/>}
         />
         <Route
           path='*'

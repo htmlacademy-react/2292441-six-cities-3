@@ -1,12 +1,17 @@
+import { useParams } from 'react-router-dom';
 import Header from '../../components/header/header';
-import { Offer } from '../../types/offer';
+import { Offers } from '../../types/offer';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 type OfferScreenProps = {
-  offer: Offer;
+  offers: Offers;
 };
 
-function OfferScreen({offer}: OfferScreenProps): JSX.Element {
-  return (
+function OfferScreen({offers}: OfferScreenProps): JSX.Element {
+  const offerId = useParams().id as string;
+  const offer = offers.find((e) => e.id.toString() === offerId);
+
+  return (!offer) ? <NotFoundScreen /> :
     <div className="page">
       <Header />
 
@@ -347,8 +352,7 @@ function OfferScreen({offer}: OfferScreenProps): JSX.Element {
           </section>
         </div>
       </main>
-    </div>
-  );
+    </div>;
 }
 
 export default OfferScreen;
