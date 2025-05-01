@@ -1,17 +1,18 @@
 import PlaceCard from '../place-card/place-card';
 import { Offers } from '../../types/offer';
-//import { useState, ChangeEvent } from 'react';
+import { useState } from 'react';
 
 type PlaceListProps = {
   offers: Offers;
 }
 
 function PlaceList({offers}: PlaceListProps): JSX.Element {
+  const [, setActiveCardId] = useState(0);
   return (
     <>
       {offers.map((e) => {
         const keyValue = e.id;
-        return <PlaceCard key={keyValue} offer={e} />;
+        return <PlaceCard key={keyValue} offer={e} onActiveCard={() => setActiveCardId(e.id)}/>;
       })}
     </>
   );
