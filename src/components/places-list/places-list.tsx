@@ -1,5 +1,6 @@
 import PlaceCard from '../place-card/place-card';
 import { Offers } from '../../types/offer';
+//import { useState, ChangeEvent } from 'react';
 
 type PlaceListProps = {
   offers: Offers;
@@ -8,10 +9,10 @@ type PlaceListProps = {
 function PlaceList({offers}: PlaceListProps): JSX.Element {
   return (
     <>
-      <PlaceCard offer={offers[0]} />
-      <PlaceCard offer={offers[1]}/>
-      <PlaceCard offer={offers[2]}/>
-      <PlaceCard offer={offers[3]}/>
+      {offers.map((e) => {
+        const keyValue = e.id;
+        return <PlaceCard key={keyValue} offer={e} />;
+      })}
     </>
   );
 }
