@@ -1,5 +1,5 @@
-import PlaceList from '../../components/places-list/places-list';
-import Header from '../../components/header/header';
+import PlaceList from '../../components/places-list';
+import Header from '../../components/header';
 import { Offers } from '../../types/offer';
 
 type MainScreenProps = {

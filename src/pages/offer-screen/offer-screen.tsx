@@ -1,8 +1,8 @@
 import { useParams } from 'react-router-dom';
-import Header from '../../components/header/header';
+import Header from '../../components/header';
 import { Offers } from '../../types/offer';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
-import ReviewForm from '../../components/review-form/review-form';
+import ReviewForm from '../../components/review-form';
 
 type OfferScreenProps = {
   offers: Offers;
