@@ -4,21 +4,24 @@ import { Outlet, useLocation } from 'react-router-dom';
 
 const getLayoutState = (pathName: AppRoute) => {
   let rootClassName = '';
-  let isLogin = false;
+  let shouldRenderUser = true;
+  let shouldRenderFooter = false;
 
   if (pathName === AppRoute.Root) {
     rootClassName = 'page--gray page--main';
   } else if (pathName === AppRoute.Login) {
     rootClassName = 'page--gray page--login';
-    isLogin = true;
+    shouldRenderUser = false;
+  }else if (pathName === AppRoute.Favorites) {
+    shouldRenderFooter = true;
   }
 
-  return {rootClassName, isLogin};
+  return {rootClassName, shouldRenderUser, shouldRenderFooter};
 };
 
 function Layout(): JSX.Element {
   const {pathname} = useLocation();
-  const {rootClassName, isLogin} = getLayoutState(pathname as AppRoute);
+  const {rootClassName, shouldRenderUser, shouldRenderFooter} = getLayoutState(pathname as AppRoute);
 
   return (
     <div className={`page ${rootClassName}`}>
@@ -31,7 +34,7 @@ function Layout(): JSX.Element {
               </Link>
             </div>
             {
-              isLogin ||
+              shouldRenderUser &&
               <nav className="header__nav">
                 <ul className="header__nav-list">
                   <li className="header__nav-item user">
@@ -54,6 +57,14 @@ function Layout(): JSX.Element {
         </div>
       </header>
       <Outlet />
+      {
+        shouldRenderFooter &&
+        <footer className="footer container">
+          <a className="footer__logo-link" href="main.html">
+            <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33"/>
+          </a>
+        </footer>
+      }
     </div>
   );
 }
