@@ -24,9 +24,9 @@ const getPlaceholderArray = (length: number, size: ImageSize) => Array.from({ le
 export const offers: Offers = [
   {
     id: 1,
-    city: 'Paris',
+    city: 'Amsterdam',
     images: getPlaceholderArray(6, OFFER_PHOTO_SIZE),
-    title: 'Charming 1-bedroom in the heart of Le Marais',
+    title: 'Charming 1-bedroom in the heart of Oud-Zuid',
     rating: {
       stars: 5,
       value: 4.5
@@ -53,7 +53,7 @@ export const offers: Offers = [
       avatar: getPlaceholderUrl(AVATAR_SIZE),
       pro: true,
     },
-    description: ['This cozy, fully furnished apartment offers modern amenities and a stylish interior.', 'Located in the vibrant Le Marais district, you\'re just steps away from cafes, shops, and historic landmarks. Ideal for singles or couples seeking a central Parisian lifestyle. Available for immediate move-in.'],
+    description: ['This cozy, fully furnished apartment offers modern amenities and a stylish interior.', 'Located in the vibrant Oud-Zuid neighborhood, you\'re just steps away from cafes, shops, and historic landmarks. Available for immediate move-in.'],
     reviews: [
       {
         user: {
@@ -70,13 +70,13 @@ export const offers: Offers = [
           avatar: getPlaceholderUrl(AVATAR_SIZE),
         },
         stars: 5,
-        comment: 'Beautifully decorated, incredibly cozy, and perfectly located near top cafes, boutiques, and museums. Every detail is thoughtfully designed, making it a perfect retreat after a day of exploring Paris. Highly recommend for an unforgettable stay!',
+        comment: 'Beautifully decorated, incredibly cozy, and perfectly located near top cafes, boutiques, and museums. Every detail is thoughtfully designed, making it a perfect retreat after a day of exploring Amsterdam. Highly recommend for an unforgettable stay!',
         date: 'January 2025'
       }
     ],
     location: {
-      lat: 48.8600,
-      lng: 2.3605,
+      lat: 52.3909553943508,
+      lng: 4.85309666406198,
     },
   },
   {
@@ -123,15 +123,15 @@ export const offers: Offers = [
       }
     ],
     location: {
-      lat: 52.3978,
-      lng: 4.9104,
+      lat: 52.3609553943508,
+      lng: 4.85309666406198,
     },
   },
   {
     id: 3,
-    city: 'Brussels',
+    city: 'Amsterdam',
     images: getPlaceholderArray(6, OFFER_PHOTO_SIZE),
-    title: 'Spacious 2-bedroom apartment in Ixelles',
+    title: 'Spacious 2-bedroom apartment in Oosterparkbuurt',
     rating: {
       stars: 4,
       value: 4.2
@@ -158,7 +158,7 @@ export const offers: Offers = [
       avatar: getPlaceholderUrl(AVATAR_SIZE),
       pro: false,
     },
-    description: ['Enjoy a spacious 2-bedroom apartment featuring a well-designed living area, fully equipped kitchen, and sleek bathroom.', 'Situated in the vibrant Ixelles neighborhood, close to public transport, shops, and dining spots.'],
+    description: ['Enjoy a spacious 2-bedroom apartment featuring a well-designed living area, fully equipped kitchen, and sleek bathroom.', 'Situated in the vibrant Oosterparkbuurt neighborhood, close to public transport, shops, and dining spots.'],
     reviews: [
       {
         user: {
@@ -166,7 +166,7 @@ export const offers: Offers = [
           avatar: getPlaceholderUrl(AVATAR_SIZE),
         },
         stars: 5,
-        comment: 'Spacious, comfortable, and well-equipped, it had everything we needed for a long stay. The location is perfect, with plenty of restaurants and shops within walking distance. The host was also incredibly helpful. Highly recommend this spot for anyone visiting Brussels!',
+        comment: 'Spacious, comfortable, and well-equipped, it had everything we needed for a long stay. The location is perfect, with plenty of restaurants and shops within walking distance. The host was also incredibly helpful. Highly recommend this spot for anyone visiting Amsterdam!',
         date: 'April 2025'
       },
       {
@@ -180,15 +180,15 @@ export const offers: Offers = [
       }
     ],
     location: {
-      lat: 50.8275,
-      lng: 4.3642
+      lat: 52.3909553943508,
+      lng: 4.929309666406198,
     },
   },
   {
     id: 4,
-    city: 'Hamburg',
+    city: 'Amsterdam',
     images: getPlaceholderArray(6, OFFER_PHOTO_SIZE),
-    title: 'Cozy room in shared flat near Schanzenviertel',
+    title: 'Cozy room in shared flat near Westerpark',
     rating: {
       stars: 2,
       value: 2
@@ -215,7 +215,7 @@ export const offers: Offers = [
       avatar: getPlaceholderUrl(AVATAR_SIZE),
       pro: false,
     },
-    description: ['This cozy room in a shared flat offers a comfortable living space with access to a shared kitchen and bathroom.', 'Located just minutes from Schanzenviertel, you\'ll enjoy a vibrant neighborhood with shops, cafes, and excellent transport links. Perfect for students or young professionals'],
+    description: ['This cozy room in a shared flat offers a comfortable living space with access to a shared kitchen and bathroom.', 'Located just minutes from Westerpark, you\'ll enjoy a vibrant neighborhood with shops, cafes, and excellent transport links. Perfect for students or young professionals.'],
     reviews: [
       {
         user: {
@@ -223,7 +223,7 @@ export const offers: Offers = [
           avatar: getPlaceholderUrl(AVATAR_SIZE),
         },
         stars: 3,
-        comment: 'Good location near Schanzenviertel with plenty of restaurants and bars nearby. The room itself is comfortable, though a bit small. The shared living space can get crowded at times. Overall, it’s a fair choice if you\'re on a budget, but not ideal for those seeking more comfort.',
+        comment: 'Good location near Westerpark with plenty of restaurants and bars nearby. The room itself is comfortable, though a bit small. The shared living space can get crowded at times. Overall, it’s a fair choice if you\'re on a budget, but not ideal for those seeking more comfort.',
         date: 'April 2025'
       },
       {
@@ -232,7 +232,7 @@ export const offers: Offers = [
           avatar: getPlaceholderUrl(AVATAR_SIZE),
         },
         stars: 2,
-        comment: 'The location near Schanzenviertel is great, but the room was smaller than expected. The shared flat was quite noisy, and I had issues with cleanliness in the common areas. Not a great experience overall, and I wouldn\'t stay here again.',
+        comment: 'The location near Westerpark is great, but the room was smaller than expected. The shared flat was quite noisy, and I had issues with cleanliness in the common areas. Not a great experience overall, and I wouldn\'t stay here again.',
         date: 'April 2025',
       },
       {
@@ -246,8 +246,8 @@ export const offers: Offers = [
       }
     ],
     location: {
-      lat: 53.5567,
-      lng: 9.9643
+      lat: 52.3809553943508,
+      lng: 4.939309666406198,
     },
   }
 ];

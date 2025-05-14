@@ -1,8 +1,7 @@
 import { useParams } from 'react-router-dom';
-import Header from '../../components/header/header';
 import { Offers } from '../../types/offer';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
-import ReviewForm from '../../components/review-form/review-form';
+import ReviewForm from '../../components/review-form';
 
 type OfferScreenProps = {
   offers: Offers;
@@ -13,9 +12,7 @@ function OfferScreen({offers}: OfferScreenProps): JSX.Element {
   const offer = offers.find((e) => e.id.toString() === offerId);
 
   return (!offer) ? <NotFoundScreen /> :
-    <div className="page">
-      <Header />
-
+    (
       <main className="page__main page__main--offer">
         <section className="offer">
           <div className="offer__gallery-container container">
@@ -308,7 +305,7 @@ function OfferScreen({offers}: OfferScreenProps): JSX.Element {
           </section>
         </div>
       </main>
-    </div>;
+    );
 }
 
 export default OfferScreen;
