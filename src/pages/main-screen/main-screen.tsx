@@ -1,5 +1,7 @@
 import PlaceList from '../../components/places-list';
 import { Offers } from '../../types/offer';
+import Map from '../../components/map';
+import { AMSTERDAM } from '../../const';
 
 type MainScreenProps = {
   offersCount : number;
@@ -71,7 +73,7 @@ function MainScreen({offersCount, offers}: MainScreenProps): JSX.Element {
             </div>
           </section>
           <div className="cities__right-section">
-            <section className="cities__map map"></section>
+            <Map city={AMSTERDAM} offers={offers}></Map>
           </div>
         </div>
       </div>

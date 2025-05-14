@@ -14,3 +14,9 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
+
+export const AMSTERDAM = {
+  name: 'Amsterdam',
+  lat: 52.3675964307,
+  lng: 4.9041366576,
+};
