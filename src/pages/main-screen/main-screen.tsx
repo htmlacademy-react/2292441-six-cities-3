@@ -2,6 +2,7 @@ import PlaceList from '../../components/places-list';
 import { Offers } from '../../types/offer';
 import Map from '../../components/map';
 import { AMSTERDAM } from '../../const';
+import { useState } from 'react';
 
 type MainScreenProps = {
   offersCount : number;
@@ -9,6 +10,8 @@ type MainScreenProps = {
 };
 
 function MainScreen({offersCount, offers}: MainScreenProps): JSX.Element {
+  const [activeCardId, setActiveCardId] = useState(0);
+
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
@@ -68,12 +71,10 @@ function MainScreen({offersCount, offers}: MainScreenProps): JSX.Element {
                 <li className="places__option" tabIndex={0}>Top rated first</li>
               </ul>
             </form>
-            <div className="cities__places-list places__list tabs__content">
-              <PlaceList offers={offers}/>
-            </div>
+            <PlaceList offers={offers} getActiveCardId={(id) => setActiveCardId(id)}/>
           </section>
           <div className="cities__right-section">
-            <Map city={AMSTERDAM} offers={offers}></Map>
+            <Map city={AMSTERDAM} offers={offers} activeCardId={activeCardId}/>
           </div>
         </div>
       </div>

@@ -20,3 +20,7 @@ export const AMSTERDAM = {
   lat: 52.3675964307,
   lng: 4.9041366576,
 };
+
+export const URL_MARKER_DEFAULT = '../../public/img/pin.svg';
+
+export const URL_MARKER_ACTIVE = '../../public/img/pin-active.svg';
