@@ -4,13 +4,14 @@ import { Offer } from '../../types/offer';
 type PlaceCardProps = {
   offer: Offer;
   onActiveCard: () => void;
+  onNoActiveCard: () => void;
 }
 
-function PlaceCard({offer, onActiveCard}: PlaceCardProps): JSX.Element {
+function PlaceCard({offer, onActiveCard, onNoActiveCard}: PlaceCardProps): JSX.Element {
   const route = `/offer/${offer.id}`;
 
   return (
-    <article className="cities__card place-card" onMouseOver={() => onActiveCard()}>
+    <article className="cities__card place-card" onMouseOver={() => onActiveCard()} onMouseOut={() => onNoActiveCard()}>
       {
         offer.premium &&
         <div className="place-card__mark">

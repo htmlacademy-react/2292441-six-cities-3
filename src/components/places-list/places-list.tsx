@@ -16,7 +16,7 @@ function PlacesList({offers, getActiveCardId}: PlacesListProps): JSX.Element {
     <div className='cities__places-list places__list tabs__content'>
       {offers.map((e) => {
         const keyValue = e.id;
-        return <PlaceCard key={keyValue} offer={e} onActiveCard={() => setActiveCardId(e.id)}/>;
+        return <PlaceCard key={keyValue} offer={e} onActiveCard={() => setActiveCardId(e.id)} onNoActiveCard={() => setActiveCardId(0)}/>;
       })}
     </div>
   );
