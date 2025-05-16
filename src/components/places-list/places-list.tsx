@@ -1,17 +1,26 @@
 import PlaceCard from '../place-card/place-card';
 import { Offers } from '../../types/offer';
+import { MAIN_PLACES_LIST_CLASSES } from '../../const';
 
 type PlacesListProps = {
   offers: Offers;
-  getActiveCardId: (e: number) => void;
+  getActiveCardId?: (e: number) => void;
+  classNames: {
+    listClass: string;
+    itemClass: string;
+  };
 }
 
-function PlacesList({offers, getActiveCardId}: PlacesListProps): JSX.Element {
+function PlacesList({offers, getActiveCardId, classNames}: PlacesListProps): JSX.Element {
+  const {listClass, itemClass} = classNames;
+
   return (
-    <div className='cities__places-list places__list tabs__content'>
+    <div className={`${listClass} places__list ${(listClass === MAIN_PLACES_LIST_CLASSES.listClass) ? 'tabs__content' : ''}`}>
       {offers.map((e) => {
         const keyValue = e.id;
-        return <PlaceCard key={keyValue} offer={e} onActiveCard={() => getActiveCardId(e.id)} onNoActiveCard={() => getActiveCardId(0)}/>;
+        return (listClass === MAIN_PLACES_LIST_CLASSES.listClass && getActiveCardId)
+          ? (<PlaceCard key={keyValue} className={itemClass} offer={e} onActiveCard={() => getActiveCardId(e.id)} onNoActiveCard={() => getActiveCardId(0)} />)
+          : (<PlaceCard key={keyValue} className={itemClass} offer={e} />);
       })}
     </div>
   );

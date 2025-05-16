@@ -1,17 +1,26 @@
 import { Link } from 'react-router-dom';
 import { Offer } from '../../types/offer';
+import { PropsWithChildren } from 'react';
+import { MAIN_PLACES_LIST_CLASSES } from '../../const';
 
 type PlaceCardProps = {
   offer: Offer;
-  onActiveCard: () => void;
-  onNoActiveCard: () => void;
+  onActiveCard?: () => void;
+  onNoActiveCard?: () => void;
+  className: string;
 }
 
-function PlaceCard({offer, onActiveCard, onNoActiveCard}: PlaceCardProps): JSX.Element {
+function PlaceCard({offer, onActiveCard, onNoActiveCard, className}: PlaceCardProps): JSX.Element {
   const route = `/offer/${offer.id}`;
 
+  function Article({children}: PropsWithChildren) {
+    return (className === MAIN_PLACES_LIST_CLASSES.itemClass && onActiveCard && onNoActiveCard)
+      ? <article className={`${className} place-card`} onMouseOver={() => onActiveCard()} onMouseOut={() => onNoActiveCard()}>{children}</article>
+      : (<article className={`${className} place-card`}>{children}</article>);
+  }
+
   return (
-    <article className="cities__card place-card" onMouseOver={() => onActiveCard()} onMouseOut={() => onNoActiveCard()}>
+    <Article>
       {
         offer.premium &&
         <div className="place-card__mark">
@@ -47,7 +56,7 @@ function PlaceCard({offer, onActiveCard, onNoActiveCard}: PlaceCardProps): JSX.E
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>
-    </article>
+    </Article>
   );
 }
 

@@ -24,3 +24,13 @@ export const AMSTERDAM = {
 export const URL_MARKER_DEFAULT = '../../public/img/pin.svg';
 
 export const URL_MARKER_ACTIVE = '../../public/img/pin-active.svg';
+
+export const MAIN_PLACES_LIST_CLASSES = {
+  listClass: 'cities__places-list',
+  itemClass: 'cities__card'
+};
+
+export const NEAR_PLACES_LIST_CLASSES = {
+  listClass: 'near-places__list',
+  itemClass: 'near-places__card'
+};
