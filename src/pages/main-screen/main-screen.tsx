@@ -74,7 +74,7 @@ function MainScreen({offersCount, offers}: MainScreenProps): JSX.Element {
             <PlaceList offers={offers} getActiveCardId={(id) => setActiveCardId(id)}/>
           </section>
           <div className="cities__right-section">
-            <Map city={AMSTERDAM} offers={offers} activeCardId={activeCardId}/>
+            <Map className='cities__map' city={AMSTERDAM} offers={offers} activeCardId={activeCardId}/>
           </div>
         </div>
       </div>

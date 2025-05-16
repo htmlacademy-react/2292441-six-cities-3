@@ -3,6 +3,8 @@ import { Offers } from '../../types/offer';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import ReviewForm from '../../components/review-form';
 import ReviewsList from '../../components/reviews-list';
+import Map from '../../components/map';
+import { AMSTERDAM } from '../../const';
 
 type OfferScreenProps = {
   offers: Offers;
@@ -168,7 +170,7 @@ function OfferScreen({offers}: OfferScreenProps): JSX.Element {
               </section>
             </div>
           </div>
-          <section className="offer__map map"></section>
+          <Map className='offer__map' city={AMSTERDAM} offers={offers.filter((e) => e !== offer)} />
         </section>
         <div className="container">
           <section className="near-places places">

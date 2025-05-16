@@ -8,7 +8,8 @@ import { URL_MARKER_DEFAULT, URL_MARKER_ACTIVE } from '../../const';
 type MapProps = {
   city: City;
   offers: Offers;
-  activeCardId: number;
+  activeCardId?: number;
+  className: string;
 };
 
 const customDefaultMarker = new Icon(
@@ -27,7 +28,7 @@ const customActiveMarker = new Icon(
   }
 );
 
-function Map({city, offers, activeCardId}: MapProps): JSX.Element {
+function Map({city, offers, activeCardId, className}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap({mapRef, city});
 
@@ -50,7 +51,7 @@ function Map({city, offers, activeCardId}: MapProps): JSX.Element {
   }, [map, offers, activeCardId]);
 
   return (
-    <section className='cities__map map' ref={mapRef} />
+    <section className={`${className} map`} ref={mapRef} />
   );
 }
 
