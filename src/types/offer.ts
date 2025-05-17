@@ -1,4 +1,4 @@
-type Review = {
+export type Review = {
   user: {
     name: string;
     avatar: string;
@@ -8,7 +8,7 @@ type Review = {
   date: string;
 };
 
-type Reviews = Review[];
+export type Reviews = Review[];
 
 export type Offer = {
   id: number;

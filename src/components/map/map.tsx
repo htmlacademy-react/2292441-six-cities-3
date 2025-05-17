@@ -2,14 +2,33 @@ import { useEffect, useRef } from 'react';
 import { City } from '../../types/city';
 import { Offers } from '../../types/offer';
 import { useMap } from '../../hooks/use-map';
-import { layerGroup, Marker } from 'leaflet';
+import { layerGroup, Marker, Icon } from 'leaflet';
+import { URL_MARKER_DEFAULT, URL_MARKER_ACTIVE } from '../../const';
 
 type MapProps = {
   city: City;
   offers: Offers;
+  activeCardId?: number;
+  className: string;
 };
 
-function Map({city, offers}: MapProps) {
+const customDefaultMarker = new Icon(
+  {
+    iconUrl: URL_MARKER_DEFAULT,
+    iconSize: [27, 39],
+    iconAnchor: [13.5, 39]
+  }
+);
+
+const customActiveMarker = new Icon(
+  {
+    iconUrl: URL_MARKER_ACTIVE,
+    iconSize: [27, 39],
+    iconAnchor: [13.5, 39]
+  }
+);
+
+function Map({city, offers, activeCardId, className}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap({mapRef, city});
 
@@ -21,6 +40,7 @@ function Map({city, offers}: MapProps) {
           lat: offer.location.lat,
           lng: offer.location.lng
         });
+        marker.setIcon((activeCardId === offer.id) ? customActiveMarker : customDefaultMarker);
         marker.addTo(markerLayer);
       });
 
@@ -28,10 +48,10 @@ function Map({city, offers}: MapProps) {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, offers]);
+  }, [map, offers, activeCardId]);
 
   return (
-    <section className='cities__map map' ref={mapRef} />
+    <section className={`${className} map`} ref={mapRef} />
   );
 }
 
