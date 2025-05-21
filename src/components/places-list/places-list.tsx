@@ -14,12 +14,18 @@ type PlacesListProps = {
 function PlacesList({offers, getActiveCardId, classNames}: PlacesListProps): JSX.Element {
   const {listClass, itemClass} = classNames;
 
+  const activeCardHandler = (id: number) => {
+    if (getActiveCardId) {
+      return () => getActiveCardId(id);
+    }
+  };
+
   return (
     <div className={`${listClass} places__list ${(listClass === MAIN_PLACES_LIST_CLASSES.listClass) ? 'tabs__content' : ''}`}>
       {offers.map((e) => {
         const keyValue = e.id;
         return (listClass === MAIN_PLACES_LIST_CLASSES.listClass && getActiveCardId)
-          ? (<PlaceCard key={keyValue} className={itemClass} offer={e} onActiveCard={() => getActiveCardId(e.id)} onNoActiveCard={() => getActiveCardId(0)} />)
+          ? (<PlaceCard key={keyValue} className={itemClass} offer={e} onActiveCard={activeCardHandler(e.id)} onNoActiveCard={activeCardHandler(0)} />)
           : (<PlaceCard key={keyValue} className={itemClass} offer={e} />);
       })}
     </div>
