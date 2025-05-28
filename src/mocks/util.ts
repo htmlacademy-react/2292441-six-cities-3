@@ -2,7 +2,7 @@ import { ImageSize } from './types';
 import { AVATAR_SIZE, COMMENTS, DATES, DESCRIPTIONS, NAMES, OFFER_PHOTO_SIZE, PLACEHOLDER_URL, TITLES, TYPES } from './const';
 import { City, Offer, Review, Location, Offers } from '../types/offer';
 
-const randomBoolean = !Math.round(Math.random());
+const getRandomBoolean = () => !Math.round(Math.random());
 
 const getRandomNumber = (min: number, max: number, precision = 0) => {
   if (min < 0 || max < 0 || max === min) {
@@ -31,7 +31,7 @@ const getReview = (): Review => {
     user: {
       name: getRandomArrayElement(NAMES),
       avatar: getPlaceholderUrl(AVATAR_SIZE),
-      pro: randomBoolean
+      pro: getRandomBoolean()
     },
     stars: getRandomNumber(1, 5),
     comment: getRandomArrayElement(COMMENTS),
@@ -45,6 +45,7 @@ const getReviewArray = (length: number) => Array.from({ length }, () => getRevie
 
 const getOffer = (id: string, city: City, location: Location): Offer => {
 
+
   const offer = {
     id: id,
     city: city,
@@ -55,23 +56,23 @@ const getOffer = (id: string, city: City, location: Location): Offer => {
     bedrooms: getRandomNumber(1, 6),
     capacity: getRandomNumber(1, 10),
     price: getRandomNumber(80, 300),
-    premium: randomBoolean,
+    premium: getRandomBoolean(),
     features: {
-      wiFi: randomBoolean,
-      heating: randomBoolean,
-      kitchen: randomBoolean,
-      fridge: randomBoolean,
-      washingMachine: randomBoolean,
-      coffeeMachine: randomBoolean,
-      dishwasher: randomBoolean,
-      towels: randomBoolean,
-      babySeat: randomBoolean,
-      cabelTV: randomBoolean,
+      wiFi: getRandomBoolean(),
+      heating: getRandomBoolean(),
+      kitchen: getRandomBoolean(),
+      fridge: getRandomBoolean(),
+      washingMachine: getRandomBoolean(),
+      coffeeMachine: getRandomBoolean(),
+      dishwasher: getRandomBoolean(),
+      towels: getRandomBoolean(),
+      babySeat: getRandomBoolean(),
+      cabelTV: getRandomBoolean(),
     },
     host: {
       name: getRandomArrayElement(NAMES),
       avatar: getPlaceholderUrl(AVATAR_SIZE),
-      pro: randomBoolean,
+      pro: getRandomBoolean(),
     },
     description: getRandomArrayElement(DESCRIPTIONS),
     reviews: getReviewArray(getRandomNumber(1, 4)),
