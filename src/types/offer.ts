@@ -1,8 +1,22 @@
+export type Location = {
+  latitude: number;
+  longitude: number;
+};
+
+export type City = {
+  name: string;
+  zoom: number;
+  location: Location;
+};
+
+type User = {
+  name: string;
+  avatar: string;
+  pro: boolean;
+};
+
 export type Review = {
-  user: {
-    name: string;
-    avatar: string;
-  };
+  user: User;
   stars: number;
   comment: string;
   date: string;
@@ -11,14 +25,11 @@ export type Review = {
 export type Reviews = Review[];
 
 export type Offer = {
-  id: number;
-  city: string;
+  id: string;
+  city: City;
   images: string[];
   title: string;
-  rating: {
-    stars: number;
-    value: number;
-  };
+  rating: number;
   type: string;
   bedrooms: number;
   capacity: number;
@@ -36,17 +47,10 @@ export type Offer = {
     babySeat: boolean;
     cabelTV: boolean;
   };
-  host: {
-    name: string;
-    avatar: string;
-    pro: boolean;
-  };
+  host: User;
   description: string[];
   reviews: Reviews;
-  location: {
-    lat: number;
-    lng: number;
-  };
+  location: Location;
 };
 
 export type Offers = Offer[];

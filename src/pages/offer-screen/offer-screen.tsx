@@ -59,10 +59,10 @@ function OfferScreen({offers}: OfferScreenProps): JSX.Element {
             </div>
             <div className="offer__rating rating">
               <div className="offer__stars rating__stars">
-                <span style={{width: `${20 * offer.rating.stars}%`}}></span>
+                <span style={{width: `${20 * offer.rating}%`}}></span>
                 <span className="visually-hidden">Rating</span>
               </div>
-              <span className="offer__rating-value rating__value">{offer.rating.value}</span>
+              <span className="offer__rating-value rating__value">{offer.rating}</span>
             </div>
             <ul className="offer__features">
               <li className="offer__feature offer__feature--entire">

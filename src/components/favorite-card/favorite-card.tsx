@@ -13,7 +13,7 @@ function FavoriteCard({offer}: FavoriteCardProps): JSX.Element {
       <div className="favorites__locations locations locations--current">
         <div className="locations__item">
           <a className="locations__item-link" href="#">
-            <span>{offer.city}</span>
+            <span>{offer.city.name}</span>
           </a>
         </div>
       </div>
@@ -45,7 +45,7 @@ function FavoriteCard({offer}: FavoriteCardProps): JSX.Element {
             </div>
             <div className="place-card__rating rating">
               <div className="place-card__stars rating__stars">
-                <span style={{width: `${20 * offer.rating.stars}%`}}></span>
+                <span style={{width: `${20 * offer.rating}%`}}></span>
                 <span className="visually-hidden">Rating</span>
               </div>
             </div>
