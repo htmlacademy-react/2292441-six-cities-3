@@ -184,15 +184,18 @@ function OfferScreen(): JSX.Element {
           activeCardId={offer.id}
         />
       </section>
-      <div className="container">
-        <section className="near-places places">
-          <h2 className="near-places__title">Other places in the neighbourhood</h2>
-          <PlacesList
-            classNames={NEAR_PLACES_LIST_CLASSES}
-            offers={nearOffers}
-          />
-        </section>
-      </div>
+      {
+        (nearOffers[0]) &&
+        <div className="container">
+          <section className="near-places places">
+            <h2 className="near-places__title">Other places in the neighbourhood</h2>
+            <PlacesList
+              classNames={NEAR_PLACES_LIST_CLASSES}
+              offers={nearOffers}
+            />
+          </section>
+        </div>
+      }
     </main>
   );
 }
