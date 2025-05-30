@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
-import { City } from '../../types/offer';
+import { City } from '../../types/city';
 import { Offers } from '../../types/offer';
 import { useMap } from '../../hooks/use-map';
-import { layerGroup, Marker, Icon } from 'leaflet';
+import { layerGroup, Marker, Icon, LatLng } from 'leaflet';
 import { URL_MARKER_DEFAULT, URL_MARKER_ACTIVE } from '../../const';
 
 type MapProps = {
@@ -28,7 +28,7 @@ const customActiveMarker = new Icon(
   }
 );
 
-function Map({city, offers, activeCardId, className}: MapProps): JSX.Element {
+function Map({offers, activeCardId, className, city}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap({mapRef, city});
 
@@ -44,11 +44,13 @@ function Map({city, offers, activeCardId, className}: MapProps): JSX.Element {
         marker.addTo(markerLayer);
       });
 
+      map.setView(new LatLng(city.location.latitude, city.location.longitude));
+
       return () => {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, offers, activeCardId]);
+  }, [map, offers, activeCardId, city]);
 
   return (
     <section className={`${className} map`} ref={mapRef} />

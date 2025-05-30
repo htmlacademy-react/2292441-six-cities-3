@@ -1,4 +1,4 @@
-export const OFFERS_AMOUNT = 4;
+export const OFFERS_AMOUNT = 24;
 
 export const AVATAR_SIZE = {
   width: 100,
@@ -124,44 +124,29 @@ export const DATES = [
   'June 2025'
 ];
 
-export const PARIS_MARKS_COORDS = [
-  { latitude: 48.8566, longitude: 2.3522 },
-  { latitude: 48.8641, longitude: 2.3499 },
-  { latitude: 48.8530, longitude: 2.3600 },
-  { latitude: 48.8584, longitude: 2.2945 }
-];
-
-export const COLOGNE_MARKS_COORDS = [
-  { latitude: 50.9375, longitude: 6.9603 },
-  { latitude: 50.9450, longitude: 6.9580 },
-  { latitude: 50.9300, longitude: 6.9605 },
-  { latitude: 50.9390, longitude: 6.9500 }
-];
-
-export const BRUSSELS_MARKS_COORDS = [
-  { latitude: 50.8503, longitude: 4.3517 },
-  { latitude: 50.8450, longitude: 4.3550 },
-  { latitude: 50.8530, longitude: 4.3600 },
-  { latitude: 50.8470, longitude: 4.3450 }
-];
-
-export const AMSTERDAM_MARKS_COORDS = [
-  { latitude: 52.3909553943508, longitude: 4.85309666406198 },
-  { latitude: 52.3609553943508, longitude: 4.85309666406198 },
-  { latitude: 52.3909553943508, longitude: 4.929309666406198 },
-  { latitude: 52.3809553943508, longitude: 4.939309666406198 }
-];
-
-export const HAMBURG_MARKS_COORDS = [
-  { latitude: 53.5511, longitude: 9.9937 },
-  { latitude: 53.5530, longitude: 9.9850 },
-  { latitude: 53.5480, longitude: 9.9900 },
-  { latitude: 53.5550, longitude: 9.9800 }
-];
-
-export const DUSSELDORF_MARKS_COORDS = [
-  { latitude: 51.2277, longitude: 6.7735 },
-  { latitude: 51.2300, longitude: 6.7800 },
-  { latitude: 51.2250, longitude: 6.7700 },
-  { latitude: 51.2280, longitude: 6.7650 }
-];
+export const MARKS_COORDS_RANGE = {
+  paris: {
+    latRange: [48.800000, 48.900000],
+    lonRange: [2.250000, 2.400000]
+  },
+  cologne: {
+    latRange: [50.900000, 51.000000],
+    lonRange: [6.850000, 7.050000]
+  },
+  brussels: {
+    latRange: [50.800000, 50.900000],
+    lonRange: [4.300000, 4.450000]
+  },
+  amsterdam: {
+    latRange: [52.350000, 52.400000],
+    lonRange: [4.850000, 4.950000]
+  },
+  hamburg: {
+    latRange: [53.500000, 53.600000],
+    lonRange: [9.900000, 10.100000]
+  },
+  dusseldorf: {
+    latRange: [51.200000, 51.300000],
+    lonRange: [6.700000, 6.850000]
+  }
+};

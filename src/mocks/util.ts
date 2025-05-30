@@ -1,20 +1,20 @@
 import { ImageSize } from './types';
-import { AVATAR_SIZE, COMMENTS, DATES, DESCRIPTIONS, NAMES, OFFER_PHOTO_SIZE, PLACEHOLDER_URL, TITLES, TYPES } from './const';
-import { City, Offer, Review, Location, Offers } from '../types/offer';
+import { AVATAR_SIZE, COMMENTS, DATES, DESCRIPTIONS, MARKS_COORDS_RANGE, NAMES, OFFER_PHOTO_SIZE, PLACEHOLDER_URL, TITLES, TYPES, IDS } from './const';
+import { Review, Offers } from '../types/offer';
+import { CityName } from '../types/city';
+import { CITIES } from '../const';
 
 const getRandomBoolean = () => !Math.round(Math.random());
 
-const getRandomNumber = (min: number, max: number, precision = 0) => {
-  if (min < 0 || max < 0 || max === min) {
-    return -1;
-  }
+const getRandomNumber = (min: number, max:number, precision?: number) => {
   if (max < min) {
     [min, max] = [max, min];
   }
+
   max -= min;
-  if (precision > 0) {
-    const string = (Math.random() * max + min).toFixed(precision);
-    return parseInt(string, 10);
+
+  if (precision) {
+    return parseFloat((Math.random() * max + min).toFixed(precision));
   }
   return Math.floor(Math.random() * ++max) + min;
 };
@@ -43,15 +43,41 @@ const getReview = (): Review => {
 
 const getReviewArray = (length: number) => Array.from({ length }, () => getReview());
 
-const getOffer = (id: string, city: City, location: Location): Offer => {
+const getCoordsRange = (city: CityName) => {
+  switch (city) {
+    case 'Paris':
+      return MARKS_COORDS_RANGE.paris;
+    case 'Cologne':
+      return MARKS_COORDS_RANGE.cologne;
+    case 'Brussels':
+      return MARKS_COORDS_RANGE.brussels;
+    case 'Amsterdam':
+      return MARKS_COORDS_RANGE.amsterdam;
+    case 'Hamburg':
+      return MARKS_COORDS_RANGE.hamburg;
+    case 'Dusseldorf':
+      return MARKS_COORDS_RANGE.dusseldorf;
+  }
+};
 
+function getRandomLocation(city: CityName) {
+  const { latRange, lonRange } = getCoordsRange(city);
+
+  const latitude = getRandomNumber(latRange[0], latRange[1], 6);
+  const longitude = getRandomNumber(lonRange[0], lonRange[1], 6);
+
+  return {latitude, longitude};
+}
+
+const getOffer = (id: string) => {
+  const city = getRandomArrayElement(CITIES.map((e) => e.name)) as CityName;
 
   const offer = {
     id: id,
     city: city,
     images: getPlaceholderArray(6, OFFER_PHOTO_SIZE),
     title: getRandomArrayElement(TITLES),
-    rating: getRandomNumber(1, 5),
+    rating: getRandomNumber(1, 5, 1),
     type: getRandomArrayElement(TYPES),
     bedrooms: getRandomNumber(1, 6),
     capacity: getRandomNumber(1, 10),
@@ -76,19 +102,19 @@ const getOffer = (id: string, city: City, location: Location): Offer => {
     },
     description: getRandomArrayElement(DESCRIPTIONS),
     reviews: getReviewArray(getRandomNumber(1, 4)),
-    location: location,
+    location: getRandomLocation(city),
   };
 
   return offer;
 };
 
-export const getOffersArray = (city: City, ids: string[], locations: Location[], amount: number) => {
-  const array: Offers = [];
+export const getOffers = (amount: number) => {
+  const arr: Offers = [];
 
   for (let i = 0; i < amount; i++) {
-    const offer = getOffer(ids[i], city, locations[i]);
-    array.push(offer);
+    const offer = getOffer(IDS[i]);
+    arr.push(offer);
   }
 
-  return array;
+  return arr;
 };

@@ -23,7 +23,7 @@ function App({offers}: AppScreenProps): JSX.Element {
         >
           <Route
             index
-            element={<MainScreen offers={offers}/>}
+            element={<MainScreen />}
           />
           <Route
             path={AppRoute.Login}
@@ -41,7 +41,7 @@ function App({offers}: AppScreenProps): JSX.Element {
           />
           <Route
             path={AppRoute.Offer}
-            element={<OfferScreen offers={offers}/>}
+            element={<OfferScreen />}
           />
           <Route
             path='*'

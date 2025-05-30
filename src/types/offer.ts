@@ -1,12 +1,8 @@
+import { CityName } from './city';
+
 export type Location = {
   latitude: number;
   longitude: number;
-};
-
-export type City = {
-  name: string;
-  zoom: number;
-  location: Location;
 };
 
 type User = {
@@ -26,7 +22,7 @@ export type Reviews = Review[];
 
 export type Offer = {
   id: string;
-  city: City;
+  city: CityName;
   images: string[];
   title: string;
   rating: number;
