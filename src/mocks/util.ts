@@ -70,7 +70,7 @@ function getRandomLocation(city: CityName) {
 }
 
 const getOffer = (id: string) => {
-  const city = getRandomArrayElement(CITIES.map((e) => e.name)) as CityName;
+  const city = getRandomArrayElement(CITIES.map((e) => e.name));
 
   const offer = {
     id: id,
