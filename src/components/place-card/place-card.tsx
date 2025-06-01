@@ -13,9 +13,21 @@ type PlaceCardProps = {
 function PlaceCard({offer, onActiveCard, onNoActiveCard, className}: PlaceCardProps): JSX.Element {
   const route = `/offer/${offer.id}`;
 
+  const activeCardHandler = () => {
+    if (onActiveCard) {
+      onActiveCard();
+    }
+  };
+
+  const noActiveCardHandler = () => {
+    if (onNoActiveCard) {
+      onNoActiveCard();
+    }
+  };
+
   function Article({children}: PropsWithChildren) {
     return (className === MAIN_PLACES_LIST_CLASSES.itemClass && onActiveCard && onNoActiveCard)
-      ? <article className={`${className} place-card`} onMouseOver={() => onActiveCard()} onMouseOut={() => onNoActiveCard()}>{children}</article>
+      ? <article className={`${className} place-card`} onMouseOver={activeCardHandler} onMouseOut={noActiveCardHandler}>{children}</article>
       : (<article className={`${className} place-card`}>{children}</article>);
   }
 
@@ -47,7 +59,7 @@ function PlaceCard({offer, onActiveCard, onNoActiveCard, className}: PlaceCardPr
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${20 * offer.rating.stars}%`}}></span>
+            <span style={{width: `${20 * offer.rating}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

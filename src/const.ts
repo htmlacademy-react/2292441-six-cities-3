@@ -1,6 +1,4 @@
-export const Setting = {
-  OffersCount: 312,
-} as const;
+import { City } from './types/city';
 
 export enum AppRoute {
   Root = '/',
@@ -15,11 +13,56 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export const AMSTERDAM = {
-  name: 'Amsterdam',
-  lat: 52.3675964307,
-  lng: 4.9041366576,
-};
+export const CITIES: City[] = [
+  {
+    name: 'Paris',
+    zoom: 11,
+    location: {
+      latitude: 48.8529682000,
+      longitude: 2.3499021000,
+    }
+  },
+  {
+    name: 'Cologne',
+    zoom: 11,
+    location: {
+      latitude: 50.9412781000,
+      longitude: 6.9582817000,
+    }
+  },
+  {
+    name: 'Brussels',
+    zoom: 11,
+    location: {
+      latitude: 50.8467322000,
+      longitude: 4.3499989000,
+    }
+  },
+  {
+    name: 'Amsterdam',
+    zoom: 11,
+    location: {
+      latitude: 52.3675964307,
+      longitude: 4.9041366576,
+    }
+  },
+  {
+    name: 'Hamburg',
+    zoom: 11,
+    location: {
+      latitude: 53.5510846000,
+      longitude: 9.9936818000,
+    }
+  },
+  {
+    name: 'Dusseldorf',
+    zoom: 11,
+    location: {
+      latitude: 51.2277411000,
+      longitude: 6.7734556000,
+    }
+  }
+];
 
 export const URL_MARKER_DEFAULT = '../../public/img/pin.svg';
 

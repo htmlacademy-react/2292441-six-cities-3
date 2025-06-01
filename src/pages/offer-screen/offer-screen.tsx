@@ -1,19 +1,18 @@
 import { useParams } from 'react-router-dom';
-import { Offers } from '../../types/offer';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import ReviewForm from '../../components/review-form';
 import ReviewsList from '../../components/reviews-list';
 import Map from '../../components/map';
-import { AMSTERDAM, NEAR_PLACES_LIST_CLASSES } from '../../const';
+import { NEAR_PLACES_LIST_CLASSES } from '../../const';
 import { getNearOffers } from './util';
 import PlacesList from '../../components/places-list';
-
-type OfferScreenProps = {
-  offers: Offers;
-};
+import { useAppSelector } from '../../hooks/use-app-selector';
 
 
-function OfferScreen({offers}: OfferScreenProps): JSX.Element {
+function OfferScreen(): JSX.Element {
+  const city = useAppSelector((state) => state.city);
+  const offers = useAppSelector((state) => state.offers);
+
   const offerId = useParams().id as string;
   const offer = offers.find((e) => e.id.toString() === offerId);
 
@@ -59,10 +58,10 @@ function OfferScreen({offers}: OfferScreenProps): JSX.Element {
             </div>
             <div className="offer__rating rating">
               <div className="offer__stars rating__stars">
-                <span style={{width: `${20 * offer.rating.stars}%`}}></span>
+                <span style={{width: `${20 * offer.rating}%`}}></span>
                 <span className="visually-hidden">Rating</span>
               </div>
-              <span className="offer__rating-value rating__value">{offer.rating.value}</span>
+              <span className="offer__rating-value rating__value">{offer.rating}</span>
             </div>
             <ul className="offer__features">
               <li className="offer__feature offer__feature--entire">
@@ -180,20 +179,23 @@ function OfferScreen({offers}: OfferScreenProps): JSX.Element {
         </div>
         <Map
           className='offer__map'
-          city={AMSTERDAM}
+          city={city}
           offers={offers}
           activeCardId={offer.id}
         />
       </section>
-      <div className="container">
-        <section className="near-places places">
-          <h2 className="near-places__title">Other places in the neighbourhood</h2>
-          <PlacesList
-            classNames={NEAR_PLACES_LIST_CLASSES}
-            offers={nearOffers}
-          />
-        </section>
-      </div>
+      {
+        (nearOffers[0]) &&
+        <div className="container">
+          <section className="near-places places">
+            <h2 className="near-places__title">Other places in the neighbourhood</h2>
+            <PlacesList
+              classNames={NEAR_PLACES_LIST_CLASSES}
+              offers={nearOffers}
+            />
+          </section>
+        </div>
+      }
     </main>
   );
 }

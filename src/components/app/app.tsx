@@ -10,11 +10,10 @@ import NotFoundScreen from '../../pages/not-found-screen';
 import { Offers } from '../../types/offer';
 
 type AppScreenProps = {
-  offersCount: number;
   offers: Offers;
 };
 
-function App({offersCount, offers}: AppScreenProps): JSX.Element {
+function App({offers}: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -24,7 +23,7 @@ function App({offersCount, offers}: AppScreenProps): JSX.Element {
         >
           <Route
             index
-            element={<MainScreen offersCount={offersCount} offers={offers}/>}
+            element={<MainScreen />}
           />
           <Route
             path={AppRoute.Login}
@@ -42,7 +41,7 @@ function App({offersCount, offers}: AppScreenProps): JSX.Element {
           />
           <Route
             path={AppRoute.Offer}
-            element={<OfferScreen offers={offers}/>}
+            element={<OfferScreen />}
           />
           <Route
             path='*'

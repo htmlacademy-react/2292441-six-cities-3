@@ -18,10 +18,10 @@ export function useMap({mapRef, city}: UseMapProps) {
     if (mapRef.current && !isRenderedRef.current) {
       const instance = new Map(mapRef.current, {
         center: {
-          lat: city.lat,
-          lng: city.lng
+          lat: city.location.latitude,
+          lng: city.location.longitude,
         },
-        zoom: 10
+        zoom: city.zoom
       });
 
       const layer = new TileLayer(
