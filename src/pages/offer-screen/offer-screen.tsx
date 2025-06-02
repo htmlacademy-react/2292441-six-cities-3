@@ -7,11 +7,12 @@ import { NEAR_PLACES_LIST_CLASSES } from '../../const';
 import { getNearOffers } from './util';
 import PlacesList from '../../components/places-list';
 import { useAppSelector } from '../../hooks/use-app-selector';
+import { SelectCity, SelectOffers } from '../../store/selectors/offers';
 
 
 function OfferScreen(): JSX.Element {
-  const city = useAppSelector((state) => state.city);
-  const offers = useAppSelector((state) => state.offers);
+  const city = useAppSelector(SelectCity);
+  const offers = useAppSelector(SelectOffers);
 
   const offerId = useParams().id as string;
   const offer = offers.find((e) => e.id.toString() === offerId);

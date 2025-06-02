@@ -5,10 +5,11 @@ import { useState } from 'react';
 import CityTabs from '../../components/city-tabs';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import PlacesSorting from '../../components/places-sorting';
+import { SelectCity, SelectOffers } from '../../store/selectors/offers';
 
 function MainScreen(): JSX.Element {
-  const city = useAppSelector((state) => state.city);
-  const offers = useAppSelector((state) => state.offers);
+  const city = useAppSelector(SelectCity);
+  const offers = useAppSelector(SelectOffers);
 
   const [activeCardId, setActiveCardId] = useState('');
 
