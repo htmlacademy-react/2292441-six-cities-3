@@ -77,3 +77,10 @@ export const NEAR_PLACES_LIST_CLASSES = {
   listClass: 'near-places__list',
   itemClass: 'near-places__card'
 };
+
+export const SORTING_OPTIONS = [
+  'Popular',
+  'Price: low to high',
+  'Price: high to low',
+  'Top rated first'
+] as const;
