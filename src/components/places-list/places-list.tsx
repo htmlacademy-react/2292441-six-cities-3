@@ -6,7 +6,7 @@ import { SortingOption } from '../../types/sorting-option';
 type PlacesListProps = {
   offers: Offers;
   getActiveCardId?: (e: string) => void;
-  sortingOption: SortingOption;
+  sortingOption?: SortingOption;
   classNames: {
     listClass: string;
     itemClass: string;
@@ -23,6 +23,9 @@ function PlacesList({offers, getActiveCardId, sortingOption, classNames}: Places
   };
 
   const getSortedOffers = () => {
+    if (!sortingOption) {
+      return offers;
+    }
     switch (sortingOption) {
       case 'Popular':
         return offers;
