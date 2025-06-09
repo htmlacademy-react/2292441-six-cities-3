@@ -84,3 +84,7 @@ export const SORTING_OPTIONS = [
   'Price: high to low',
   'Top rated first'
 ] as const;
+
+export const BACKEND_URL = 'https://15.design.htmlacademy.pro/spec/six-cities';
+
+export const REQUEST_TIMEOUT = 5000;
