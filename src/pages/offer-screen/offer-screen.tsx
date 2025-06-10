@@ -41,7 +41,7 @@ function OfferScreen(): JSX.Element {
         <div className="offer__container container">
           <div className="offer__wrapper">
             {
-              offer.premium &&
+              offer.isPremium &&
               <div className="offer__mark">
                 <span>Premium</span>
               </div>
@@ -72,7 +72,7 @@ function OfferScreen(): JSX.Element {
                 {offer.bedrooms} Bedrooms
               </li>
               <li className="offer__feature offer__feature--adults">
-                Max {offer.capacity} adults
+                Max {offer.maxAdults} adults
               </li>
             </ul>
             <div className="offer__price">
@@ -83,92 +83,32 @@ function OfferScreen(): JSX.Element {
               <h2 className="offer__inside-title">What&apos;s inside</h2>
               <ul className="offer__inside-list">
                 {
-                  offer.features.wiFi &&
-                  <li className="offer__inside-item">
-                    Wi-Fi
-                  </li>
-                }
-                {
-                  offer.features.washingMachine &&
-                  <li className="offer__inside-item">
-                    Washing machine
-                  </li>
-                }
-                {
-                  offer.features.towels &&
-                  <li className="offer__inside-item">
-                    Towels
-                  </li>
-                }
-                {
-                  offer.features.heating &&
-                  <li className="offer__inside-item">
-                    Heating
-                  </li>
-                }
-                {
-                  offer.features.coffeeMachine &&
-                  <li className="offer__inside-item">
-                    Coffee machine
-                  </li>
-                }
-                {
-                  offer.features.babySeat &&
-                  <li className="offer__inside-item">
-                    Baby seat
-                  </li>
-                }
-                {
-                  offer.features.kitchen &&
-                  <li className="offer__inside-item">
-                    Kitchen
-                  </li>
-                }
-                {
-                  offer.features.dishwasher &&
-                  <li className="offer__inside-item">
-                    Dishwasher
-                  </li>
-                }
-                {
-                  offer.features.cabelTV &&
-                  <li className="offer__inside-item">
-                    Cabel TV
-                  </li>
-                }
-                {
-                  offer.features.fridge &&
-                  <li className="offer__inside-item">
-                    Fridge
-                  </li>
+                  offer.features && offer.features.map((e) => (
+                    <li className="offer__inside-item" key={e}>
+                      {e}
+                    </li>
+                  ))
                 }
               </ul>
             </div>
             <div className="offer__host">
               <h2 className="offer__host-title">Meet the host</h2>
               <div className="offer__host-user user">
-                <div className={`offer__avatar-wrapper ${offer.host.pro ? 'offer__avatar-wrapper--pro' : ''} user__avatar-wrapper`}>
-                  <img className="offer__avatar user__avatar" src={offer.host.avatar} width="74" height="74" alt="Host avatar"/>
+                <div className={`offer__avatar-wrapper ${offer.host.isPro ? 'offer__avatar-wrapper--pro' : ''} user__avatar-wrapper`}>
+                  <img className="offer__avatar user__avatar" src={offer.host.avatarUrl} width="74" height="74" alt="Host avatar"/>
                 </div>
                 <span className="offer__user-name">
                   {offer.host.name}
                 </span>
                 {
-                  offer.host.pro &&
+                  offer.host.isPro &&
                     <span className="offer__user-status">
                       Pro
                     </span>
                 }
               </div>
               <div className="offer__description">
-                {offer.description.map((e, i) => {
-                  const keyValue = `${i}-${e}`;
-                  return (
-                    <p key={keyValue} className="offer__text">
-                      {e}
-                    </p>
-                  );
-                })}
+                {offer.description}
               </div>
             </div>
             <section className="offer__reviews reviews">

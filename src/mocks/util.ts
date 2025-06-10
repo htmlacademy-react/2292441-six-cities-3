@@ -1,5 +1,5 @@
 import { ImageSize } from './types';
-import { AVATAR_SIZE, COMMENTS, DATES, DESCRIPTIONS, MARKS_COORDS_RANGE, NAMES, OFFER_PHOTO_SIZE, PLACEHOLDER_URL, TITLES, TYPES, IDS } from './const';
+import { AVATAR_SIZE, COMMENTS, DATES, DESCRIPTIONS, MARKS_COORDS_RANGE, NAMES, OFFER_PHOTO_SIZE, PLACEHOLDER_URL, TITLES, TYPES, IDS, FEATURES } from './const';
 import { Review, Offers } from '../types/offer';
 import { CityName } from '../types/city';
 import { CITIES } from '../const';
@@ -28,12 +28,13 @@ const getPlaceholderArray = (length: number, size: ImageSize) => Array.from({ le
 
 const getReview = (): Review => {
   const review = {
+    id: getRandomArrayElement(IDS),
     user: {
       name: getRandomArrayElement(NAMES),
-      avatar: getPlaceholderUrl(AVATAR_SIZE),
-      pro: getRandomBoolean()
+      avatarUrl: getPlaceholderUrl(AVATAR_SIZE),
+      isPro: getRandomBoolean()
     },
-    stars: getRandomNumber(1, 5),
+    rating: getRandomNumber(1, 5),
     comment: getRandomArrayElement(COMMENTS),
     date: getRandomArrayElement(DATES),
   };
@@ -60,49 +61,57 @@ const getCoordsRange = (city: CityName) => {
   }
 };
 
-function getRandomLocation(city: CityName) {
+const getRandomLocation = (city: CityName) => {
   const { latRange, lonRange } = getCoordsRange(city);
 
   const latitude = getRandomNumber(latRange[0], latRange[1], 6);
   const longitude = getRandomNumber(lonRange[0], lonRange[1], 6);
+  const zoom = 11;
 
-  return {latitude, longitude};
-}
+  return { latitude, longitude, zoom };
+};
+
+const getNewRandomArray = <T>(data: T[]) => {
+  const length = getRandomNumber(0, data.length);
+
+  if (length === 0) {
+    return undefined;
+  }
+
+  const newArr: T[] = Array.from({ length });
+
+  return newArr.map((e, i) => {
+    e = data[i];
+    return e;
+  });
+};
 
 const getOffer = (id: string) => {
-  const city = getRandomArrayElement(CITIES.map((e) => e.name));
+  const city = getRandomArrayElement(CITIES);
+  const images = getPlaceholderArray(6, OFFER_PHOTO_SIZE);
 
   const offer = {
     id: id,
     city: city,
-    images: getPlaceholderArray(6, OFFER_PHOTO_SIZE),
+    previewImage: getRandomArrayElement(images),
+    images: images,
     title: getRandomArrayElement(TITLES),
     rating: getRandomNumber(1, 5, 1),
     type: getRandomArrayElement(TYPES),
     bedrooms: getRandomNumber(1, 6),
-    capacity: getRandomNumber(1, 10),
+    maxAdults: getRandomNumber(1, 10),
     price: getRandomNumber(80, 300),
-    premium: getRandomBoolean(),
-    features: {
-      wiFi: getRandomBoolean(),
-      heating: getRandomBoolean(),
-      kitchen: getRandomBoolean(),
-      fridge: getRandomBoolean(),
-      washingMachine: getRandomBoolean(),
-      coffeeMachine: getRandomBoolean(),
-      dishwasher: getRandomBoolean(),
-      towels: getRandomBoolean(),
-      babySeat: getRandomBoolean(),
-      cabelTV: getRandomBoolean(),
-    },
+    isPremium: getRandomBoolean(),
+    isFavorite: getRandomBoolean(),
+    features: getNewRandomArray(FEATURES),
     host: {
       name: getRandomArrayElement(NAMES),
-      avatar: getPlaceholderUrl(AVATAR_SIZE),
-      pro: getRandomBoolean(),
+      avatarUrl: getPlaceholderUrl(AVATAR_SIZE),
+      isPro: getRandomBoolean(),
     },
     description: getRandomArrayElement(DESCRIPTIONS),
     reviews: getReviewArray(getRandomNumber(1, 4)),
-    location: getRandomLocation(city),
+    location: getRandomLocation(city.name),
   };
 
   return offer;

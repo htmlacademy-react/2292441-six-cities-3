@@ -1,19 +1,21 @@
-import { CityName } from './city';
+import { City } from './city';
 
 export type Location = {
   latitude: number;
   longitude: number;
+  zoom: number;
 };
 
 type User = {
   name: string;
-  avatar: string;
-  pro: boolean;
+  avatarUrl: string;
+  isPro: boolean;
 };
 
 export type Review = {
+  id: string;
   user: User;
-  stars: number;
+  rating: number;
   comment: string;
   date: string;
 };
@@ -22,29 +24,20 @@ export type Reviews = Review[];
 
 export type Offer = {
   id: string;
-  city: CityName;
+  city: City;
+  previewImage: string;
   images: string[];
   title: string;
   rating: number;
   type: string;
   bedrooms: number;
-  capacity: number;
+  maxAdults: number;
   price: number;
-  premium: boolean;
-  features: {
-    wiFi: boolean;
-    heating: boolean;
-    kitchen: boolean;
-    fridge: boolean;
-    washingMachine: boolean;
-    coffeeMachine: boolean;
-    dishwasher: boolean;
-    towels: boolean;
-    babySeat: boolean;
-    cabelTV: boolean;
-  };
+  isPremium: boolean;
+  isFavorite: boolean;
+  features: string[] | undefined;
   host: User;
-  description: string[];
+  description: string;
   reviews: Reviews;
   location: Location;
 };

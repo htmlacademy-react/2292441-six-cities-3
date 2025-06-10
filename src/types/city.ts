@@ -2,7 +2,6 @@ import { Location } from './offer';
 
 export type City = {
   name: CityName;
-  zoom: number;
   location: Location;
 };
 

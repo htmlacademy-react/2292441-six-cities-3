@@ -21,6 +21,18 @@ export const IDS = [
   'b6e3f2c1', 'f5a7c9d8', 'e9b1d4a3', 'd6c2f8a5'
 ];
 
+export const FEATURES = [
+  'Wi-Fi',
+  'Washing machine',
+  'Towels',
+  'Heating',
+  'Coffee machine',
+  'Baby seat',
+  'Kitchen',
+  'Dishwasher',
+  'Cabel TV',
+  'Fridge'
+];
 
 export const TITLES = [
   'Cozy stay with everything you need',
@@ -61,46 +73,16 @@ export const NAMES = [
 ];
 
 export const DESCRIPTIONS = [
-  [
-    'Cozy one-bedroom apartment located in the heart of downtown. Close to shops, restaurants, and public transport.',
-    'Ideal for singles or couples looking for a vibrant urban lifestyle.'
-  ],
-  [
-    'Spacious two-bedroom condo with modern amenities and a balcony overlooking the park. Includes access to a gym and swimming pool.',
-    'Perfect for small families or roommates wanting extra space.'
-  ],
-  [
-    'Charming studio apartment with lots of natural light and hardwood floors. Recently renovated kitchen and bathroom.',
-    'Great for students or young professionals.'
-  ],
-  [
-    'Large three-bedroom house with a fenced backyard and garage. Quiet neighborhood with excellent schools nearby.',
-    'Suitable for families seeking comfort and privacy.'
-  ],
-  [
-    'Modern loft apartment featuring high ceilings and an open floor plan. Walking distance to cultural attractions and nightlife.',
-    'Ideal for creative professionals or couples.'
-  ],
-  [
-    'Affordable basement suite with a private entrance and laundry facilities. Includes utilities in the rent.',
-    'Perfect for budget-conscious renters.'
-  ],
-  [
-    'Luxury penthouse with panoramic city views, floor-to-ceiling windows, and smart home features. Comes fully furnished.',
-    'Best for executives or those who love to entertain.'
-  ],
-  [
-    'Quiet studio in a historic building with character details and a cozy atmosphere. Close to public transit and cafes.',
-    'Great option for students or single tenants.'
-  ],
-  [
-    'Family-friendly townhouse with three bedrooms, two bathrooms, and a backyard patio. Located near parks and schools.',
-    'Ideal for growing families.'
-  ],
-  [
-    'Bright one-bedroom apartment with updated appliances and a private balcony. Secure building with on-site management.',
-    'Perfect for professionals looking for convenience and safety.'
-  ]
+  'Cozy one-bedroom apartment located in the heart of downtown. Close to shops, restaurants, and public transport. Ideal for singles or couples looking for a vibrant urban lifestyle.',
+  'Spacious two-bedroom condo with modern amenities and a balcony overlooking the park. Includes access to a gym and swimming pool. Perfect for small families or roommates wanting extra space.',
+  'Charming studio apartment with lots of natural light and hardwood floors. Recently renovated kitchen and bathroom. Great for students or young professionals.',
+  'Large three-bedroom house with a fenced backyard and garage. Quiet neighborhood with excellent schools nearby. Suitable for families seeking comfort and privacy.',
+  'Modern loft apartment featuring high ceilings and an open floor plan. Walking distance to cultural attractions and nightlife. Ideal for creative professionals or couples.',
+  'Affordable basement suite with a private entrance and laundry facilities. Includes utilities in the rent. Perfect for budget-conscious renters.',
+  'Luxury penthouse with panoramic city views, floor-to-ceiling windows, and smart home features. Comes fully furnished. Best for executives or those who love to entertain.',
+  'Quiet studio in a historic building with character details and a cozy atmosphere. Close to public transit and cafes. Great option for students or single tenants.',
+  'Family-friendly townhouse with three bedrooms, two bathrooms, and a backyard patio. Located near parks and schools. Ideal for growing families.',
+  'Bright one-bedroom apartment with updated appliances and a private balcony. Secure building with on-site management. Perfect for professionals looking for convenience and safety.'
 ];
 
 export const COMMENTS = [
