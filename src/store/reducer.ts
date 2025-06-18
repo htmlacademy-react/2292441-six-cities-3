@@ -1,19 +1,33 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { setCity, fillPlacesList } from './action';
-import { findOffers } from './util';
-import { CITIES } from '../const';
+import { setCity, fillPlacesList, loadOffers, requireAuthorization } from './action';
+import { AuthorizationStatus, CITIES } from '../const';
+import { City } from '../types/city';
+import { Offers } from '../types/offer';
 
-const initialState = {
+type InitialState = {
+  city: City;
+  offers: Offers;
+  authorizationStatus: AuthorizationStatus;
+};
+
+const initialState: InitialState = {
   city: CITIES[0],
-  offers: findOffers('Paris'),
+  offers: [],
+  authorizationStatus: AuthorizationStatus.Unknown,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
   builder.
-    addCase(setCity, (state, city) => {
-      state.city = city.payload;
+    addCase(setCity, (state, action) => {
+      state.city = action.payload;
     }).
-    addCase(fillPlacesList, (state, city) => {
-      state.offers = findOffers(city.payload);
+    addCase(fillPlacesList, (state, action) => {
+      state.offers = state.offers.filter((e) => e.city.name === action.payload);
+    }).
+    addCase(loadOffers, (state, action) => {
+      state.offers = action.payload;
+    }).
+    addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
     });
 });
