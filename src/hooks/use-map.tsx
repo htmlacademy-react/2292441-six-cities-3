@@ -21,7 +21,7 @@ export function useMap({mapRef, city}: UseMapProps) {
           lat: city.location.latitude,
           lng: city.location.longitude,
         },
-        zoom: city.zoom
+        zoom: city.location.zoom
       });
 
       const layer = new TileLayer(

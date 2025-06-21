@@ -1,5 +1,7 @@
 import { City } from './types/city';
 
+export const DEFAULT_CITY = 'Paris';
+
 export enum AppRoute {
   Root = '/',
   Login = '/login',
@@ -16,50 +18,50 @@ export enum AuthorizationStatus {
 export const CITIES: City[] = [
   {
     name: 'Paris',
-    zoom: 11,
     location: {
       latitude: 48.8529682000,
       longitude: 2.3499021000,
+      zoom: 11,
     }
   },
   {
     name: 'Cologne',
-    zoom: 11,
     location: {
       latitude: 50.9412781000,
       longitude: 6.9582817000,
+      zoom: 11,
     }
   },
   {
     name: 'Brussels',
-    zoom: 11,
     location: {
       latitude: 50.8467322000,
       longitude: 4.3499989000,
+      zoom: 11,
     }
   },
   {
     name: 'Amsterdam',
-    zoom: 11,
     location: {
       latitude: 52.3675964307,
       longitude: 4.9041366576,
+      zoom: 11,
     }
   },
   {
     name: 'Hamburg',
-    zoom: 11,
     location: {
       latitude: 53.5510846000,
       longitude: 9.9936818000,
+      zoom: 11,
     }
   },
   {
     name: 'Dusseldorf',
-    zoom: 11,
     location: {
       latitude: 51.2277411000,
       longitude: 6.7734556000,
+      zoom: 11,
     }
   }
 ];
@@ -84,3 +86,24 @@ export const SORTING_OPTIONS = [
   'Price: high to low',
   'Top rated first'
 ] as const;
+
+export const BACKEND_URL = 'https://15.design.htmlacademy.pro/six-cities';
+
+export const REQUEST_TIMEOUT = 5000;
+
+export const AUTH_TOKEN_KEY_NAME = 'six-cities-token';
+
+export enum APIRoute {
+  Offers = '/offers',
+  Favorites = '/favorite',
+  Login = '/login',
+  Logout = '/logout',
+  Comments = '/comments'
+}
+
+export enum RequestStatus {
+  Idle,
+  Loading,
+  Success,
+  Failed
+}

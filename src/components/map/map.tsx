@@ -4,11 +4,12 @@ import { Offers } from '../../types/offer';
 import { useMap } from '../../hooks/use-map';
 import { layerGroup, Marker, Icon, LatLng } from 'leaflet';
 import { URL_MARKER_DEFAULT, URL_MARKER_ACTIVE } from '../../const';
+import { useAppSelector } from '../../hooks/use-app-selector';
+import { SelectActiveOfferId } from '../../store/selectors/offers';
 
 type MapProps = {
   city: City;
   offers: Offers;
-  activeCardId?: string;
   className: string;
 };
 
@@ -28,9 +29,10 @@ const customActiveMarker = new Icon(
   }
 );
 
-function Map({offers, activeCardId, className, city}: MapProps): JSX.Element {
+function Map({offers, className, city}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap({mapRef, city});
+  const activeOfferId = useAppSelector(SelectActiveOfferId);
 
   useEffect(() => {
     if (map) {
@@ -40,7 +42,7 @@ function Map({offers, activeCardId, className, city}: MapProps): JSX.Element {
           lat: offer.location.latitude,
           lng: offer.location.longitude,
         });
-        marker.setIcon((activeCardId === offer.id) ? customActiveMarker : customDefaultMarker);
+        marker.setIcon((activeOfferId === offer.id) ? customActiveMarker : customDefaultMarker);
         marker.addTo(markerLayer);
       });
 
@@ -50,7 +52,7 @@ function Map({offers, activeCardId, className, city}: MapProps): JSX.Element {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, offers, activeCardId, city]);
+  }, [map, offers, activeOfferId, city]);
 
   return (
     <section className={`${className} map`} ref={mapRef} />

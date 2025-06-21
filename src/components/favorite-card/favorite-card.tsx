@@ -13,21 +13,21 @@ function FavoriteCard({offer}: FavoriteCardProps): JSX.Element {
       <div className="favorites__locations locations locations--current">
         <div className="locations__item">
           <a className="locations__item-link" href="#">
-            <span>{offer.city}</span>
+            <span>{offer.city.name}</span>
           </a>
         </div>
       </div>
       <div className="favorites__places">
         <article className="favorites__card place-card">
           {
-            offer.premium &&
+            offer.isPremium &&
             <div className="place-card__mark">
               <span>Premium</span>
             </div>
           }
           <div className="favorites__image-wrapper place-card__image-wrapper">
             <Link to={route}>
-              <img className="place-card__image" src={`${offer.images[0]}`} width="150" height="110" alt="Place image"/>
+              <img className="place-card__image" src={`${offer.previewImage}`} width="150" height="110" alt="Place image"/>
             </Link>
           </div>
           <div className="favorites__card-info place-card__info">

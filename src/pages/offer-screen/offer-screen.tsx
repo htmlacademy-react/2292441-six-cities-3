@@ -1,27 +1,19 @@
-import { useParams } from 'react-router-dom';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import ReviewForm from '../../components/review-form';
 import ReviewsList from '../../components/reviews-list';
 import Map from '../../components/map';
 import { NEAR_PLACES_LIST_CLASSES } from '../../const';
-import { getNearOffers } from './util';
 import PlacesList from '../../components/places-list';
 import { useAppSelector } from '../../hooks/use-app-selector';
-import { SelectCity, SelectOffers } from '../../store/selectors/offers';
-
+import { SelectCurrentOffer, SelectCity } from '../../store/selectors/offers';
 
 function OfferScreen(): JSX.Element {
   const city = useAppSelector(SelectCity);
-  const offers = useAppSelector(SelectOffers);
-
-  const offerId = useParams().id as string;
-  const offer = offers.find((e) => e.id.toString() === offerId);
+  const offer = useAppSelector(SelectCurrentOffer);
 
   if (!offer) {
     return <NotFoundScreen />;
   }
-
-  const nearOffers = getNearOffers(offers, offer);
 
   return (
     <main className="page__main page__main--offer">
@@ -41,7 +33,7 @@ function OfferScreen(): JSX.Element {
         <div className="offer__container container">
           <div className="offer__wrapper">
             {
-              offer.premium &&
+              offer.isPremium &&
               <div className="offer__mark">
                 <span>Premium</span>
               </div>
@@ -72,7 +64,7 @@ function OfferScreen(): JSX.Element {
                 {offer.bedrooms} Bedrooms
               </li>
               <li className="offer__feature offer__feature--adults">
-                Max {offer.capacity} adults
+                Max {offer.maxAdults} adults
               </li>
             </ul>
             <div className="offer__price">
@@ -83,97 +75,37 @@ function OfferScreen(): JSX.Element {
               <h2 className="offer__inside-title">What&apos;s inside</h2>
               <ul className="offer__inside-list">
                 {
-                  offer.features.wiFi &&
-                  <li className="offer__inside-item">
-                    Wi-Fi
-                  </li>
-                }
-                {
-                  offer.features.washingMachine &&
-                  <li className="offer__inside-item">
-                    Washing machine
-                  </li>
-                }
-                {
-                  offer.features.towels &&
-                  <li className="offer__inside-item">
-                    Towels
-                  </li>
-                }
-                {
-                  offer.features.heating &&
-                  <li className="offer__inside-item">
-                    Heating
-                  </li>
-                }
-                {
-                  offer.features.coffeeMachine &&
-                  <li className="offer__inside-item">
-                    Coffee machine
-                  </li>
-                }
-                {
-                  offer.features.babySeat &&
-                  <li className="offer__inside-item">
-                    Baby seat
-                  </li>
-                }
-                {
-                  offer.features.kitchen &&
-                  <li className="offer__inside-item">
-                    Kitchen
-                  </li>
-                }
-                {
-                  offer.features.dishwasher &&
-                  <li className="offer__inside-item">
-                    Dishwasher
-                  </li>
-                }
-                {
-                  offer.features.cabelTV &&
-                  <li className="offer__inside-item">
-                    Cabel TV
-                  </li>
-                }
-                {
-                  offer.features.fridge &&
-                  <li className="offer__inside-item">
-                    Fridge
-                  </li>
+                  offer.goods && offer.goods.map((e) => (
+                    <li className="offer__inside-item" key={e}>
+                      {e}
+                    </li>
+                  ))
                 }
               </ul>
             </div>
             <div className="offer__host">
               <h2 className="offer__host-title">Meet the host</h2>
               <div className="offer__host-user user">
-                <div className={`offer__avatar-wrapper ${offer.host.pro ? 'offer__avatar-wrapper--pro' : ''} user__avatar-wrapper`}>
-                  <img className="offer__avatar user__avatar" src={offer.host.avatar} width="74" height="74" alt="Host avatar"/>
+                <div className={`offer__avatar-wrapper ${offer.host.isPro ? 'offer__avatar-wrapper--pro' : ''} user__avatar-wrapper`}>
+                  <img className="offer__avatar user__avatar" src={offer.host.avatarUrl} width="74" height="74" alt="Host avatar"/>
                 </div>
                 <span className="offer__user-name">
                   {offer.host.name}
                 </span>
                 {
-                  offer.host.pro &&
+                  offer.host.isPro &&
                     <span className="offer__user-status">
                       Pro
                     </span>
                 }
               </div>
               <div className="offer__description">
-                {offer.description.map((e, i) => {
-                  const keyValue = `${i}-${e}`;
-                  return (
-                    <p key={keyValue} className="offer__text">
-                      {e}
-                    </p>
-                  );
-                })}
+                {offer.description}
               </div>
             </div>
             <section className="offer__reviews reviews">
-              <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{offer.reviews.length}</span></h2>
-              <ReviewsList reviews={offer.reviews} />
+              <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{0}</span></h2>
+              <ReviewsList reviews={[]} />
               <ReviewForm />
             </section>
           </div>
@@ -181,22 +113,18 @@ function OfferScreen(): JSX.Element {
         <Map
           className='offer__map'
           city={city}
-          offers={offers}
-          activeCardId={offer.id}
+          offers={[]}
         />
       </section>
-      {
-        (nearOffers[0]) &&
-        <div className="container">
-          <section className="near-places places">
-            <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <PlacesList
-              classNames={NEAR_PLACES_LIST_CLASSES}
-              offers={nearOffers}
-            />
-          </section>
-        </div>
-      }
+      <div className="container">
+        <section className="near-places places">
+          <h2 className="near-places__title">Other places in the neighbourhood</h2>
+          <PlacesList
+            classNames={NEAR_PLACES_LIST_CLASSES}
+            offers={[]}
+          />
+        </section>
+      </div>
     </main>
   );
 }
