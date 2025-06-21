@@ -7,13 +7,17 @@ import LoginScreen from '../../pages/login-screen';
 import FavoritesScreen from '../../pages/favorites-screen';
 import OfferScreen from '../../pages/offer-screen';
 import NotFoundScreen from '../../pages/not-found-screen';
-import { Offers } from '../../types/offer';
+import { useAppDispatch } from '../../hooks/use-app-dispatch';
+import { useEffect } from 'react';
+import { fetchOffers } from '../../store/api-action';
 
-type AppScreenProps = {
-  offers: Offers;
-};
+function App(): JSX.Element {
+  const dispatch = useAppDispatch();
 
-function App({offers}: AppScreenProps): JSX.Element {
+  useEffect(() => {
+    dispatch(fetchOffers());
+  });
+
   return (
     <BrowserRouter>
       <Routes>
@@ -35,7 +39,7 @@ function App({offers}: AppScreenProps): JSX.Element {
               <PrivateRoute
                 authorizationStatus={AuthorizationStatus.Auth}
               >
-                <FavoritesScreen offers={offers} />
+                <FavoritesScreen offers={[]} />
               </PrivateRoute>
             }
           />

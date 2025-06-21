@@ -1,5 +1,7 @@
 import { City } from './types/city';
 
+export const DEFAULT_CITY = 'Paris';
+
 export enum AppRoute {
   Root = '/',
   Login = '/login',
@@ -85,7 +87,7 @@ export const SORTING_OPTIONS = [
   'Top rated first'
 ] as const;
 
-export const BACKEND_URL = 'https://15.design.htmlacademy.pro/spec/six-cities';
+export const BACKEND_URL = 'https://15.design.htmlacademy.pro/six-cities';
 
 export const REQUEST_TIMEOUT = 5000;
 
@@ -95,6 +97,13 @@ export enum APIRoute {
   Offers = '/offers',
   Favorites = '/favorite',
   Login = '/login',
-  Logout = '/logout'
+  Logout = '/logout',
+  Comments = '/comments'
 }
 
+export enum RequestStatus {
+  Idle,
+  Loading,
+  Success,
+  Failed
+}

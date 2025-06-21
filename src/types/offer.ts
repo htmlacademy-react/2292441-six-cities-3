@@ -35,7 +35,7 @@ export type Offer = {
   price: number;
   isPremium: boolean;
   isFavorite: boolean;
-  features: string[] | undefined;
+  goods: string[] | undefined;
   host: User;
   description: string;
   reviews: Reviews;

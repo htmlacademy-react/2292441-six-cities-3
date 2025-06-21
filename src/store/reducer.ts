@@ -1,30 +1,52 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { setCity, fillPlacesList, loadOffers } from './action';
-import { AuthorizationStatus, CITIES } from '../const';
+import { setCity, fillPlacesList, setCurrentOffer, setActiveOfferId } from './action';
+import { AuthorizationStatus, CITIES, RequestStatus } from '../const';
 import { City } from '../types/city';
-import { Offers } from '../types/offer';
+import { Offer, Offers } from '../types/offer';
+import { fetchOffers } from './api-action';
 
 type InitialState = {
   city: City;
   offers: Offers;
+  activeOfferId: string;
+  currentOffers: Offers;
+  currentOffer: Offer;
   authorizationStatus: AuthorizationStatus;
+  requestStatus: RequestStatus;
 };
 
 const initialState: InitialState = {
   city: CITIES[0],
   offers: [],
+  activeOfferId: '',
+  currentOffers: [],
+  currentOffer: {} as Offer,
   authorizationStatus: AuthorizationStatus.Unknown,
+  requestStatus: RequestStatus.Idle,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
   builder.
+    addCase(fetchOffers.pending, (state) => {
+      state.requestStatus = RequestStatus.Loading;
+    }).
+    addCase(fetchOffers.fulfilled, (state, action) => {
+      state.requestStatus = RequestStatus.Success;
+      state.offers = action.payload;
+    }).
+    addCase(fetchOffers.rejected, (state) => {
+      state.requestStatus = RequestStatus.Failed;
+    }).
     addCase(setCity, (state, action) => {
       state.city = action.payload;
     }).
     addCase(fillPlacesList, (state, action) => {
-      state.offers = state.offers.filter((e) => e.city.name === action.payload);
+      state.currentOffers = state.offers.filter((e) => e.city.name === action.payload);
     }).
-    addCase(loadOffers, (state, action) => {
-      state.offers = action.payload;
+    addCase(setActiveOfferId, (state, action) => {
+      state.activeOfferId = action.payload;
+    }).
+    addCase(setCurrentOffer, (state, action) => {
+      state.currentOffer = action.payload;
     });
 });

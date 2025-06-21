@@ -1,11 +1,13 @@
 import PlaceCard from '../place-card/place-card';
 import { Offers } from '../../types/offer';
-import { MAIN_PLACES_LIST_CLASSES } from '../../const';
+import { MAIN_PLACES_LIST_CLASSES, RequestStatus } from '../../const';
 import { SortingOption } from '../../types/sorting-option';
+import { useAppSelector } from '../../hooks/use-app-selector';
+import { SelectRequestStatus } from '../../store/selectors/offers';
+import Spinner from '../spinner';
 
 type PlacesListProps = {
   offers: Offers;
-  getActiveCardId?: (e: string) => void;
   sortingOption?: SortingOption;
   classNames: {
     listClass: string;
@@ -13,14 +15,16 @@ type PlacesListProps = {
   };
 }
 
-function PlacesList({offers, getActiveCardId, sortingOption, classNames}: PlacesListProps): JSX.Element {
-  const {listClass, itemClass} = classNames;
+function PlacesList({offers, sortingOption, classNames}: PlacesListProps): JSX.Element {
+  const status = useAppSelector(SelectRequestStatus);
 
-  const activeCardHandler = (id: string) => {
-    if (getActiveCardId) {
-      return () => getActiveCardId(id);
-    }
-  };
+  if (status === RequestStatus.Loading) {
+    return (
+      <Spinner />
+    );
+  }
+
+  const {listClass, itemClass} = classNames;
 
   const getSortedOffers = () => {
     if (!sortingOption) {
@@ -44,9 +48,7 @@ function PlacesList({offers, getActiveCardId, sortingOption, classNames}: Places
     <div className={`${listClass} places__list ${(listClass === MAIN_PLACES_LIST_CLASSES.listClass) ? 'tabs__content' : ''}`}>
       {sortedOffers.map((e) => {
         const keyValue = e.id;
-        return (listClass === MAIN_PLACES_LIST_CLASSES.listClass && getActiveCardId)
-          ? (<PlaceCard key={keyValue} className={itemClass} offer={e} onActiveCard={activeCardHandler(e.id)} onNoActiveCard={activeCardHandler('')} />)
-          : (<PlaceCard key={keyValue} className={itemClass} offer={e} />);
+        return (<PlaceCard key={keyValue} className={itemClass} offer={e} />);
       })}
     </div>
   );

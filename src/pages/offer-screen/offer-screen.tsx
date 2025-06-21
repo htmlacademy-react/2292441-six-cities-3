@@ -1,27 +1,19 @@
-import { useParams } from 'react-router-dom';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import ReviewForm from '../../components/review-form';
 import ReviewsList from '../../components/reviews-list';
 import Map from '../../components/map';
 import { NEAR_PLACES_LIST_CLASSES } from '../../const';
-import { getNearOffers } from './util';
 import PlacesList from '../../components/places-list';
 import { useAppSelector } from '../../hooks/use-app-selector';
-import { SelectCity, SelectOffers } from '../../store/selectors/offers';
-
+import { SelectCurrentOffer, SelectCity } from '../../store/selectors/offers';
 
 function OfferScreen(): JSX.Element {
   const city = useAppSelector(SelectCity);
-  const offers = useAppSelector(SelectOffers);
-
-  const offerId = useParams().id as string;
-  const offer = offers.find((e) => e.id.toString() === offerId);
+  const offer = useAppSelector(SelectCurrentOffer);
 
   if (!offer) {
     return <NotFoundScreen />;
   }
-
-  const nearOffers = getNearOffers(offers, offer);
 
   return (
     <main className="page__main page__main--offer">
@@ -83,7 +75,7 @@ function OfferScreen(): JSX.Element {
               <h2 className="offer__inside-title">What&apos;s inside</h2>
               <ul className="offer__inside-list">
                 {
-                  offer.features && offer.features.map((e) => (
+                  offer.goods && offer.goods.map((e) => (
                     <li className="offer__inside-item" key={e}>
                       {e}
                     </li>
@@ -112,8 +104,8 @@ function OfferScreen(): JSX.Element {
               </div>
             </div>
             <section className="offer__reviews reviews">
-              <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{offer.reviews.length}</span></h2>
-              <ReviewsList reviews={offer.reviews} />
+              <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{0}</span></h2>
+              <ReviewsList reviews={[]} />
               <ReviewForm />
             </section>
           </div>
@@ -121,22 +113,18 @@ function OfferScreen(): JSX.Element {
         <Map
           className='offer__map'
           city={city}
-          offers={offers}
-          activeCardId={offer.id}
+          offers={[]}
         />
       </section>
-      {
-        (nearOffers[0]) &&
-        <div className="container">
-          <section className="near-places places">
-            <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <PlacesList
-              classNames={NEAR_PLACES_LIST_CLASSES}
-              offers={nearOffers}
-            />
-          </section>
-        </div>
-      }
+      <div className="container">
+        <section className="near-places places">
+          <h2 className="near-places__title">Other places in the neighbourhood</h2>
+          <PlacesList
+            classNames={NEAR_PLACES_LIST_CLASSES}
+            offers={[]}
+          />
+        </section>
+      </div>
     </main>
   );
 }

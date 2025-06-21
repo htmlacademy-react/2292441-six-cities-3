@@ -2,37 +2,42 @@ import { Link } from 'react-router-dom';
 import { Offer } from '../../types/offer';
 import { PropsWithChildren } from 'react';
 import { MAIN_PLACES_LIST_CLASSES } from '../../const';
+import { useAppDispatch } from '../../hooks/use-app-dispatch';
+import { setActiveOfferId } from '../../store/action';
 
 type PlaceCardProps = {
   offer: Offer;
-  onActiveCard?: () => void;
-  onNoActiveCard?: () => void;
   className: string;
-}
+};
 
-function PlaceCard({offer, onActiveCard, onNoActiveCard, className}: PlaceCardProps): JSX.Element {
+function PlaceCard({offer, className}: PlaceCardProps): JSX.Element {
+  const dispatch = useAppDispatch();
   const route = `/offer/${offer.id}`;
 
   const activeCardHandler = () => {
-    if (onActiveCard) {
-      onActiveCard();
-    }
+    dispatch(setActiveOfferId(offer.id));
   };
 
   const noActiveCardHandler = () => {
-    if (onNoActiveCard) {
-      onNoActiveCard();
-    }
+    dispatch(setActiveOfferId(''));
   };
 
-  function Article({children}: PropsWithChildren) {
-    return (className === MAIN_PLACES_LIST_CLASSES.itemClass && onActiveCard && onNoActiveCard)
-      ? <article className={`${className} place-card`} onMouseOver={activeCardHandler} onMouseOut={noActiveCardHandler}>{children}</article>
-      : (<article className={`${className} place-card`}>{children}</article>);
+  function Wrapper({children}: PropsWithChildren) {
+    return (className === MAIN_PLACES_LIST_CLASSES.itemClass)
+      ?
+      <article
+        className={`${className} place-card`}
+        onMouseOver={activeCardHandler}
+        onMouseOut={noActiveCardHandler}
+      >
+        {children}
+      </article>
+      :
+      (<article className={`${className} place-card`}>{children}</article>);
   }
 
   return (
-    <Article>
+    <Wrapper>
       {
         offer.isPremium &&
         <div className="place-card__mark">
@@ -41,7 +46,7 @@ function PlaceCard({offer, onActiveCard, onNoActiveCard, className}: PlaceCardPr
       }
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={route}>
-          <img className="place-card__image" src={offer.images[0]} width="260" height="200" alt="Place image"/>
+          <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Place image"/>
         </Link>
       </div>
       <div className="place-card__info">
@@ -68,7 +73,7 @@ function PlaceCard({offer, onActiveCard, onNoActiveCard, className}: PlaceCardPr
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>
-    </Article>
+    </Wrapper>
   );
 }
 
