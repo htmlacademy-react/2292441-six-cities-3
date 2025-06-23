@@ -6,3 +6,4 @@ export const SelectActiveOfferId = (state: State) => state.activeOfferId;
 export const SelectRequestStatus = (state: State) => state.requestStatus;
 export const SelectCurrentOffers = (state: State) => state.currentOffers;
 export const SelectCurrentOffer = (state: State) => state.currentOffer;
+export const SelectAuthorizationStatus = (state: State) => state.authorizationStatus;
