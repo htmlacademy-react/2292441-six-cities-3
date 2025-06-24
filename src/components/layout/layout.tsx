@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import { Outlet, useLocation } from 'react-router-dom';
+import { useAppSelector } from '../../hooks/use-app-selector';
+import { SelectAuthorizationStatus } from '../../store/selectors/offers';
 
 const getLayoutState = (pathName: AppRoute) => {
   let rootClassName = '';
@@ -22,6 +24,7 @@ const getLayoutState = (pathName: AppRoute) => {
 function Layout(): JSX.Element {
   const {pathname} = useLocation();
   const {rootClassName, shouldRenderUser, shouldRenderFooter} = getLayoutState(pathname as AppRoute);
+  const authorizationStatus = useAppSelector(SelectAuthorizationStatus);
 
   return (
     <div className={`page ${rootClassName}`}>
@@ -41,15 +44,25 @@ function Layout(): JSX.Element {
                     <Link to={AppRoute.Favorites} className="header__nav-link header__nav-link--profile">
                       <div className="header__avatar-wrapper user__avatar-wrapper">
                       </div>
-                      <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                      <span className="header__favorite-count">3</span>
+                      {
+                        authorizationStatus === AuthorizationStatus.Auth ? (
+                          <>
+                            <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                            <span className="header__favorite-count">3</span>
+                          </>
+                        ) : <span className='header_login'>Sign in</span>
+                      }
                     </Link>
                   </li>
-                  <li className="header__nav-item">
-                    <Link to={AppRoute.Login} className="header__nav-link">
-                      <span className="header__signout">Sign out</span>
-                    </Link>
-                  </li>
+                  {
+                    authorizationStatus === AuthorizationStatus.Auth ? (
+                      <li className="header__nav-item">
+                        <Link to={AppRoute.Login} className="header__nav-link">
+                          <span className="header__signout">Sign out</span>
+                        </Link>
+                      </li>
+                    ) : null
+                  }
                 </ul>
               </nav>
             }
