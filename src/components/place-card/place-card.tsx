@@ -1,16 +1,15 @@
 import { Link } from 'react-router-dom';
 import { Offer } from '../../types/offer';
-import { PropsWithChildren } from 'react';
-import { MAIN_PLACES_LIST_CLASSES } from '../../const';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { setActiveOfferId } from '../../store/action';
 
 type PlaceCardProps = {
   offer: Offer;
   className: string;
+  isMainPage?: boolean;
 };
 
-function PlaceCard({offer, className}: PlaceCardProps): JSX.Element {
+function PlaceCard({offer, className, isMainPage}: PlaceCardProps): JSX.Element {
   const dispatch = useAppDispatch();
   const route = `/offer/${offer.id}`;
 
@@ -22,22 +21,12 @@ function PlaceCard({offer, className}: PlaceCardProps): JSX.Element {
     dispatch(setActiveOfferId(''));
   };
 
-  function Wrapper({children}: PropsWithChildren) {
-    return (className === MAIN_PLACES_LIST_CLASSES.itemClass)
-      ?
-      <article
-        className={`${className} place-card`}
-        onMouseOver={activeCardHandler}
-        onMouseOut={noActiveCardHandler}
-      >
-        {children}
-      </article>
-      :
-      (<article className={`${className} place-card`}>{children}</article>);
-  }
-
   return (
-    <Wrapper>
+    <article
+      className={`${className} place-card`}
+      onMouseOver={isMainPage ? activeCardHandler : undefined}
+      onMouseOut={ isMainPage ? noActiveCardHandler : undefined}
+    >
       {
         offer.isPremium &&
         <div className="place-card__mark">
@@ -73,7 +62,7 @@ function PlaceCard({offer, className}: PlaceCardProps): JSX.Element {
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>
-    </Wrapper>
+    </article>
   );
 }
 

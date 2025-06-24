@@ -1,6 +1,6 @@
 import PlaceCard from '../place-card/place-card';
 import { Offers } from '../../types/offer';
-import { MAIN_PLACES_LIST_CLASSES, RequestStatus } from '../../const';
+import { RequestStatus } from '../../const';
 import { SortingOption } from '../../types/sorting-option';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { SelectRequestStatus } from '../../store/selectors/offers';
@@ -13,9 +13,10 @@ type PlacesListProps = {
     listClass: string;
     itemClass: string;
   };
+  isMainPage?: boolean;
 }
 
-function PlacesList({offers, sortingOption, classNames}: PlacesListProps): JSX.Element {
+function PlacesList({offers, sortingOption, classNames, isMainPage}: PlacesListProps): JSX.Element {
   const status = useAppSelector(SelectRequestStatus);
 
   if (status === RequestStatus.Loading) {
@@ -45,10 +46,10 @@ function PlacesList({offers, sortingOption, classNames}: PlacesListProps): JSX.E
   const sortedOffers = getSortedOffers();
 
   return (
-    <div className={`${listClass} places__list ${(listClass === MAIN_PLACES_LIST_CLASSES.listClass) ? 'tabs__content' : ''}`}>
+    <div className={`${listClass} places__list ${(isMainPage) ? 'tabs__content' : ''}`}>
       {sortedOffers.map((e) => {
         const keyValue = e.id;
-        return (<PlaceCard key={keyValue} className={itemClass} offer={e} />);
+        return (<PlaceCard key={keyValue} className={itemClass} isMainPage={isMainPage} offer={e} />);
       })}
     </div>
   );
