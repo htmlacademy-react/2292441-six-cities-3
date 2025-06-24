@@ -16,7 +16,7 @@ function App(): JSX.Element {
 
   useEffect(() => {
     dispatch(fetchOffers());
-  });
+  }, [dispatch]);
 
   return (
     <BrowserRouter>
