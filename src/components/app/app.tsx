@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import PrivateRoute from '../private-route';
 import Layout from '../layout';
@@ -10,6 +10,8 @@ import NotFoundScreen from '../../pages/not-found-screen';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { useEffect } from 'react';
 import { fetchOffers } from '../../store/api-action';
+import browserHistory from '../../browser-history';
+import HistoryRouter from '../history-route';
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -19,7 +21,7 @@ function App(): JSX.Element {
   }, [dispatch]);
 
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route
           path={AppRoute.Root}
@@ -51,7 +53,7 @@ function App(): JSX.Element {
           />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 
