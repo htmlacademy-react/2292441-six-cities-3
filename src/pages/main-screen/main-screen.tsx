@@ -28,6 +28,7 @@ function MainScreen(): JSX.Element {
               classNames={MAIN_PLACES_LIST_CLASSES}
               offers={offers}
               sortingOption={selectedSort}
+              isMainPage
             />
           </section>
           <div className="cities__right-section">

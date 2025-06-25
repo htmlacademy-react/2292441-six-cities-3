@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { setCity, fillPlacesList, setCurrentOffer, setActiveOfferId } from './action';
+import { setCity, fillPlacesList, setCurrentOffer, setActiveOfferId, setAuthorizationStatus } from './action';
 import { AuthorizationStatus, CITIES, RequestStatus } from '../const';
 import { City } from '../types/city';
 import { Offer, Offers } from '../types/offer';
@@ -27,6 +27,9 @@ const initialState: InitialState = {
 
 export const reducer = createReducer(initialState, (builder) => {
   builder.
+    addCase(setAuthorizationStatus, (state, action) => {
+      state.authorizationStatus = action.payload;
+    }).
     addCase(fetchOffers.pending, (state) => {
       state.requestStatus = RequestStatus.Loading;
     }).

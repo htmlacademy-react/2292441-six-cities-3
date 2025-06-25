@@ -1,5 +1,5 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { Routes, Route } from 'react-router-dom';
+import { AppRoute } from '../../const';
 import PrivateRoute from '../private-route';
 import Layout from '../layout';
 import MainScreen from '../../pages/main-screen';
@@ -10,16 +10,18 @@ import NotFoundScreen from '../../pages/not-found-screen';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { useEffect } from 'react';
 import { fetchOffers } from '../../store/api-action';
+import browserHistory from '../../browser-history';
+import HistoryRouter from '../history-route';
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(fetchOffers());
-  });
+  }, [dispatch]);
 
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route
           path={AppRoute.Root}
@@ -36,9 +38,7 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute
-                authorizationStatus={AuthorizationStatus.Auth}
-              >
+              <PrivateRoute>
                 <FavoritesScreen offers={[]} />
               </PrivateRoute>
             }
@@ -53,7 +53,7 @@ function App(): JSX.Element {
           />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 
