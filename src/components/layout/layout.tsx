@@ -3,6 +3,9 @@ import { AppRoute, AuthorizationStatus } from '../../const';
 import { Outlet, useLocation } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { SelectAuthorizationStatus } from '../../store/selectors/offers';
+import { MouseEvent } from 'react';
+import { useAppDispatch } from '../../hooks/use-app-dispatch';
+import { logout } from '../../store/api-action';
 
 const getLayoutState = (pathName: AppRoute) => {
   let rootClassName = '';
@@ -25,6 +28,14 @@ function Layout(): JSX.Element {
   const {pathname} = useLocation();
   const {rootClassName, shouldRenderUser, shouldRenderFooter} = getLayoutState(pathname as AppRoute);
   const authorizationStatus = useAppSelector(SelectAuthorizationStatus);
+
+  const dispatch = useAppDispatch();
+
+  const logoutHandler = (evt: MouseEvent<HTMLAnchorElement>) => {
+    evt.preventDefault();
+
+    dispatch(logout());
+  };
 
   return (
     <div className={`page ${rootClassName}`}>
@@ -57,7 +68,11 @@ function Layout(): JSX.Element {
                   {
                     authorizationStatus === AuthorizationStatus.Auth ? (
                       <li className="header__nav-item">
-                        <Link to={AppRoute.Login} className="header__nav-link">
+                        <Link
+                          to={AppRoute.Login}
+                          className="header__nav-link"
+                          onClick={logoutHandler}
+                        >
                           <span className="header__signout">Sign out</span>
                         </Link>
                       </li>

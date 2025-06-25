@@ -6,7 +6,7 @@ import { APIRoute, AppRoute, AuthorizationStatus, DEFAULT_CITY } from '../const'
 import { fillPlacesList, redirectToRoute, setAuthorizationStatus } from './action';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
-import { saveToken } from '../services/token';
+import { dropToken, saveToken } from '../services/token';
 
 export const fetchOffers = createAsyncThunk<Offers, undefined, {
   dispatch: AppDispatch;
@@ -48,5 +48,18 @@ export const login = createAsyncThunk<void, AuthData, {
     saveToken(token);
     dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
     dispatch(redirectToRoute(AppRoute.Root));
+  }
+);
+
+export const logout = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'user/logout',
+  async (_arg, {dispatch, extra: api}) => {
+    await api.delete(APIRoute.Logout);
+    dropToken();
+    dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
   }
 );
