@@ -4,7 +4,7 @@ import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { fillPlacesList, setCity } from '../../store/action';
 import { City } from '../../types/city';
-import { SelectCity } from '../../store/selectors/offers';
+import { SelectCity } from '../../store/selectors/city';
 
 function CityTabs(): JSX.Element {
   const currentCity = useAppSelector(SelectCity);

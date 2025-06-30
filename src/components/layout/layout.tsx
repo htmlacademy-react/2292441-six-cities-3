@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { Outlet, useLocation } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/use-app-selector';
-import { SelectAuthorizationStatus } from '../../store/selectors/offers';
+import { SelectAuthorizationStatus } from '../../store/selectors/authorization';
 import { MouseEvent } from 'react';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { logout } from '../../store/api-action';

@@ -5,7 +5,8 @@ import { useState } from 'react';
 import CityTabs from '../../components/city-tabs';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import PlacesSorting from '../../components/places-sorting';
-import { SelectCity, SelectCurrentOffers } from '../../store/selectors/offers';
+import { SelectCity } from '../../store/selectors/city';
+import { SelectCurrentOffers } from '../../store/selectors/offers';
 import { SortingOption } from '../../types/sorting-option';
 
 function MainScreen(): JSX.Element {

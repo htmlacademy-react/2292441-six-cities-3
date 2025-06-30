@@ -5,7 +5,8 @@ import Map from '../../components/map';
 import { NEAR_PLACES_LIST_CLASSES } from '../../const';
 import PlacesList from '../../components/places-list';
 import { useAppSelector } from '../../hooks/use-app-selector';
-import { SelectCurrentOffer, SelectCity } from '../../store/selectors/offers';
+import { SelectCity } from '../../store/selectors/city';
+import { SelectCurrentOffer } from '../../store/selectors/offers';
 
 function OfferScreen(): JSX.Element {
   const city = useAppSelector(SelectCity);

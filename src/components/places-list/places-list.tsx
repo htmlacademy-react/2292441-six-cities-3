@@ -3,7 +3,7 @@ import { Offers } from '../../types/offer';
 import { RequestStatus } from '../../const';
 import { SortingOption } from '../../types/sorting-option';
 import { useAppSelector } from '../../hooks/use-app-selector';
-import { SelectRequestStatus } from '../../store/selectors/offers';
+import { SelectRequestStatus } from '../../store/selectors/request';
 import Spinner from '../spinner';
 
 type PlacesListProps = {
