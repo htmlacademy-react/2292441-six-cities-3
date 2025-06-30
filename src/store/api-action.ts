@@ -8,7 +8,8 @@ import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
 import { dropToken, saveToken } from '../services/token';
 import { FullOffer } from '../types/full-offer';
-import { Reviews } from '../types/review';
+import { Review, Reviews } from '../types/review';
+import { PostCommentProps } from '../types/post-comment-props';
 
 export const fetchOffers = createAsyncThunk<Offers, undefined, {
   dispatch: AppDispatch;
@@ -98,6 +99,18 @@ export const fetchNearbyOffers = createAsyncThunk<Offers, string, {
   'offer/fetchNearbyOffers',
   async (id, {extra: api}) => {
     const {data} = await api.get<Offers>(`${APIRoute.Offers}/${id}/nearby`);
+    return data;
+  }
+);
+
+export const postComment = createAsyncThunk<Review, PostCommentProps, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'offer/postComment',
+  async ({body, offerId}, {extra: api}) => {
+    const {data} = await api.post<Review>(`${APIRoute.Comments}/${offerId}`, body);
     return data;
   }
 );
