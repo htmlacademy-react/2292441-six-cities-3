@@ -3,8 +3,9 @@ import { setCity, fillPlacesList, setActiveOfferId, setAuthorizationStatus } fro
 import { AuthorizationStatus, CITIES, RequestStatus } from '../const';
 import { City } from '../types/city';
 import { Offers } from '../types/offer';
-import { fetchOffers, fetchOffer } from './api-action';
+import { fetchOffers, fetchOffer, fetchComments, fetchNearbyOffers } from './api-action';
 import { FullOffer } from '../types/full-offer';
+import { Reviews } from '../types/review';
 
 type InitialState = {
   city: City;
@@ -14,6 +15,8 @@ type InitialState = {
   currentOffer: FullOffer;
   authorizationStatus: AuthorizationStatus;
   requestStatus: RequestStatus;
+  comments: Reviews;
+  nearby: Offers;
 };
 
 const initialState: InitialState = {
@@ -24,6 +27,8 @@ const initialState: InitialState = {
   currentOffer: {} as FullOffer,
   authorizationStatus: AuthorizationStatus.Unknown,
   requestStatus: RequestStatus.Idle,
+  comments: [],
+  nearby: [],
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -35,8 +40,8 @@ export const reducer = createReducer(initialState, (builder) => {
       state.requestStatus = RequestStatus.Loading;
     }).
     addCase(fetchOffers.fulfilled, (state, action) => {
-      state.requestStatus = RequestStatus.Success;
       state.offers = action.payload;
+      state.requestStatus = RequestStatus.Success;
     }).
     addCase(fetchOffers.rejected, (state) => {
       state.requestStatus = RequestStatus.Failed;
@@ -54,10 +59,30 @@ export const reducer = createReducer(initialState, (builder) => {
       state.requestStatus = RequestStatus.Loading;
     }).
     addCase(fetchOffer.fulfilled, (state, action) => {
-      state.requestStatus = RequestStatus.Success;
       state.currentOffer = action.payload;
+      state.requestStatus = RequestStatus.Success;
     }).
     addCase(fetchOffer.rejected, (state) => {
+      state.requestStatus = RequestStatus.Failed;
+    }).
+    addCase(fetchComments.pending, (state) => {
+      state.requestStatus = RequestStatus.Loading;
+    }).
+    addCase(fetchComments.fulfilled, (state, action) => {
+      state.comments = action.payload;
+      state.requestStatus = RequestStatus.Success;
+    }).
+    addCase(fetchComments.rejected, (state) => {
+      state.requestStatus = RequestStatus.Failed;
+    }).
+    addCase(fetchNearbyOffers.pending, (state) => {
+      state.requestStatus = RequestStatus.Loading;
+    }).
+    addCase(fetchNearbyOffers.fulfilled, (state, action) => {
+      state.nearby = action.payload;
+      state.requestStatus = RequestStatus.Success;
+    }).
+    addCase(fetchNearbyOffers.rejected, (state) => {
       state.requestStatus = RequestStatus.Failed;
     });
 });
