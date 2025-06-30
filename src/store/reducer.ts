@@ -1,16 +1,17 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { setCity, fillPlacesList, setCurrentOffer, setActiveOfferId, setAuthorizationStatus } from './action';
+import { setCity, fillPlacesList, setActiveOfferId, setAuthorizationStatus } from './action';
 import { AuthorizationStatus, CITIES, RequestStatus } from '../const';
 import { City } from '../types/city';
-import { Offer, Offers } from '../types/offer';
-import { fetchOffers } from './api-action';
+import { Offers } from '../types/offer';
+import { fetchOffers, fetchOffer } from './api-action';
+import { FullOffer } from '../types/full-offer';
 
 type InitialState = {
   city: City;
   offers: Offers;
   activeOfferId: string;
   currentOffers: Offers;
-  currentOffer: Offer;
+  currentOffer: FullOffer;
   authorizationStatus: AuthorizationStatus;
   requestStatus: RequestStatus;
 };
@@ -20,7 +21,7 @@ const initialState: InitialState = {
   offers: [],
   activeOfferId: '',
   currentOffers: [],
-  currentOffer: {} as Offer,
+  currentOffer: {} as FullOffer,
   authorizationStatus: AuthorizationStatus.Unknown,
   requestStatus: RequestStatus.Idle,
 };
@@ -49,7 +50,14 @@ export const reducer = createReducer(initialState, (builder) => {
     addCase(setActiveOfferId, (state, action) => {
       state.activeOfferId = action.payload;
     }).
-    addCase(setCurrentOffer, (state, action) => {
+    addCase(fetchOffer.pending, (state) => {
+      state.requestStatus = RequestStatus.Loading;
+    }).
+    addCase(fetchOffer.fulfilled, (state, action) => {
+      state.requestStatus = RequestStatus.Success;
       state.currentOffer = action.payload;
+    }).
+    addCase(fetchOffer.rejected, (state) => {
+      state.requestStatus = RequestStatus.Failed;
     });
 });

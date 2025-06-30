@@ -7,6 +7,7 @@ import { fillPlacesList, redirectToRoute, setAuthorizationStatus } from './actio
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
 import { dropToken, saveToken } from '../services/token';
+import { FullOffer } from '../types/full-offer';
 
 export const fetchOffers = createAsyncThunk<Offers, undefined, {
   dispatch: AppDispatch;
@@ -61,5 +62,17 @@ export const logout = createAsyncThunk<void, undefined, {
     await api.delete(APIRoute.Logout);
     dropToken();
     dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
+  }
+);
+
+export const fetchOffer = createAsyncThunk<FullOffer, string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchOffer',
+  async (id, {extra: api}) => {
+    const {data} = await api.get<FullOffer>(`${APIRoute.Offers}/${id}`);
+    return data;
   }
 );
