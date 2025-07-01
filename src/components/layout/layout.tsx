@@ -6,6 +6,7 @@ import { SelectAuthorizationStatus } from '../../store/selectors/authorization';
 import { MouseEvent } from 'react';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { logout } from '../../store/api-action';
+import { SelectUser } from '../../store/selectors/user';
 
 const getLayoutState = (pathName: AppRoute) => {
   let rootClassName = '';
@@ -28,6 +29,7 @@ function Layout(): JSX.Element {
   const {pathname} = useLocation();
   const {rootClassName, shouldRenderUser, shouldRenderFooter} = getLayoutState(pathname as AppRoute);
   const authorizationStatus = useAppSelector(SelectAuthorizationStatus);
+  const user = useAppSelector(SelectUser);
 
   const dispatch = useAppDispatch();
 
@@ -58,7 +60,7 @@ function Layout(): JSX.Element {
                       {
                         authorizationStatus === AuthorizationStatus.Auth ? (
                           <>
-                            <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                            <span className="header__user-name user__name">{user?.email}</span>
                             <span className="header__favorite-count">3</span>
                           </>
                         ) : <span className='header_login'>Sign in</span>

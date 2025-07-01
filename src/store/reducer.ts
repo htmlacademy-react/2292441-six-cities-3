@@ -3,11 +3,13 @@ import { setCity, fillPlacesList, setActiveOfferId, setAuthorizationStatus } fro
 import { AuthorizationStatus, CITIES, RequestStatus } from '../const';
 import { City } from '../types/city';
 import { Offers } from '../types/offer';
-import { fetchOffers, fetchOffer, fetchNearbyOffers, fetchReviews, postReview } from './api-action';
+import { fetchOffers, fetchOffer, fetchNearbyOffers, fetchReviews, postReview, login } from './api-action';
 import { FullOffer } from '../types/full-offer';
 import { Reviews } from '../types/review';
+import { UserData } from '../types/user-data';
 
 type InitialState = {
+  user: UserData | null;
   city: City;
   offers: Offers;
   activeOfferId: string;
@@ -20,6 +22,7 @@ type InitialState = {
 };
 
 const initialState: InitialState = {
+  user: null,
   city: CITIES[0],
   offers: [],
   activeOfferId: '',
@@ -87,5 +90,8 @@ export const reducer = createReducer(initialState, (builder) => {
     }).
     addCase(postReview.fulfilled, (state, action) => {
       state.reviews.unshift(action.payload);
+    }).
+    addCase(login.fulfilled, (state, action) => {
+      state.user = action.payload;
     });
 });
