@@ -5,5 +5,5 @@ export type PostCommentProps = {
     comment: string;
     rating: number;
   };
-  offerId: FullOffer['id'];
+  offerId: FullOffer['id'] | undefined;
 };

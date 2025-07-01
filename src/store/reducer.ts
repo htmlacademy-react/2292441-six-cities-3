@@ -3,7 +3,7 @@ import { setCity, fillPlacesList, setActiveOfferId, setAuthorizationStatus } fro
 import { AuthorizationStatus, CITIES, RequestStatus } from '../const';
 import { City } from '../types/city';
 import { Offers } from '../types/offer';
-import { fetchOffers, fetchOffer, fetchNearbyOffers, fetchReviews } from './api-action';
+import { fetchOffers, fetchOffer, fetchNearbyOffers, fetchReviews, postReview } from './api-action';
 import { FullOffer } from '../types/full-offer';
 import { Reviews } from '../types/review';
 
@@ -84,5 +84,8 @@ export const reducer = createReducer(initialState, (builder) => {
     }).
     addCase(fetchNearbyOffers.rejected, (state) => {
       state.requestStatus = RequestStatus.Failed;
+    }).
+    addCase(postReview.fulfilled, (state, action) => {
+      state.reviews.push(action.payload);
     });
 });
