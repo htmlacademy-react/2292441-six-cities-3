@@ -86,6 +86,6 @@ export const reducer = createReducer(initialState, (builder) => {
       state.requestStatus = RequestStatus.Failed;
     }).
     addCase(postReview.fulfilled, (state, action) => {
-      state.reviews.push(action.payload);
+      state.reviews.unshift(action.payload);
     });
 });
