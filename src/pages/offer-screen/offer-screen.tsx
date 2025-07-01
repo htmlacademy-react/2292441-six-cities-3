@@ -1,7 +1,7 @@
 import ReviewForm from '../../components/review-form';
 import ReviewsList from '../../components/reviews-list';
 import Map from '../../components/map';
-import { NEAR_PLACES_LIST_CLASSES, RequestStatus } from '../../const';
+import { AuthorizationStatus, NEAR_PLACES_LIST_CLASSES, RequestStatus } from '../../const';
 import PlacesList from '../../components/places-list';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { SelectCity } from '../../store/selectors/city';
@@ -15,6 +15,7 @@ import Spinner from '../../components/spinner';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { setActiveOfferId } from '../../store/action';
 import NotFoundScreen from '../not-found-screen';
+import { SelectAuthorizationStatus } from '../../store/selectors/authorization';
 
 function OfferScreen(): JSX.Element {
   const city = useAppSelector(SelectCity);
@@ -23,6 +24,7 @@ function OfferScreen(): JSX.Element {
   const reviews = useAppSelector(SelectReviews);
   const nearbyOffers = useAppSelector(SelectNearbyOffers);
   const status = useAppSelector(SelectRequestStatus);
+  const authorizationStatus = useAppSelector(SelectAuthorizationStatus);
 
   const dispatch = useAppDispatch();
 
@@ -138,7 +140,7 @@ function OfferScreen(): JSX.Element {
             <section className="offer__reviews reviews">
               <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
               <ReviewsList reviews={reviews} />
-              <ReviewForm />
+              {authorizationStatus === AuthorizationStatus.Auth ? <ReviewForm /> : null}
             </section>
           </div>
         </div>
