@@ -79,7 +79,7 @@ export const fetchOffer = createAsyncThunk<FullOffer, string, {
   }
 );
 
-export const fetchComments = createAsyncThunk<Reviews, string, {
+export const fetchReviews = createAsyncThunk<Reviews, string, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
@@ -103,7 +103,7 @@ export const fetchNearbyOffers = createAsyncThunk<Offers, string, {
   }
 );
 
-export const postComment = createAsyncThunk<Review, PostCommentProps, {
+export const postReview = createAsyncThunk<Review, PostCommentProps, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
