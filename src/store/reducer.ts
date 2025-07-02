@@ -1,28 +1,37 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { setCity, fillPlacesList, setCurrentOffer, setActiveOfferId, setAuthorizationStatus } from './action';
+import { setCity, fillPlacesList, setActiveOfferId, setAuthorizationStatus } from './action';
 import { AuthorizationStatus, CITIES, RequestStatus } from '../const';
 import { City } from '../types/city';
-import { Offer, Offers } from '../types/offer';
-import { fetchOffers } from './api-action';
+import { Offers } from '../types/offer';
+import { fetchOffers, fetchOffer, fetchNearbyOffers, fetchReviews, postReview, login } from './api-action';
+import { FullOffer } from '../types/full-offer';
+import { Reviews } from '../types/review';
+import { UserData } from '../types/user-data';
 
 type InitialState = {
+  user: UserData | null;
   city: City;
   offers: Offers;
   activeOfferId: string;
   currentOffers: Offers;
-  currentOffer: Offer;
+  currentOffer: FullOffer | null;
   authorizationStatus: AuthorizationStatus;
   requestStatus: RequestStatus;
+  reviews: Reviews;
+  nearbyOffers: Offers;
 };
 
 const initialState: InitialState = {
+  user: null,
   city: CITIES[0],
   offers: [],
   activeOfferId: '',
   currentOffers: [],
-  currentOffer: {} as Offer,
+  currentOffer: null,
   authorizationStatus: AuthorizationStatus.Unknown,
   requestStatus: RequestStatus.Idle,
+  reviews: [],
+  nearbyOffers: [],
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -34,8 +43,8 @@ export const reducer = createReducer(initialState, (builder) => {
       state.requestStatus = RequestStatus.Loading;
     }).
     addCase(fetchOffers.fulfilled, (state, action) => {
-      state.requestStatus = RequestStatus.Success;
       state.offers = action.payload;
+      state.requestStatus = RequestStatus.Success;
     }).
     addCase(fetchOffers.rejected, (state) => {
       state.requestStatus = RequestStatus.Failed;
@@ -49,7 +58,40 @@ export const reducer = createReducer(initialState, (builder) => {
     addCase(setActiveOfferId, (state, action) => {
       state.activeOfferId = action.payload;
     }).
-    addCase(setCurrentOffer, (state, action) => {
+    addCase(fetchOffer.pending, (state) => {
+      state.requestStatus = RequestStatus.Loading;
+    }).
+    addCase(fetchOffer.fulfilled, (state, action) => {
       state.currentOffer = action.payload;
+      state.requestStatus = RequestStatus.Success;
+    }).
+    addCase(fetchOffer.rejected, (state) => {
+      state.requestStatus = RequestStatus.Failed;
+    }).
+    addCase(fetchReviews.pending, (state) => {
+      state.requestStatus = RequestStatus.Loading;
+    }).
+    addCase(fetchReviews.fulfilled, (state, action) => {
+      state.reviews = action.payload;
+      state.requestStatus = RequestStatus.Success;
+    }).
+    addCase(fetchReviews.rejected, (state) => {
+      state.requestStatus = RequestStatus.Failed;
+    }).
+    addCase(fetchNearbyOffers.pending, (state) => {
+      state.requestStatus = RequestStatus.Loading;
+    }).
+    addCase(fetchNearbyOffers.fulfilled, (state, action) => {
+      state.nearbyOffers = action.payload;
+      state.requestStatus = RequestStatus.Success;
+    }).
+    addCase(fetchNearbyOffers.rejected, (state) => {
+      state.requestStatus = RequestStatus.Failed;
+    }).
+    addCase(postReview.fulfilled, (state, action) => {
+      state.reviews.unshift(action.payload);
+    }).
+    addCase(login.fulfilled, (state, action) => {
+      state.user = action.payload;
     });
 });

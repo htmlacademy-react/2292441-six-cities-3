@@ -1,17 +1,21 @@
 import { City } from './city';
 import { Location } from './location';
+import { User } from './user';
 
-export type Offer = {
+export type FullOffer = {
   id: string;
   city: City;
-  previewImage: string;
+  images: string[];
   title: string;
   rating: number;
   type: string;
+  bedrooms: number;
+  maxAdults: number;
   price: number;
   isPremium: boolean;
   isFavorite: boolean;
+  goods: string[] | undefined;
+  host: User;
+  description: string;
   location: Location;
 };
-
-export type Offers = Offer[];

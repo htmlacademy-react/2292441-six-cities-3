@@ -1,23 +1,48 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
+import { useAppDispatch } from '../../hooks/use-app-dispatch';
+import { postReview } from '../../store/api-action';
+import { useAppSelector } from '../../hooks/use-app-selector';
+import { SelectCurrentOffer } from '../../store/selectors/offers';
 
 function ReviewForm(): JSX.Element {
+  const offer = useAppSelector(SelectCurrentOffer);
+
   const [review, setReview] = useState(
     {
-      stars: '',
+      stars: 0,
       comment: ''
     }
   );
 
+  const dispatch = useAppDispatch();
+
   const handleRadioChange = ({target}: ChangeEvent<HTMLInputElement>) => {
-    setReview({...review, stars: target.value});
+    setReview({...review, stars: Number(target.value)});
   };
 
   const handleFieldChange = ({target}: ChangeEvent<HTMLTextAreaElement>) => {
     setReview({...review, comment: target.value});
   };
 
+  const submitHandler = (evt: FormEvent) => {
+    evt.preventDefault();
+
+    dispatch(postReview({
+      body: {
+        comment: review.comment,
+        rating: review.stars,
+      },
+      offerId: offer?.id,
+    }));
+  };
+
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form
+      className="reviews__form form"
+      action="#"
+      method="post"
+      onSubmit={submitHandler}
+    >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         <input className="form__rating-input visually-hidden" name="rating" value="5" id="5-stars" type="radio" onChange={handleRadioChange}/>
@@ -56,7 +81,7 @@ function ReviewForm(): JSX.Element {
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" {...(review.comment.length < 50 ? {disabled: true} : {})}>Submit</button>
       </div>
     </form>
   );

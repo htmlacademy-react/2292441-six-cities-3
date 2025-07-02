@@ -1,4 +1,4 @@
-import { Reviews } from '../../types/offer';
+import { Reviews } from '../../types/review';
 import ReviewItem from '../review/review-item';
 
 type ReviewsListProps = {

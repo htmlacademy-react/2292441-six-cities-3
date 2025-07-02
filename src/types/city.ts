@@ -1,4 +1,4 @@
-import { Location } from './offer';
+import { Location } from './location';
 
 export type City = {
   name: CityName;

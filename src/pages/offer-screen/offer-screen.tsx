@@ -1,17 +1,51 @@
-import NotFoundScreen from '../not-found-screen/not-found-screen';
 import ReviewForm from '../../components/review-form';
 import ReviewsList from '../../components/reviews-list';
 import Map from '../../components/map';
-import { NEAR_PLACES_LIST_CLASSES } from '../../const';
+import { AuthorizationStatus, NEAR_PLACES_LIST_CLASSES, RequestStatus } from '../../const';
 import PlacesList from '../../components/places-list';
 import { useAppSelector } from '../../hooks/use-app-selector';
-import { SelectCurrentOffer, SelectCity } from '../../store/selectors/offers';
+import { SelectCity } from '../../store/selectors/city';
+import { SelectCurrentOffer, SelectNearbyOffers, SelectOffers } from '../../store/selectors/offers';
+import { SelectReviews } from '../../store/selectors/reviews';
+import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { fetchNearbyOffers, fetchOffer, fetchReviews } from '../../store/api-action';
+import { SelectRequestStatus } from '../../store/selectors/request';
+import Spinner from '../../components/spinner';
+import { useAppDispatch } from '../../hooks/use-app-dispatch';
+import { setActiveOfferId } from '../../store/action';
+import NotFoundScreen from '../not-found-screen';
+import { SelectAuthorizationStatus } from '../../store/selectors/authorization';
 
 function OfferScreen(): JSX.Element {
   const city = useAppSelector(SelectCity);
+  const offers = useAppSelector(SelectOffers);
   const offer = useAppSelector(SelectCurrentOffer);
+  const reviews = useAppSelector(SelectReviews);
+  const nearbyOffers = useAppSelector(SelectNearbyOffers);
+  const status = useAppSelector(SelectRequestStatus);
+  const authorizationStatus = useAppSelector(SelectAuthorizationStatus);
 
-  if (!offer) {
+  const dispatch = useAppDispatch();
+
+  const {id} = useParams();
+
+  useEffect(() => {
+    if (id) {
+      Promise.all([
+        dispatch(fetchOffer(id)),
+        dispatch(fetchReviews(id)),
+        dispatch(fetchNearbyOffers(id)),
+        dispatch(setActiveOfferId(id))
+      ]);
+    }
+  }, [dispatch, id]);
+
+  if (status === RequestStatus.Loading || status === RequestStatus.Idle) {
+    return <Spinner />;
+  }
+
+  if (status === RequestStatus.Failed || !offer) {
     return <NotFoundScreen />;
   }
 
@@ -104,16 +138,16 @@ function OfferScreen(): JSX.Element {
               </div>
             </div>
             <section className="offer__reviews reviews">
-              <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{0}</span></h2>
-              <ReviewsList reviews={[]} />
-              <ReviewForm />
+              <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
+              <ReviewsList reviews={reviews} />
+              {authorizationStatus === AuthorizationStatus.Auth ? <ReviewForm /> : null}
             </section>
           </div>
         </div>
         <Map
           className='offer__map'
           city={city}
-          offers={[]}
+          offers={offers}
         />
       </section>
       <div className="container">
@@ -121,7 +155,7 @@ function OfferScreen(): JSX.Element {
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
           <PlacesList
             classNames={NEAR_PLACES_LIST_CLASSES}
-            offers={[]}
+            offers={nearbyOffers}
           />
         </section>
       </div>
