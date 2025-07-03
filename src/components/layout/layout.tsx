@@ -1,43 +1,10 @@
 import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import { Outlet, useLocation } from 'react-router-dom';
-import { useAppSelector } from '../../hooks/use-app-selector';
-import { SelectAuthorizationStatus } from '../../store/selectors/authorization';
-import { MouseEvent } from 'react';
-import { useAppDispatch } from '../../hooks/use-app-dispatch';
-import { logout } from '../../store/api-action';
-import { SelectUser } from '../../store/selectors/user';
-
-const getLayoutState = (pathName: AppRoute) => {
-  let rootClassName = '';
-  let shouldRenderUser = true;
-  let shouldRenderFooter = false;
-
-  if (pathName === AppRoute.Root) {
-    rootClassName = 'page--gray page--main';
-  } else if (pathName === AppRoute.Login) {
-    rootClassName = 'page--gray page--login';
-    shouldRenderUser = false;
-  }else if (pathName === AppRoute.Favorites) {
-    shouldRenderFooter = true;
-  }
-
-  return {rootClassName, shouldRenderUser, shouldRenderFooter};
-};
+import { Outlet } from 'react-router-dom';
+import { useLayoutState } from '../../hooks/use-layout-state';
 
 function Layout(): JSX.Element {
-  const {pathname} = useLocation();
-  const {rootClassName, shouldRenderUser, shouldRenderFooter} = getLayoutState(pathname as AppRoute);
-  const authorizationStatus = useAppSelector(SelectAuthorizationStatus);
-  const user = useAppSelector(SelectUser);
-
-  const dispatch = useAppDispatch();
-
-  const logoutHandler = (evt: MouseEvent<HTMLAnchorElement>) => {
-    evt.preventDefault();
-
-    dispatch(logout());
-  };
+  const {user, authorizationStatus, rootClassName, shouldRenderFooter, shouldRenderUser, logoutHandler} = useLayoutState();
 
   return (
     <div className={`page ${rootClassName}`}>
