@@ -2,8 +2,11 @@ import { useState, FormEvent, ChangeEvent } from 'react';
 import { useAppDispatch } from './use-app-dispatch';
 import { postReview } from '../store/api-action';
 import { FullOffer } from '../types/full-offer';
+import { useAppSelector } from './use-app-selector';
+import { SelectCurrentOffer } from '../store/selectors/offers';
 
-export const useUserReview = (offerId: FullOffer['id']) => {
+export const useUserReview = () => {
+  const offer = useAppSelector(SelectCurrentOffer) as FullOffer;
   const dispatch = useAppDispatch();
 
   const [review, setReview] = useState(
@@ -30,7 +33,7 @@ export const useUserReview = (offerId: FullOffer['id']) => {
         comment: review.comment,
         rating: review.stars,
       },
-      offerId: offerId,
+      offerId: offer.id,
     }));
   };
 

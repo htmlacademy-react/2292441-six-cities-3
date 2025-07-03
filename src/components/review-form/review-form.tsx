@@ -1,11 +1,7 @@
-import { useAppSelector } from '../../hooks/use-app-selector';
 import { useUserReview } from '../../hooks/use-user-review.ts';
-import { SelectCurrentOffer } from '../../store/selectors/offers';
-import { FullOffer } from '../../types/full-offer';
 
 function ReviewForm(): JSX.Element {
-  const offer = useAppSelector(SelectCurrentOffer) as FullOffer;
-  const {review, handleRadioChange, handleFieldChange, submitHandler} = useUserReview(offer.id);
+  const {review, handleRadioChange, handleFieldChange, submitHandler} = useUserReview();
 
   return (
     <form
