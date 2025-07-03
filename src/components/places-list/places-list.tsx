@@ -5,6 +5,7 @@ import { SortingOption } from '../../types/sorting-option';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { SelectRequestStatus } from '../../store/selectors/request';
 import Spinner from '../spinner';
+import { useSortedOffers } from '../../hooks/use-sorted-offers';
 
 type PlacesListProps = {
   offers: Offers;
@@ -17,33 +18,15 @@ type PlacesListProps = {
 }
 
 function PlacesList({offers, sortingOption, classNames, isMainPage}: PlacesListProps): JSX.Element {
+  const {listClass, itemClass} = classNames;
   const status = useAppSelector(SelectRequestStatus);
+  const sortedOffers = useSortedOffers(offers, sortingOption);
 
   if (status === RequestStatus.Loading) {
     return (
       <Spinner />
     );
   }
-
-  const {listClass, itemClass} = classNames;
-
-  const getSortedOffers = () => {
-    if (!sortingOption) {
-      return offers;
-    }
-    switch (sortingOption) {
-      case 'Popular':
-        return offers;
-      case 'Price: high to low':
-        return offers.toSorted((a, b) => b.price - a.price);
-      case 'Price: low to high':
-        return offers.toSorted((a, b) => a.price - b.price);
-      case 'Top rated first':
-        return offers.toSorted((a, b) => b.rating - a.rating);
-    }
-  };
-
-  const sortedOffers = getSortedOffers();
 
   return (
     <div className={`${listClass} places__list ${(isMainPage) ? 'tabs__content' : ''}`}>
