@@ -1,40 +1,11 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
-import { useAppDispatch } from '../../hooks/use-app-dispatch';
-import { postReview } from '../../store/api-action';
 import { useAppSelector } from '../../hooks/use-app-selector';
+import { useUserReview } from '../../hooks/use-user-review.ts';
 import { SelectCurrentOffer } from '../../store/selectors/offers';
+import { FullOffer } from '../../types/full-offer';
 
 function ReviewForm(): JSX.Element {
-  const offer = useAppSelector(SelectCurrentOffer);
-
-  const [review, setReview] = useState(
-    {
-      stars: 0,
-      comment: ''
-    }
-  );
-
-  const dispatch = useAppDispatch();
-
-  const handleRadioChange = ({target}: ChangeEvent<HTMLInputElement>) => {
-    setReview({...review, stars: Number(target.value)});
-  };
-
-  const handleFieldChange = ({target}: ChangeEvent<HTMLTextAreaElement>) => {
-    setReview({...review, comment: target.value});
-  };
-
-  const submitHandler = (evt: FormEvent) => {
-    evt.preventDefault();
-
-    dispatch(postReview({
-      body: {
-        comment: review.comment,
-        rating: review.stars,
-      },
-      offerId: offer?.id,
-    }));
-  };
+  const offer = useAppSelector(SelectCurrentOffer) as FullOffer;
+  const {review, handleRadioChange, handleFieldChange, submitHandler} = useUserReview(offer.id);
 
   return (
     <form
@@ -81,7 +52,7 @@ function ReviewForm(): JSX.Element {
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" {...(review.comment.length < 50 ? {disabled: true} : {})}>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={review.comment.length < 50}>Submit</button>
       </div>
     </form>
   );
