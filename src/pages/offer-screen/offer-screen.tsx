@@ -3,43 +3,12 @@ import ReviewsList from '../../components/reviews-list';
 import Map from '../../components/map';
 import { AuthorizationStatus, NEAR_PLACES_LIST_CLASSES, RequestStatus } from '../../const';
 import PlacesList from '../../components/places-list';
-import { useAppSelector } from '../../hooks/use-app-selector';
-import { SelectCity } from '../../store/selectors/city';
-import { SelectCurrentOffer, SelectNearbyOffers, SelectOffers } from '../../store/selectors/offers';
-import { SelectReviews } from '../../store/selectors/reviews';
-import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
-import { fetchNearbyOffers, fetchOffer, fetchReviews } from '../../store/api-action';
-import { SelectRequestStatus } from '../../store/selectors/request';
 import Spinner from '../../components/spinner';
-import { useAppDispatch } from '../../hooks/use-app-dispatch';
-import { setActiveOfferId } from '../../store/action';
 import NotFoundScreen from '../not-found-screen';
-import { SelectAuthorizationStatus } from '../../store/selectors/authorization';
+import { useFullOffer } from '../../hooks/use-full-offer';
 
 function OfferScreen(): JSX.Element {
-  const city = useAppSelector(SelectCity);
-  const offers = useAppSelector(SelectOffers);
-  const offer = useAppSelector(SelectCurrentOffer);
-  const reviews = useAppSelector(SelectReviews);
-  const nearbyOffers = useAppSelector(SelectNearbyOffers);
-  const status = useAppSelector(SelectRequestStatus);
-  const authorizationStatus = useAppSelector(SelectAuthorizationStatus);
-
-  const dispatch = useAppDispatch();
-
-  const {id} = useParams();
-
-  useEffect(() => {
-    if (id) {
-      Promise.all([
-        dispatch(fetchOffer(id)),
-        dispatch(fetchReviews(id)),
-        dispatch(fetchNearbyOffers(id)),
-        dispatch(setActiveOfferId(id))
-      ]);
-    }
-  }, [dispatch, id]);
+  const {city, offers, offer, reviews, nearbyOffers, status, authorizationStatus} = useFullOffer();
 
   if (status === RequestStatus.Loading || status === RequestStatus.Idle) {
     return <Spinner />;
