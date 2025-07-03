@@ -1,23 +1,7 @@
-import { FormEvent, useRef } from 'react';
-import { useAppDispatch } from '../../hooks/use-app-dispatch';
-import { login } from '../../store/api-action';
+import { useLogin } from '../../hooks/use-login';
 
 function LoginScreen(): JSX.Element {
-  const loginRef = useRef<HTMLInputElement | null>(null);
-  const passwordRef = useRef<HTMLInputElement | null>(null);
-
-  const dispatch = useAppDispatch();
-
-  const submitHandler = (evt: FormEvent<HTMLFormElement>) => {
-    evt.preventDefault();
-
-    if (loginRef.current !== null && passwordRef.current !== null) {
-      dispatch(login({
-        login: loginRef.current.value,
-        password: passwordRef.current.value
-      }));
-    }
-  };
+  const {loginRef, passwordRef, submitHandler} = useLogin();
 
   return (
     <main className="page__main page__main--login">
