@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export function UseBoolean(initialValue = false) {
+export function useBoolean(initialValue = false) {
   const [isOn, setIsOn] = useState(initialValue);
 
   return {
