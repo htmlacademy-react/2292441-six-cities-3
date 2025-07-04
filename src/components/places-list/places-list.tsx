@@ -3,7 +3,7 @@ import { Offers } from '../../types/offer';
 import { MAIN_PLACES_LIST_CLASSES, NEAR_PLACES_LIST_CLASSES, RequestStatus } from '../../const';
 import { SortingOption } from '../../types/sorting-option';
 import { useAppSelector } from '../../hooks/use-app-selector';
-import { SelectRequestStatus } from '../../store/selectors/request';
+import { SelectOffersRequestStatus } from '../../store/slices/offers-data/selectors';
 import Spinner from '../spinner';
 import { useSortedOffers } from '../../hooks/use-sorted-offers';
 
@@ -15,7 +15,7 @@ type PlacesListProps = {
 
 function PlacesList({offers, sortingOption, isMainPage}: PlacesListProps): JSX.Element {
   const {listClass, itemClass} = isMainPage ? MAIN_PLACES_LIST_CLASSES : NEAR_PLACES_LIST_CLASSES;
-  const status = useAppSelector(SelectRequestStatus);
+  const status = useAppSelector(SelectOffersRequestStatus);
   const sortedOffers = useSortedOffers(offers, sortingOption);
 
   if (status === RequestStatus.Loading) {

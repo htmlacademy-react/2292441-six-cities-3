@@ -1,17 +1,17 @@
 import { useAppDispatch } from './use-app-dispatch';
-import { setActiveOfferId } from '../store/action';
 import { Offer } from '../types/offer';
+import { setActiveCard } from '../store/slices/main-process/main-process';
 
 
 export const useActiveCard = (offerId: Offer['id']) => {
   const dispatch = useAppDispatch();
 
   const activeCardHandler = () => {
-    dispatch(setActiveOfferId(offerId));
+    dispatch(setActiveCard(offerId));
   };
 
   const noActiveCardHandler = () => {
-    dispatch(setActiveOfferId(''));
+    dispatch(setActiveCard(''));
   };
 
   return {activeCardHandler, noActiveCardHandler};

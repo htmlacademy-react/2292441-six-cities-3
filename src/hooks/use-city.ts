@@ -1,9 +1,10 @@
 import { City } from '../types/city';
 import { useAppDispatch } from './use-app-dispatch';
-import { setCity, fillPlacesList } from '../store/action';
 import { MouseEvent } from 'react';
 import { useAppSelector } from './use-app-selector';
-import { SelectCity } from '../store/selectors/city';
+import { SelectCity } from '../store/slices/main-process/selectors';
+import { setCurrentOffers } from '../store/slices/offers-data/offers-data';
+import { setCity } from '../store/slices/main-process/main-process';
 
 export const useCity = () => {
   const currentCity = useAppSelector(SelectCity);
@@ -12,7 +13,7 @@ export const useCity = () => {
   const cityChangeHandler = (city: City) => (evt: MouseEvent<HTMLAnchorElement>) => {
     evt.preventDefault();
     dispatch(setCity(city));
-    dispatch(fillPlacesList(city.name));
+    dispatch(setCurrentOffers(city.name));
   };
 
   return {currentCity, cityChangeHandler};

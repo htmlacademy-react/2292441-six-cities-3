@@ -2,21 +2,23 @@ import { useAppDispatch } from './use-app-dispatch';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { fetchOffer, fetchReviews, fetchNearbyOffers } from '../store/api-action';
-import { setActiveOfferId } from '../store/action';
 import { useAppSelector } from './use-app-selector';
-import { SelectCity } from '../store/selectors/city';
-import { SelectOffers, SelectCurrentOffer, SelectNearbyOffers } from '../store/selectors/offers';
-import { SelectRequestStatus } from '../store/selectors/request';
-import { SelectReviews } from '../store/selectors/reviews';
-import { SelectAuthorizationStatus } from '../store/selectors/authorization';
+import { SelectCity } from '../store/slices/main-process/selectors';
+import { SelectCurrentOffers } from '../store/slices/offers-data/selectors';
+import { SelectOffer } from '../store/slices/offer-data/selectors';
+import { SelectReviews } from '../store/slices/reviews-data/selectors';
+import { SelectNearbyOffers } from '../store/slices/nearby-data/selectors';
+import { SelectOfferRequestStatus } from '../store/slices/offer-data/selectors';
+import { SelectAuthorizationStatus } from '../store/slices/auth-process/selectors';
+import { setActiveCard } from '../store/slices/main-process/main-process';
 
 export const useFullOffer = () => {
   const city = useAppSelector(SelectCity);
-  const offers = useAppSelector(SelectOffers);
-  const offer = useAppSelector(SelectCurrentOffer);
+  const offers = useAppSelector(SelectCurrentOffers);
+  const offer = useAppSelector(SelectOffer);
   const reviews = useAppSelector(SelectReviews);
   const nearbyOffers = useAppSelector(SelectNearbyOffers);
-  const status = useAppSelector(SelectRequestStatus);
+  const status = useAppSelector(SelectOfferRequestStatus);
   const authorizationStatus = useAppSelector(SelectAuthorizationStatus);
 
   const dispatch = useAppDispatch();
@@ -28,7 +30,7 @@ export const useFullOffer = () => {
         dispatch(fetchOffer(id)),
         dispatch(fetchReviews(id)),
         dispatch(fetchNearbyOffers(id)),
-        dispatch(setActiveOfferId(id))
+        dispatch(setActiveCard(id))
       ]);
     }
   }, [dispatch, id]);

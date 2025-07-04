@@ -3,10 +3,10 @@ import { useAppDispatch } from './use-app-dispatch';
 import { postReview } from '../store/api-action';
 import { FullOffer } from '../types/full-offer';
 import { useAppSelector } from './use-app-selector';
-import { SelectCurrentOffer } from '../store/selectors/offers';
+import { SelectOffer } from '../store/slices/offer-data/selectors';
 
 export const useUserReview = () => {
-  const offer = useAppSelector(SelectCurrentOffer) as FullOffer;
+  const offer = useAppSelector(SelectOffer) as FullOffer;
   const dispatch = useAppDispatch();
 
   const [review, setReview] = useState(

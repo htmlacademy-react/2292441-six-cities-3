@@ -4,8 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { MouseEvent } from 'react';
 import { logout } from '../store/api-action';
 import { useAppSelector } from './use-app-selector';
-import { SelectUser } from '../store/selectors/user';
-import { SelectAuthorizationStatus } from '../store/selectors/authorization';
+import { SelectUser, SelectAuthorizationStatus } from '../store/slices/auth-process/selectors';
 
 export const useLayoutState = () => {
   const user = useAppSelector(SelectUser);
