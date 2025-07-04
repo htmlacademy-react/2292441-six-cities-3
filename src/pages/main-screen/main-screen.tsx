@@ -1,6 +1,6 @@
 import PlaceList from '../../components/places-list';
 import Map from '../../components/map';
-import {MAIN_PLACES_LIST_CLASSES, SORTING_OPTIONS } from '../../const';
+import { SORTING_OPTIONS } from '../../const';
 import { useState } from 'react';
 import CityTabs from '../../components/city-tabs';
 import { useAppSelector } from '../../hooks/use-app-selector';
@@ -26,7 +26,6 @@ function MainScreen(): JSX.Element {
             <b className="places__found">{offers.length} places to stay in {city.name}</b>
             <PlacesSorting getSortingOption={setSelectedSort}/>
             <PlaceList
-              classNames={MAIN_PLACES_LIST_CLASSES}
               offers={offers}
               sortingOption={selectedSort}
               isMainPage
@@ -35,7 +34,8 @@ function MainScreen(): JSX.Element {
           <div className="cities__right-section">
             <Map
               className='cities__map'
-              city={city} offers={offers}
+              city={city}
+              offers={offers}
             />
           </div>
         </div>

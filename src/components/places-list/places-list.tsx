@@ -1,6 +1,6 @@
 import PlaceCard from '../place-card/place-card';
 import { Offers } from '../../types/offer';
-import { RequestStatus } from '../../const';
+import { MAIN_PLACES_LIST_CLASSES, NEAR_PLACES_LIST_CLASSES, RequestStatus } from '../../const';
 import { SortingOption } from '../../types/sorting-option';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { SelectRequestStatus } from '../../store/selectors/request';
@@ -10,15 +10,11 @@ import { useSortedOffers } from '../../hooks/use-sorted-offers';
 type PlacesListProps = {
   offers: Offers;
   sortingOption?: SortingOption;
-  classNames: {
-    listClass: string;
-    itemClass: string;
-  };
   isMainPage?: boolean;
 }
 
-function PlacesList({offers, sortingOption, classNames, isMainPage}: PlacesListProps): JSX.Element {
-  const {listClass, itemClass} = classNames;
+function PlacesList({offers, sortingOption, isMainPage}: PlacesListProps): JSX.Element {
+  const {listClass, itemClass} = isMainPage ? MAIN_PLACES_LIST_CLASSES : NEAR_PLACES_LIST_CLASSES;
   const status = useAppSelector(SelectRequestStatus);
   const sortedOffers = useSortedOffers(offers, sortingOption);
 

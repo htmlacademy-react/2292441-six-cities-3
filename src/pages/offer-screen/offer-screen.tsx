@@ -1,7 +1,7 @@
 import ReviewForm from '../../components/review-form';
 import ReviewsList from '../../components/reviews-list';
 import Map from '../../components/map';
-import { AuthorizationStatus, NEAR_PLACES_LIST_CLASSES, RequestStatus } from '../../const';
+import { AuthorizationStatus, RequestStatus } from '../../const';
 import PlacesList from '../../components/places-list';
 import Spinner from '../../components/spinner';
 import NotFoundScreen from '../not-found-screen';
@@ -123,7 +123,6 @@ function OfferScreen(): JSX.Element {
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
           <PlacesList
-            classNames={NEAR_PLACES_LIST_CLASSES}
             offers={nearbyOffers}
           />
         </section>
