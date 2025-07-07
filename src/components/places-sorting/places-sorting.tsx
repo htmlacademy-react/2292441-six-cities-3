@@ -1,7 +1,8 @@
+/* eslint-disable react-refresh/only-export-components */
 import { SORTING_OPTIONS } from '../../const';
 import { SortingOption } from '../../types/sorting-option';
 import { useSort } from '../../hooks/use-sort';
-
+import { memo } from 'react';
 
 type PlacesSortingProps = {
   getSortingOption: (option: SortingOption) => void;
@@ -41,4 +42,4 @@ function PlacesSorting({getSortingOption}: PlacesSortingProps): JSX.Element {
   );
 }
 
-export default PlacesSorting;
+export default memo(PlacesSorting);
