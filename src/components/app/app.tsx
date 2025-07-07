@@ -9,7 +9,7 @@ import OfferScreen from '../../pages/offer-screen';
 import NotFoundScreen from '../../pages/not-found-screen';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { useEffect } from 'react';
-import { fetchOffers } from '../../store/api-action';
+import { checkAuth, fetchOffers } from '../../store/api-action';
 import browserHistory from '../../browser-history';
 import HistoryRouter from '../history-route';
 
@@ -17,6 +17,7 @@ function App(): JSX.Element {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    dispatch(checkAuth());
     dispatch(fetchOffers());
   }, [dispatch]);
 
