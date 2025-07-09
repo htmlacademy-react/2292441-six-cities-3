@@ -6,6 +6,7 @@ import { fetchNearbyOffers } from '../../api-action';
 const initialState: NearbyData = {
   nearbyOffers: [],
   requestStatus: RequestStatus.Idle,
+  hasError: false,
 };
 
 export const nearbyData = createSlice({
@@ -23,6 +24,7 @@ export const nearbyData = createSlice({
       }).
       addCase(fetchNearbyOffers.rejected, (state) => {
         state.requestStatus = RequestStatus.Failed;
+        state.hasError = true;
       });
   },
 });

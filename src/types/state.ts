@@ -9,6 +9,7 @@ import { FullOffer } from './full-offer';
 export type AuthProcess = {
   authorizationStatus: AuthorizationStatus;
   user: UserData | null;
+  hasError: boolean;
 };
 
 export type MainProcess = {
@@ -19,22 +20,26 @@ export type MainProcess = {
 export type NearbyData = {
   nearbyOffers: Offers;
   requestStatus: RequestStatus;
+  hasError: boolean;
 };
 
 export type OfferData = {
   offer: FullOffer | null;
   requestStatus: RequestStatus;
+  hasError: boolean;
 };
 
 export type OffersData = {
   offers: Offers;
   currentOffers: Offers;
   requestStatus: RequestStatus;
+  hasError: boolean;
 };
 
 export type ReviewsData = {
   reviews: Reviews;
   requestStatus: RequestStatus;
+  hasError: boolean;
 };
 
 export type State = ReturnType<typeof store.getState>;

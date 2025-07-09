@@ -6,6 +6,7 @@ import { fetchOffers, fetchReviews, postReview } from '../../api-action';
 const initialState: ReviewsData = {
   reviews: [],
   requestStatus: RequestStatus.Idle,
+  hasError: false,
 };
 
 export const reviewsData = createSlice({
@@ -23,6 +24,7 @@ export const reviewsData = createSlice({
       }).
       addCase(fetchOffers.rejected, (state) => {
         state.requestStatus = RequestStatus.Failed;
+        state.hasError = true;
       }).
       addCase(postReview.fulfilled, (state, action) => {
         state.reviews.unshift(action.payload);

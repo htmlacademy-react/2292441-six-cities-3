@@ -6,6 +6,7 @@ import { fetchOffer } from '../../api-action';
 const initialState: OfferData = {
   offer: null,
   requestStatus: RequestStatus.Idle,
+  hasError: false,
 };
 
 export const offerData = createSlice({
@@ -23,6 +24,7 @@ export const offerData = createSlice({
       }).
       addCase(fetchOffer.rejected, (state) => {
         state.requestStatus = RequestStatus.Failed;
+        state.hasError = true;
       });
   },
 });
