@@ -1,4 +1,5 @@
+import { NameSpace } from '../../../const';
 import { State } from '../../../types/state';
 
-export const SelectOffer = (state: State) => state.OFFER.offer;
-export const SelectOfferRequestStatus = (state: State) => state.OFFER.requestStatus;
+export const SelectOffer = (state: State) => state[NameSpace.Offer].offer;
+export const SelectOfferRequestStatus = (state: State) => state[NameSpace.Offer].requestStatus;
