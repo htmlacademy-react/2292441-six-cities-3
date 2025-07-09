@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace, RequestStatus } from '../../../const';
 import { ReviewsData } from '../../../types/state';
-import { fetchOffers, fetchReviews, postReview } from '../../api-action';
+import { fetchReviews, postReview } from '../../api-action';
 
 const initialState: ReviewsData = {
   reviews: [],
@@ -22,7 +22,7 @@ export const reviewsData = createSlice({
         state.requestStatus = RequestStatus.Success;
         state.reviews = action.payload;
       }).
-      addCase(fetchOffers.rejected, (state) => {
+      addCase(fetchReviews.rejected, (state) => {
         state.requestStatus = RequestStatus.Failed;
         state.hasError = true;
       }).
