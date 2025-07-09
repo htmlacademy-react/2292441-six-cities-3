@@ -18,7 +18,7 @@ export const nearbyData = createSlice({
         state.requestStatus = RequestStatus.Loading;
       }).
       addCase(fetchNearbyOffers.fulfilled, (state, action) => {
-        state.requestStatus = RequestStatus.Loading;
+        state.requestStatus = RequestStatus.Success;
         state.nearbyOffers = action.payload;
       }).
       addCase(fetchNearbyOffers.rejected, (state) => {
