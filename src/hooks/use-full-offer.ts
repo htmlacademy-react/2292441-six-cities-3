@@ -23,6 +23,8 @@ export const useFullOffer = () => {
 
   const dispatch = useAppDispatch();
   const {id} = useParams();
+  const sortedReviews = [...reviews].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
 
   useEffect(() => {
     if (id) {
@@ -35,5 +37,5 @@ export const useFullOffer = () => {
     }
   }, [dispatch, id]);
 
-  return {city, offers, offer, reviews, nearbyOffers, status, authorizationStatus};
+  return {city, offers, offer, sortedReviews, nearbyOffers, status, authorizationStatus};
 };

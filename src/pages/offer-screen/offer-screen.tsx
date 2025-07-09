@@ -8,7 +8,7 @@ import NotFoundScreen from '../not-found-screen';
 import { useFullOffer } from '../../hooks/use-full-offer';
 
 function OfferScreen(): JSX.Element {
-  const {city, offers, offer, reviews, nearbyOffers, status, authorizationStatus} = useFullOffer();
+  const {city, offers, offer, sortedReviews, nearbyOffers, status, authorizationStatus} = useFullOffer();
 
   if (status === RequestStatus.Loading || status === RequestStatus.Idle) {
     return <Spinner />;
@@ -107,8 +107,8 @@ function OfferScreen(): JSX.Element {
               </div>
             </div>
             <section className="offer__reviews reviews">
-              <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
-              <ReviewsList reviews={reviews} />
+              <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{sortedReviews.length}</span></h2>
+              <ReviewsList reviews={sortedReviews} />
               {authorizationStatus === AuthorizationStatus.Auth ? <ReviewForm /> : null}
             </section>
           </div>

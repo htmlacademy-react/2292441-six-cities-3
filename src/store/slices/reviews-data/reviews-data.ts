@@ -27,7 +27,7 @@ export const reviewsData = createSlice({
         state.hasError = true;
       }).
       addCase(postReview.fulfilled, (state, action) => {
-        state.reviews.unshift(action.payload);
+        state.reviews.push(action.payload);
       });
   },
 });
