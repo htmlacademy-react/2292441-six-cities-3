@@ -1,6 +1,8 @@
+/* eslint-disable react-refresh/only-export-components */
 import { Link } from 'react-router-dom';
 import { Offer } from '../../types/offer';
 import { useActiveCard } from '../../hooks/use-active-card';
+import { memo } from 'react';
 
 type PlaceCardProps = {
   offer: Offer;
@@ -57,4 +59,4 @@ function PlaceCard({offer, className, isMainPage}: PlaceCardProps): JSX.Element 
   );
 }
 
-export default PlaceCard;
+export default memo(PlaceCard);
