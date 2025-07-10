@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react';
+/* eslint-disable react-refresh/only-export-components */
+import { useEffect, useRef, memo } from 'react';
 import { City } from '../../types/city';
 import { Offers } from '../../types/offer';
 import { useMap } from '../../hooks/use-map';
@@ -59,4 +60,4 @@ function Map({offers, className, city}: MapProps): JSX.Element {
   );
 }
 
-export default Map;
+export default memo(Map);
