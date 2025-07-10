@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import PlaceCard from '../place-card/place-card';
 import { Offers } from '../../types/offer';
 import { MAIN_PLACES_LIST_CLASSES, NEAR_PLACES_LIST_CLASSES, RequestStatus } from '../../const';
@@ -6,6 +7,7 @@ import { useAppSelector } from '../../hooks/use-app-selector';
 import { SelectOffersRequestStatus } from '../../store/slices/offers-data/selectors';
 import Spinner from '../spinner';
 import { useSortedOffers } from '../../hooks/use-sorted-offers';
+import { memo } from 'react';
 
 type PlacesListProps = {
   offers: Offers;
@@ -34,4 +36,4 @@ function PlacesList({offers, sortingOption, isMainPage}: PlacesListProps): JSX.E
   );
 }
 
-export default PlacesList;
+export default memo(PlacesList);
