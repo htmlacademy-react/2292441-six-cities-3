@@ -1,3 +1,5 @@
+/* eslint-disable react-refresh/only-export-components */
+import { memo } from 'react';
 import { useUserReview } from '../../hooks/use-user-review.ts';
 
 function ReviewForm(): JSX.Element {
@@ -54,4 +56,4 @@ function ReviewForm(): JSX.Element {
   );
 }
 
-export default ReviewForm;
+export default memo(ReviewForm);
