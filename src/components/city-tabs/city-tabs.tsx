@@ -1,5 +1,7 @@
+/* eslint-disable react-refresh/only-export-components */
 import { CITIES } from '../../const';
 import { useCity } from '../../hooks/use-city';
+import { memo } from 'react';
 
 function CityTabs(): JSX.Element {
   const {currentCity, cityChangeHandler} = useCity();
@@ -23,4 +25,4 @@ function CityTabs(): JSX.Element {
   );
 }
 
-export default CityTabs;
+export default memo(CityTabs);
