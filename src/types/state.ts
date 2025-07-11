@@ -41,6 +41,12 @@ export type ReviewsData = {
   hasError: boolean;
 };
 
+export type FavoritesData = {
+  favorites: Offers;
+  requestStatus: RequestStatus;
+  hasError: boolean;
+}
+
 export type State = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
