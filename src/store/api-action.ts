@@ -10,7 +10,7 @@ import { dropToken, saveToken } from '../services/token';
 import { FullOffer } from '../types/full-offer';
 import { Review, Reviews } from '../types/review';
 import { PostCommentProps } from '../types/post-comment-props';
-import { setCurrentOffers } from './slices/offers-data/offers-data';
+import { setCity } from './slices/main-process/main-process';
 
 export const fetchOffers = createAsyncThunk<Offers, undefined, {
   dispatch: AppDispatch;
@@ -20,7 +20,7 @@ export const fetchOffers = createAsyncThunk<Offers, undefined, {
   'data/fetchOffers',
   async (_arg, {dispatch, extra: api}) => {
     const { data } = await api.get<Offers>(APIRoute.Offers);
-    dispatch(setCurrentOffers(DEFAULT_CITY));
+    dispatch(setCity(DEFAULT_CITY));
     return data;
   }
 );

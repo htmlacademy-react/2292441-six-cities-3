@@ -1,7 +1,5 @@
 import { City } from './types/city';
 
-export const DEFAULT_CITY = 'Paris';
-
 export enum AppRoute {
   Root = '/',
   Login = '/login',
@@ -65,6 +63,8 @@ export const CITIES: City[] = [
     }
   }
 ];
+
+export const DEFAULT_CITY = CITIES[0];
 
 export const URL_MARKER_DEFAULT = '../../public/img/pin.svg';
 

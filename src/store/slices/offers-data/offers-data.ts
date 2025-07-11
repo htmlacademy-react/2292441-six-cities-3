@@ -1,12 +1,10 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace, RequestStatus } from '../../../const';
 import { OffersData } from '../../../types/state';
 import { fetchOffers } from '../../api-action';
-import { CityName } from '../../../types/city';
 
 const initialState: OffersData = {
   offers: [],
-  currentOffers: [],
   requestStatus: RequestStatus.Idle,
   hasError: false,
 };
@@ -14,11 +12,7 @@ const initialState: OffersData = {
 export const offersData = createSlice({
   name: NameSpace.Offers,
   initialState,
-  reducers: {
-    setCurrentOffers: (state, action: PayloadAction<CityName>) => {
-      state.currentOffers = state.offers.filter((e) => e.city.name === action.payload);
-    }
-  },
+  reducers: {},
   extraReducers(builder) {
     builder.
       addCase(fetchOffers.pending, (state) => {
@@ -34,5 +28,3 @@ export const offersData = createSlice({
       });
   },
 });
-
-export const { setCurrentOffers } = offersData.actions;

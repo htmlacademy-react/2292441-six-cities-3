@@ -17,8 +17,8 @@ function App(): JSX.Element {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(checkAuth());
     dispatch(fetchOffers());
+    dispatch(checkAuth());
   }, [dispatch]);
 
   return (

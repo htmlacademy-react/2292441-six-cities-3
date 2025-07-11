@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { fetchOffer, fetchReviews, fetchNearbyOffers } from '../store/api-action';
 import { useAppSelector } from './use-app-selector';
 import { SelectCity } from '../store/slices/main-process/selectors';
-import { SelectCurrentOffers } from '../store/slices/offers-data/selectors';
+import { SelectCurrentOffers } from '../store/selectors/select-current-offers';
 import { SelectOffer } from '../store/slices/offer-data/selectors';
 import { SelectReviews } from '../store/slices/reviews-data/selectors';
 import { SelectNearbyOffers } from '../store/slices/nearby-data/selectors';

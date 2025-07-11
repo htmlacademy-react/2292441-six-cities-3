@@ -31,7 +31,6 @@ export type OfferData = {
 
 export type OffersData = {
   offers: Offers;
-  currentOffers: Offers;
   requestStatus: RequestStatus;
   hasError: boolean;
 };
