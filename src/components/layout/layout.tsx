@@ -6,7 +6,7 @@ import { memo } from 'react';
 
 function Layout(): JSX.Element {
   const MemoizedLink = memo(Link);
-  const {user, authorizationStatus, rootClassName, shouldRenderFooter, shouldRenderUser, logoutHandler} = useLayoutState();
+  const {user, favorites, authorizationStatus, rootClassName, shouldRenderFooter, shouldRenderUser, logoutHandler} = useLayoutState();
 
   return (
     <div className={`page ${rootClassName}`}>
@@ -30,7 +30,7 @@ function Layout(): JSX.Element {
                         authorizationStatus === AuthorizationStatus.Auth ? (
                           <>
                             <span className="header__user-name user__name">{user?.email}</span>
-                            <span className="header__favorite-count">3</span>
+                            <span className="header__favorite-count">{favorites.length}</span>
                           </>
                         ) : <span className='header_login'>Sign in</span>
                       }

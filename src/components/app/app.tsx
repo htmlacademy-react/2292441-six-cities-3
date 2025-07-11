@@ -40,7 +40,7 @@ function App(): JSX.Element {
             path={AppRoute.Favorites}
             element={
               <PrivateRoute>
-                <FavoritesScreen offers={[]} />
+                <FavoritesScreen />
               </PrivateRoute>
             }
           />

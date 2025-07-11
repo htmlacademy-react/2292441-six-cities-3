@@ -5,10 +5,12 @@ import { MouseEvent } from 'react';
 import { logout } from '../store/api-action';
 import { useAppSelector } from './use-app-selector';
 import { SelectUser, SelectAuthorizationStatus } from '../store/slices/auth-process/selectors';
+import { SelectFavorites } from '../store/slices/favorites-data/selectors';
 
 export const useLayoutState = () => {
   const user = useAppSelector(SelectUser);
   const authorizationStatus = useAppSelector(SelectAuthorizationStatus);
+  const favorites = useAppSelector(SelectFavorites);
 
   const dispatch = useAppDispatch();
   const {pathname} = useLocation();
@@ -33,5 +35,5 @@ export const useLayoutState = () => {
     dispatch(logout());
   };
 
-  return {user, authorizationStatus, rootClassName, shouldRenderFooter, shouldRenderUser, logoutHandler};
+  return {user, favorites, authorizationStatus, rootClassName, shouldRenderFooter, shouldRenderUser, logoutHandler};
 };

@@ -10,7 +10,7 @@ function FavoritesList({offers}: FavoritesListProps): JSX.Element {
     <>
       {offers.map((e) => {
         const keyValue = e.id;
-        return <PlaceCard key={keyValue} offer={e} className=''/>;
+        return <PlaceCard key={keyValue} offer={e} className='favorites__card'/>;
       })}
     </>
   );
