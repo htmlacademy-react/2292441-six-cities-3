@@ -107,3 +107,12 @@ export enum RequestStatus {
   Success,
   Failed
 }
+
+export enum NameSpace {
+  Auth = 'AUTH',
+  Main = 'MAIN',
+  Offers = 'OFFERS',
+  Offer = 'OFFER',
+  Reviews = 'REVIEWS',
+  Nearby = 'NEARBY',
+}

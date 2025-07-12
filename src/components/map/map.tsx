@@ -1,11 +1,12 @@
-import { useEffect, useRef } from 'react';
+/* eslint-disable react-refresh/only-export-components */
+import { useEffect, useRef, memo } from 'react';
 import { City } from '../../types/city';
 import { Offers } from '../../types/offer';
 import { useMap } from '../../hooks/use-map';
 import { layerGroup, Marker, Icon, LatLng } from 'leaflet';
 import { URL_MARKER_DEFAULT, URL_MARKER_ACTIVE } from '../../const';
 import { useAppSelector } from '../../hooks/use-app-selector';
-import { SelectActiveOfferId } from '../../store/selectors/offers';
+import { SelectActiveCard } from '../../store/slices/main-process/selectors';
 
 type MapProps = {
   city: City;
@@ -32,7 +33,7 @@ const customActiveMarker = new Icon(
 function Map({offers, className, city}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap({mapRef, city});
-  const activeOfferId = useAppSelector(SelectActiveOfferId);
+  const activeOfferId = useAppSelector(SelectActiveCard);
 
   useEffect(() => {
     if (map) {
@@ -59,4 +60,4 @@ function Map({offers, className, city}: MapProps): JSX.Element {
   );
 }
 
-export default Map;
+export default memo(Map);

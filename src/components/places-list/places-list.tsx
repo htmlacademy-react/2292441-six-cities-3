@@ -1,49 +1,30 @@
+/* eslint-disable react-refresh/only-export-components */
 import PlaceCard from '../place-card/place-card';
 import { Offers } from '../../types/offer';
-import { RequestStatus } from '../../const';
+import { MAIN_PLACES_LIST_CLASSES, NEAR_PLACES_LIST_CLASSES, RequestStatus } from '../../const';
 import { SortingOption } from '../../types/sorting-option';
 import { useAppSelector } from '../../hooks/use-app-selector';
-import { SelectRequestStatus } from '../../store/selectors/request';
+import { SelectOffersRequestStatus } from '../../store/slices/offers-data/selectors';
 import Spinner from '../spinner';
+import { useSortedOffers } from '../../hooks/use-sorted-offers';
+import { memo } from 'react';
 
 type PlacesListProps = {
   offers: Offers;
   sortingOption?: SortingOption;
-  classNames: {
-    listClass: string;
-    itemClass: string;
-  };
   isMainPage?: boolean;
 }
 
-function PlacesList({offers, sortingOption, classNames, isMainPage}: PlacesListProps): JSX.Element {
-  const status = useAppSelector(SelectRequestStatus);
+function PlacesList({offers, sortingOption, isMainPage}: PlacesListProps): JSX.Element {
+  const {listClass, itemClass} = isMainPage ? MAIN_PLACES_LIST_CLASSES : NEAR_PLACES_LIST_CLASSES;
+  const status = useAppSelector(SelectOffersRequestStatus);
+  const sortedOffers = useSortedOffers(offers, sortingOption);
 
   if (status === RequestStatus.Loading) {
     return (
       <Spinner />
     );
   }
-
-  const {listClass, itemClass} = classNames;
-
-  const getSortedOffers = () => {
-    if (!sortingOption) {
-      return offers;
-    }
-    switch (sortingOption) {
-      case 'Popular':
-        return offers;
-      case 'Price: high to low':
-        return offers.toSorted((a, b) => b.price - a.price);
-      case 'Price: low to high':
-        return offers.toSorted((a, b) => a.price - b.price);
-      case 'Top rated first':
-        return offers.toSorted((a, b) => b.rating - a.rating);
-    }
-  };
-
-  const sortedOffers = getSortedOffers();
 
   return (
     <div className={`${listClass} places__list ${(isMainPage) ? 'tabs__content' : ''}`}>
@@ -55,4 +36,4 @@ function PlacesList({offers, sortingOption, classNames, isMainPage}: PlacesListP
   );
 }
 
-export default PlacesList;
+export default memo(PlacesList);

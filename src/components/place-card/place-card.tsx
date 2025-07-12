@@ -1,7 +1,8 @@
+/* eslint-disable react-refresh/only-export-components */
 import { Link } from 'react-router-dom';
 import { Offer } from '../../types/offer';
-import { useAppDispatch } from '../../hooks/use-app-dispatch';
-import { setActiveOfferId } from '../../store/action';
+import { useActiveCard } from '../../hooks/use-active-card';
+import { memo } from 'react';
 
 type PlaceCardProps = {
   offer: Offer;
@@ -10,22 +11,14 @@ type PlaceCardProps = {
 };
 
 function PlaceCard({offer, className, isMainPage}: PlaceCardProps): JSX.Element {
-  const dispatch = useAppDispatch();
   const route = `/offer/${offer.id}`;
-
-  const activeCardHandler = () => {
-    dispatch(setActiveOfferId(offer.id));
-  };
-
-  const noActiveCardHandler = () => {
-    dispatch(setActiveOfferId(''));
-  };
+  const {activeCardHandler, noActiveCardHandler} = useActiveCard(offer.id);
 
   return (
     <article
       className={`${className} place-card`}
       onMouseOver={isMainPage ? activeCardHandler : undefined}
-      onMouseOut={ isMainPage ? noActiveCardHandler : undefined}
+      onMouseOut={isMainPage ? noActiveCardHandler : undefined}
     >
       {
         offer.isPremium &&
@@ -66,4 +59,4 @@ function PlaceCard({offer, className, isMainPage}: PlaceCardProps): JSX.Element 
   );
 }
 
-export default PlaceCard;
+export default memo(PlaceCard);
