@@ -28,18 +28,16 @@ function MainScreen(): JSX.Element {
         <div className={`cities__places-container ${isListEmpty ? 'cities__places-container--empty' : ''} container`}>
           <section className={isListEmpty ? 'cities__no-places' : 'cities__places places'}>
             {isListEmpty ? <PlacesListEmpty /> :
-              (
-                <>
-                  <h2 className="visually-hidden">Places</h2>
-                  <b className="places__found">{offers.length} places to stay in {city.name}</b>
-                  <PlacesSorting getSortingOption={selectSortHandler}/>
-                  <PlaceList
-                    offers={offers}
-                    sortingOption={selectedSort}
-                    isMainPage
-                  />
-                </>
-              )}
+              <>
+                <h2 className="visually-hidden">Places</h2>
+                <b className="places__found">{offers.length} places to stay in {city.name}</b>
+                <PlacesSorting getSortingOption={selectSortHandler}/>
+                <PlaceList
+                  offers={offers}
+                  sortingOption={selectedSort}
+                  isMainPage
+                />
+              </>}
           </section>
           <div className="cities__right-section">
             <Map
