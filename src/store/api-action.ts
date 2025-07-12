@@ -11,6 +11,7 @@ import { FullOffer } from '../types/full-offer';
 import { Review, Reviews } from '../types/review';
 import { PostCommentProps } from '../types/post-comment-props';
 import { setCity } from './slices/main-process/main-process';
+import { ChangeFavoriteStatus } from '../types/change-favorite-flag';
 
 export const fetchOffers = createAsyncThunk<Offers, undefined, {
   dispatch: AppDispatch;
@@ -120,6 +121,18 @@ export const fetchFavorites = createAsyncThunk<Offers, undefined, {
   'data/fetchFavorites',
   async (_arg, {extra: api}) => {
     const { data } = await api.get<Offers>(APIRoute.Favorites);
+    return data;
+  }
+);
+
+export const changeFavoriteStatus = createAsyncThunk<FullOffer, ChangeFavoriteStatus, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'favorites/changeFlag',
+  async ({id, status}, {extra: api}) => {
+    const {data} = await api.post<FullOffer>(`${APIRoute.Favorites}/${id}/${status}`);
     return data;
   }
 );
