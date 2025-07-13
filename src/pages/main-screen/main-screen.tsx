@@ -21,13 +21,13 @@ function MainScreen(): JSX.Element {
   const selectSortHandler = useCallback(setSelectedSort, [setSelectedSort]);
 
   return (
-    <main className="page__main page__main--index">
+    <main className={`page__main page__main--index ${isListEmpty ? 'page__main--index-empty' : ''}`}>
       <h1 className="visually-hidden">Cities</h1>
       <CityTabs />
       <div className="cities">
         <div className={`cities__places-container ${isListEmpty ? 'cities__places-container--empty' : ''} container`}>
           <section className={isListEmpty ? 'cities__no-places' : 'cities__places places'}>
-            {isListEmpty ? <PlacesListEmpty /> :
+            {isListEmpty ? <PlacesListEmpty city={city} /> :
               <>
                 <h2 className="visually-hidden">Places</h2>
                 <b className="places__found">{offers.length} places to stay in {city.name}</b>
@@ -40,11 +40,12 @@ function MainScreen(): JSX.Element {
               </>}
           </section>
           <div className="cities__right-section">
-            <Map
-              className='cities__map'
-              city={city}
-              offers={offers}
-            />
+            {isListEmpty ? null :
+              <Map
+                className='cities__map'
+                city={city}
+                offers={offers}
+              />}
           </div>
         </div>
       </div>
