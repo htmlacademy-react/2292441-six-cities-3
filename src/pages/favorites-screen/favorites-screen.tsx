@@ -2,10 +2,12 @@ import FavoritesEmpty from '../../components/favorites-empty';
 import FavoritesList from '../../components/favorites-list';
 import Spinner from '../../components/spinner';
 import { RequestStatus } from '../../const';
-import { useFavorites } from '../../hooks/use-favorites';
+import { useAppSelector } from '../../hooks/use-app-selector';
+import { SelectFavorites, SelectFavoritesRequestStatus } from '../../store/slices/favorites-data/selectors';
 
 function FavoritesScreen(): JSX.Element {
-  const {favorites, status} = useFavorites();
+  const favorites = useAppSelector(SelectFavorites);
+  const status = useAppSelector(SelectFavoritesRequestStatus);
   const isEmpty = status === RequestStatus.Success && !favorites.length;
 
   if (status === RequestStatus.Loading) {

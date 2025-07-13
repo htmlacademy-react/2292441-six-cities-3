@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
 import { AxiosInstance } from 'axios';
-import { Offers } from '../types/offer';
+import { Offer, Offers } from '../types/offer';
 import { APIRoute, AppRoute, DEFAULT_CITY } from '../const';
 import { redirectToRoute } from './action';
 import { AuthData } from '../types/auth-data';
@@ -12,6 +12,7 @@ import { Review, Reviews } from '../types/review';
 import { PostCommentProps } from '../types/post-comment-props';
 import { setCity } from './slices/main-process/main-process';
 import { ChangeFavoriteStatus } from '../types/change-favorite-flag';
+import { FavoriteOffer } from '../types/favorite-offer';
 
 export const fetchOffers = createAsyncThunk<Offers, undefined, {
   dispatch: AppDispatch;
@@ -26,17 +27,6 @@ export const fetchOffers = createAsyncThunk<Offers, undefined, {
   }
 );
 
-export const checkAuth = createAsyncThunk<UserData, undefined, {
-  dispatch: AppDispatch;
-  state: State;
-  extra: AxiosInstance;
-}>(
-  'user/checkAuth',
-  async (_arg, {extra: api}) => {
-    const {data} = await api.get<UserData>(APIRoute.Login);
-    return data;
-  }
-);
 
 export const login = createAsyncThunk<UserData, AuthData, {
   dispatch: AppDispatch;
@@ -125,14 +115,39 @@ export const fetchFavorites = createAsyncThunk<Offers, undefined, {
   }
 );
 
-export const changeFavoriteStatus = createAsyncThunk<FullOffer, ChangeFavoriteStatus, {
+export const checkAuth = createAsyncThunk<UserData, undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'user/checkAuth',
+  async (_arg, {dispatch, extra: api}) => {
+    const {data} = await api.get<UserData>(APIRoute.Login);
+    dispatch(fetchFavorites());
+    return data;
+  }
+);
+
+export const changeFavoriteStatus = createAsyncThunk<Offer, ChangeFavoriteStatus, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'favorites/changeFlag',
   async ({id, status}, {extra: api}) => {
-    const {data} = await api.post<FullOffer>(`${APIRoute.Favorites}/${id}/${status}`);
-    return data;
+    const {data} = await api.post<FavoriteOffer>(`${APIRoute.Favorites}/${id}/${status}`, status);
+    const offer: Offer = {
+      id: data.id,
+      city: data.city,
+      previewImage: data.previewImage,
+      title: data.title,
+      rating: data.rating,
+      type: data.type,
+      price: data.price,
+      isPremium: data.isPremium,
+      isFavorite: data.isFavorite,
+      location: data.location,
+    };
+    return offer;
   }
 );

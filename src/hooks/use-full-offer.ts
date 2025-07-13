@@ -25,7 +25,6 @@ export const useFullOffer = () => {
   const {id} = useParams();
   const sortedReviews = [...reviews].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-
   useEffect(() => {
     if (id) {
       Promise.all([
