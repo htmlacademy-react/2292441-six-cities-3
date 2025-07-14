@@ -36,7 +36,7 @@ function MainScreen(): JSX.Element {
                 <PlaceList
                   offers={memoizedOffers}
                   sortingOption={selectedSort}
-                  isMainPage
+                  element='cities__places-list'
                 />
               </>}
           </section>

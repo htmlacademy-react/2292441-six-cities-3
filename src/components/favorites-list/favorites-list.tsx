@@ -17,7 +17,7 @@ function FavoritesList({favorites}: FavoritesListProps): JSX.Element {
         return (
           (!e.length) ? null :
             <FavoritesLocation key={keyValue} city={e[0].city}>
-              <PlacesList offers={e} />
+              <PlacesList offers={e} element='favorites__places'/>
             </FavoritesLocation>);
       })}
     </ul>

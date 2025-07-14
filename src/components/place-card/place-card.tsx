@@ -5,23 +5,24 @@ import { useActiveCard } from '../../hooks/use-active-card';
 import { memo } from 'react';
 import BookmarkButton from '../bookmark-button/bookmark-button';
 import { useFavorite } from '../../hooks/use-favorite';
+import { usePlaceCardClasses } from '../../hooks/use-place-card-classes';
 
 type PlaceCardProps = {
   offer: Offer;
-  className: string;
-  isMainPage?: boolean;
+  parent: string;
 };
 
-function PlaceCard({offer, className, isMainPage}: PlaceCardProps): JSX.Element {
+function PlaceCard({offer, parent}: PlaceCardProps): JSX.Element {
   const route = `/offer/${offer.id}`;
+  const {isMainList, isFavorites, card, imgWrapper} = usePlaceCardClasses(parent);
   const {activeCardHandler, noActiveCardHandler} = useActiveCard(offer.id);
   const {isFavorite, clickHandler} = useFavorite(offer);
 
   return (
     <article
-      className={`${className} place-card`}
-      onMouseOver={isMainPage ? activeCardHandler : undefined}
-      onMouseOut={isMainPage ? noActiveCardHandler : undefined}
+      className={card}
+      onMouseOver={isMainList ? activeCardHandler : undefined}
+      onMouseOut={isMainList ? noActiveCardHandler : undefined}
     >
       {
         offer.isPremium &&
@@ -29,9 +30,9 @@ function PlaceCard({offer, className, isMainPage}: PlaceCardProps): JSX.Element 
           <span>Premium</span>
         </div>
       }
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={imgWrapper}>
         <Link to={route}>
-          <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Place image"/>
+          <img className="place-card__image" src={offer.previewImage} width={isFavorites ? '150' : '260'} height={isFavorites ? '110' : '200'} alt="Place image"/>
         </Link>
       </div>
       <div className="place-card__info">

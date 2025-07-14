@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import PlaceCard from '../place-card/place-card';
 import { Offers } from '../../types/offer';
-import { MAIN_PLACES_LIST_CLASSES, NEAR_PLACES_LIST_CLASSES, RequestStatus } from '../../const';
+import { RequestStatus } from '../../const';
 import { SortingOption } from '../../types/sorting-option';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { SelectOffersRequestStatus } from '../../store/slices/offers-data/selectors';
@@ -12,13 +12,14 @@ import { memo } from 'react';
 type PlacesListProps = {
   offers: Offers;
   sortingOption?: SortingOption;
-  isMainPage?: boolean;
+  element: string;
 }
 
-function PlacesList({offers, sortingOption, isMainPage}: PlacesListProps): JSX.Element {
-  const {listClass, itemClass} = isMainPage ? MAIN_PLACES_LIST_CLASSES : NEAR_PLACES_LIST_CLASSES;
+function PlacesList({offers, sortingOption, element}: PlacesListProps): JSX.Element {
   const status = useAppSelector(SelectOffersRequestStatus);
   const sortedOffers = useSortedOffers(offers, sortingOption);
+  const isFavorites = element === 'favorites__places';
+  const className = isFavorites ? element : `${element} places__list ${element === 'cities__places-list' ? 'tabs__content' : ''}`;
 
   if (status === RequestStatus.Loading) {
     return (
@@ -27,10 +28,10 @@ function PlacesList({offers, sortingOption, isMainPage}: PlacesListProps): JSX.E
   }
 
   return (
-    <div className={`${listClass} places__list ${(isMainPage) ? 'tabs__content' : ''}`}>
+    <div className={className}>
       {sortedOffers.map((e) => {
         const keyValue = e.id;
-        return (<PlaceCard key={keyValue} className={itemClass} isMainPage={isMainPage} offer={e} />);
+        return (<PlaceCard key={keyValue} parent={element} offer={e} />);
       })}
     </div>
   );

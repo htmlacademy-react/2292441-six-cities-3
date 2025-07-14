@@ -126,6 +126,7 @@ function OfferScreen(): JSX.Element {
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
           <PlacesList
             offers={nearbyOffers}
+            element='near-places__list'
           />
         </section>
       </div>
