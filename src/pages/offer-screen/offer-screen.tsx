@@ -6,11 +6,12 @@ import PlacesList from '../../components/places-list';
 import Spinner from '../../components/spinner';
 import NotFoundScreen from '../not-found-screen';
 import { useFullOffer } from '../../hooks/use-full-offer';
+import BookmarkButton from '../../components/bookmark-button';
 import { useFavorite } from '../../hooks/use-favorite';
 
 function OfferScreen(): JSX.Element {
   const {city, offers, offer, sortedReviews, nearbyOffers, status, authorizationStatus} = useFullOffer();
-  const {isFavorite, favoriteClickHandler} = useFavorite(offer);
+  const {isFavorite, clickHandler} = useFavorite(offer);
 
   if (status === RequestStatus.Loading || status === RequestStatus.Idle) {
     return <Spinner />;
@@ -47,16 +48,11 @@ function OfferScreen(): JSX.Element {
               <h1 className="offer__name">
                 {offer.title}
               </h1>
-              <button
-                className={`offer__bookmark-button ${isFavorite ? 'offer__bookmark-button--active' : ''} button`}
-                type="button"
-                onClick={favoriteClickHandler}
-              >
-                <svg className="offer__bookmark-icon" width="31" height="33">
-                  <use xlinkHref="#icon-bookmark"></use>
-                </svg>
-                <span className="visually-hidden">To bookmarks</span>
-              </button>
+              <BookmarkButton
+                isFavorite={isFavorite}
+                clickHandler={clickHandler}
+                element='offer'
+              />
             </div>
             <div className="offer__rating rating">
               <div className="offer__stars rating__stars">

@@ -1,7 +1,7 @@
 import PlaceList from '../../components/places-list';
 import Map from '../../components/map';
 import { RequestStatus, SORTING_OPTIONS } from '../../const';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import CityTabs from '../../components/city-tabs';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import PlacesSorting from '../../components/places-sorting';
@@ -15,6 +15,7 @@ import { SelectOffersRequestStatus } from '../../store/slices/offers-data/select
 function MainScreen(): JSX.Element {
   const city = useAppSelector(SelectCity);
   const offers = useAppSelector(SelectCurrentOffers);
+  const memoizedOffers = useMemo(() => offers, [offers]);
   const status = useAppSelector(SelectOffersRequestStatus);
   const isListEmpty = status === RequestStatus.Success && !offers.length;
   const [selectedSort, setSelectedSort] = useState(SORTING_OPTIONS[0] as SortingOption);
@@ -33,7 +34,7 @@ function MainScreen(): JSX.Element {
                 <b className="places__found">{offers.length} places to stay in {city.name}</b>
                 <PlacesSorting getSortingOption={selectSortHandler}/>
                 <PlaceList
-                  offers={offers}
+                  offers={memoizedOffers}
                   sortingOption={selectedSort}
                   isMainPage
                 />

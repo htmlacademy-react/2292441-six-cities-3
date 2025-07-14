@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Offer } from '../../types/offer';
 import { useActiveCard } from '../../hooks/use-active-card';
 import { memo } from 'react';
+import BookmarkButton from '../bookmark-button/bookmark-button';
 import { useFavorite } from '../../hooks/use-favorite';
 
 type PlaceCardProps = {
@@ -14,7 +15,7 @@ type PlaceCardProps = {
 function PlaceCard({offer, className, isMainPage}: PlaceCardProps): JSX.Element {
   const route = `/offer/${offer.id}`;
   const {activeCardHandler, noActiveCardHandler} = useActiveCard(offer.id);
-  const {isFavorite, favoriteClickHandler} = useFavorite(offer);
+  const {isFavorite, clickHandler} = useFavorite(offer);
 
   return (
     <article
@@ -39,16 +40,11 @@ function PlaceCard({offer, className, isMainPage}: PlaceCardProps): JSX.Element 
             <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button
-            className={`place-card__bookmark-button ${isFavorite ? 'place-card__bookmark-button--active' : ''} button`}
-            type="button"
-            onClick={favoriteClickHandler}
-          >
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">To bookmarks</span>
-          </button>
+          <BookmarkButton
+            isFavorite={isFavorite}
+            clickHandler={clickHandler}
+            element='place-card'
+          />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">

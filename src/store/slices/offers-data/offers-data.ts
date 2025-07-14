@@ -1,7 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NameSpace, RequestStatus } from '../../../const';
 import { OffersData } from '../../../types/state';
 import { fetchOffers } from '../../api-action';
+import { ChangeFavoriteStatus } from '../../../types/change-favorite-flag';
+
 
 const initialState: OffersData = {
   offers: [],
@@ -12,7 +14,15 @@ const initialState: OffersData = {
 export const offersData = createSlice({
   name: NameSpace.Offers,
   initialState,
-  reducers: {},
+  reducers: {
+    refreshCards: (state, action: PayloadAction<ChangeFavoriteStatus>) => {
+      state.offers.map((e) => {
+        if (e.id === action.payload.id) {
+          e.isFavorite = Boolean(action.payload.status);
+        }
+      });
+    },
+  },
   extraReducers(builder) {
     builder.
       addCase(fetchOffers.pending, (state) => {
@@ -28,3 +38,5 @@ export const offersData = createSlice({
       });
   },
 });
+
+export const {refreshCards} = offersData.actions;
