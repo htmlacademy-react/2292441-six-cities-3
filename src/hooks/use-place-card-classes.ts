@@ -3,28 +3,20 @@ export const usePlaceCardClasses = (parent: string) => {
   const isNearList = parent === 'near-places__list';
   const isFavorites = parent === 'favorites__places';
 
-  const getCardClass = () => {
-    if (isNearList) {
-      return 'near-places__card';
-    } else if (isFavorites) {
-      return 'favorites__card';
+  const getClasses = () => {
+    switch (parent) {
+      case 'cities__places-list':
+        return {card: 'cities__card place-card', imgWrapper: 'cities__image-wrapper place-card__image-wrapper'};
+      case 'near-places__list':
+        return {card: 'near-places__card place-card', imgWrapper: 'near-places__image-wrapper place-card__image-wrapper'};
+      case 'favorites__places':
+        return {card: 'favorites__card place-card', imgWrapper: 'favorites__image-wrapper place-card__image-wrapper'};
+      default:
+        return {card: '', imgWrapper: ''};
     }
-
-    return 'cities__card';
   };
 
-  const getImgWrapperClass = () => {
-    if (isNearList) {
-      return 'near-places__image-wrapper';
-    } else if (isFavorites) {
-      return 'favorites__image-wrapper';
-    }
-
-    return 'cities__image-wrapper';
-  };
-
-  const card = `${getCardClass()} place-card`;
-  const imgWrapper = `${getImgWrapperClass()} place-card__image-wrapper`;
+  const {card, imgWrapper} = getClasses();
 
   return {isMainList, isNearList, isFavorites, card, imgWrapper};
 };
