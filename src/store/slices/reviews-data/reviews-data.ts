@@ -24,10 +24,12 @@ export const reviewsData = createSlice({
       }).
       addCase(fetchReviews.rejected, (state) => {
         state.requestStatus = RequestStatus.Failed;
-        state.hasError = true;
       }).
       addCase(postReview.fulfilled, (state, action) => {
         state.reviews.push(action.payload);
+      }).
+      addCase(postReview.rejected, (state) => {
+        state.hasError = true;
       });
   },
 });

@@ -20,13 +20,11 @@ export type MainProcess = {
 export type NearbyData = {
   nearbyOffers: Offers;
   requestStatus: RequestStatus;
-  hasError: boolean;
 };
 
 export type OfferData = {
   offer: FullOffer | null;
   requestStatus: RequestStatus;
-  hasError: boolean;
 };
 
 export type OffersData = {

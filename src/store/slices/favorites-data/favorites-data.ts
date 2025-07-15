@@ -24,7 +24,6 @@ export const favoritesData = createSlice({
       }).
       addCase(fetchFavorites.rejected, (state) => {
         state.requestStatus = RequestStatus.Failed;
-        state.hasError = true;
       }).
       addCase(changeFavoriteStatus.fulfilled, (state, action) => {
         state.requestStatus = RequestStatus.Success;
