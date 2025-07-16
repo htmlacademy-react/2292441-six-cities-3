@@ -1,11 +1,14 @@
 import { useAppDispatch } from './use-app-dispatch';
 import { FormEvent, useRef } from 'react';
 import { login } from '../store/api-action';
+import { useAppSelector } from './use-app-selector';
+import { SelectError } from '../store/slices/auth-process/selectors';
 
 export const useLogin = () => {
   const dispatch = useAppDispatch();
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
+  const error = useAppSelector(SelectError);
 
   const submitHandler = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -18,5 +21,5 @@ export const useLogin = () => {
     }
   };
 
-  return {loginRef, passwordRef, submitHandler};
+  return {loginRef, passwordRef, submitHandler, error};
 };

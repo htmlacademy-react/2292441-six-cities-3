@@ -107,3 +107,8 @@ export enum NameSpace {
   Nearby = 'NEARBY',
   Favorites = 'FAVORITES',
 }
+
+export enum ErrorType {
+  Login = 'login',
+  Comment = 'comment',
+}

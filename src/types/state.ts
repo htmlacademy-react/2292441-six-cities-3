@@ -10,7 +10,7 @@ import { LoginErrorData } from './login-error-data';
 export type AuthProcess = {
   authorizationStatus: AuthorizationStatus;
   user: UserData | null;
-  error: LoginErrorData;
+  error: LoginErrorData | null;
 };
 
 export type MainProcess = {
