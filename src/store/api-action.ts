@@ -120,11 +120,22 @@ export const postReview = createAsyncThunk<Review, PostCommentProps, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
+  rejectValue: DetailedError | ServerError;
 }>(
   'offer/postComment',
-  async ({body, offerId}, {extra: api}) => {
-    const {data} = await api.post<Review>(`${APIRoute.Comments}/${offerId}`, body);
-    return data;
+  async ({body, offerId}, {extra: api, rejectWithValue}) => {
+    try {
+      const {data} = await api.post<Review>(`${APIRoute.Comments}/${offerId}`, body);
+      return data;
+    } catch (error: unknown) {
+      if (isAxiosError(error)) {
+        return rejectWithValue(error.response?.data as DetailedError);
+      }
+      return rejectWithValue({
+        errorType: 'UNKNOWN_ERROR',
+        message: 'Something went wrong.'
+      });
+    }
   }
 );
 

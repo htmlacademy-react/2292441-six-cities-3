@@ -6,7 +6,7 @@ import { fetchReviews, postReview } from '../../api-action';
 const initialState: ReviewsData = {
   reviews: [],
   requestStatus: RequestStatus.Idle,
-  hasError: false,
+  error: null,
 };
 
 export const reviewsData = createSlice({
@@ -26,10 +26,17 @@ export const reviewsData = createSlice({
         state.requestStatus = RequestStatus.Failed;
       }).
       addCase(postReview.fulfilled, (state, action) => {
+        state.error = null;
         state.reviews.push(action.payload);
       }).
-      addCase(postReview.rejected, (state) => {
-        state.hasError = true;
+      addCase(postReview.rejected, (state, action) => {
+        if (action.payload) {
+          if ('details' in action.payload && action.payload.details.length) {
+            state.error = action.payload.details[0].messages.join(' ');
+          } else {
+            state.error = action.payload.message;
+          }
+        }
       });
   },
 });

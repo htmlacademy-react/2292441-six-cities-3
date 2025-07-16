@@ -27,7 +27,7 @@ function LoginScreen(): JSX.Element {
                 required
               />
             </div>
-            {error && error.property === 'email' ? <ErrorPopup type={ErrorType.Login} error={error}/> : null}
+            {error && error.property === 'email' ? <ErrorPopup type={ErrorType.Login} error={error.message}/> : null}
             <div className="login__input-wrapper form__input-wrapper">
               <label className="visually-hidden">Password</label>
               <input
@@ -39,7 +39,7 @@ function LoginScreen(): JSX.Element {
                 required
               />
             </div>
-            {error && error.property === 'password' ? <ErrorPopup type={ErrorType.Login} error={error}/> : null}
+            {error && error.property === 'password' ? <ErrorPopup type={ErrorType.Login} error={error.message}/> : null}
             <button className="login__submit form__submit button" type="submit">Sign in</button>
           </form>
         </section>

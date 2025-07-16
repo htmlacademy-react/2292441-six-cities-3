@@ -4,9 +4,11 @@ import { postReview } from '../store/api-action';
 import { FullOffer } from '../types/full-offer';
 import { useAppSelector } from './use-app-selector';
 import { SelectOffer } from '../store/slices/offer-data/selectors';
+import { SelectReviewError } from '../store/slices/reviews-data/selectors';
 
 export const useUserReview = () => {
   const offer = useAppSelector(SelectOffer) as FullOffer;
+  const error = useAppSelector(SelectReviewError);
   const dispatch = useAppDispatch();
 
   const [review, setReview] = useState(
@@ -38,5 +40,5 @@ export const useUserReview = () => {
   };
 
 
-  return {review, handleRadioChange, handleFieldChange, submitHandler};
+  return {review, handleRadioChange, handleFieldChange, submitHandler, error};
 };

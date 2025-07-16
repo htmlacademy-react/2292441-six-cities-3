@@ -3,4 +3,4 @@ import { NameSpace } from '../../../const';
 
 export const SelectAuthorizationStatus = (state: State) => state[NameSpace.Auth].authorizationStatus;
 export const SelectUser = (state: State) => state[NameSpace.Auth].user;
-export const SelectError = (state: State) => state[NameSpace.Auth].error;
+export const SelectAuthError = (state: State) => state[NameSpace.Auth].error;

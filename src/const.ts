@@ -110,5 +110,5 @@ export enum NameSpace {
 
 export enum ErrorType {
   Login = 'login',
-  Comment = 'comment',
+  Review = 'review',
 }

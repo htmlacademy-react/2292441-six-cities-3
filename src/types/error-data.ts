@@ -1,4 +1,4 @@
-export type LoginErrorData = {
+export type ErrorData = {
   property: string;
   message: string;
 };

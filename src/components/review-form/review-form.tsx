@@ -1,9 +1,11 @@
 /* eslint-disable react-refresh/only-export-components */
 import { memo } from 'react';
 import { useUserReview } from '../../hooks/use-user-review.ts';
+import ErrorPopup from '../error-popup/error-popup.tsx';
+import { ErrorType } from '../../const.ts';
 
 function ReviewForm(): JSX.Element {
-  const {review, handleRadioChange, handleFieldChange, submitHandler} = useUserReview();
+  const {review, handleRadioChange, handleFieldChange, submitHandler, error} = useUserReview();
 
   return (
     <form
@@ -52,6 +54,7 @@ function ReviewForm(): JSX.Element {
         </p>
         <button className="reviews__submit form__submit button" type="submit" disabled={review.comment.length < 50}>Submit</button>
       </div>
+      {error ? <ErrorPopup type={ErrorType.Review} error={error} /> : null}
     </form>
   );
 }
