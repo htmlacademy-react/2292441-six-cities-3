@@ -5,11 +5,12 @@ import { City } from './city';
 import { Reviews } from './review';
 import { RequestStatus, AuthorizationStatus } from '../const';
 import { FullOffer } from './full-offer';
+import { LoginErrorData } from './login-error-data';
 
 export type AuthProcess = {
   authorizationStatus: AuthorizationStatus;
   user: UserData | null;
-  hasError: boolean;
+  error: LoginErrorData;
 };
 
 export type MainProcess = {

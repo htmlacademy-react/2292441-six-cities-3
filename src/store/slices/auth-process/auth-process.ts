@@ -6,7 +6,10 @@ import { checkAuth, login, logout } from '../../api-action';
 const initialState: AuthProcess = {
   authorizationStatus: AuthorizationStatus.Unknown,
   user: null,
-  hasError: false,
+  error: {
+    property: '',
+    message: ''
+  },
 };
 
 export const authProcess = createSlice({
@@ -26,9 +29,16 @@ export const authProcess = createSlice({
         state.authorizationStatus = AuthorizationStatus.Auth;
         state.user = action.payload;
       }).
-      addCase(login.rejected, (state) => {
+      addCase(login.rejected, (state, action) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
-        state.hasError = true;
+        if (action.payload) {
+          if ('details' in action.payload) {
+            state.error.property = action.payload.details[0].property;
+            state.error.message = action.payload.details[0].messages.join(' ');
+          } else {
+            state.error.message = action.payload.message;
+          }
+        }
       }).
       addCase(logout.fulfilled, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;

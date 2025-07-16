@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
-import { AxiosInstance } from 'axios';
+import { AxiosInstance, isAxiosError } from 'axios';
 import { Offer, Offers } from '../types/offer';
 import { APIRoute, AppRoute, DEFAULT_CITY } from '../const';
 import { redirectToRoute } from './action';
@@ -13,6 +13,8 @@ import { PostCommentProps } from '../types/post-comment-props';
 import { setCity } from './slices/main-process/main-process';
 import { ChangeFavoriteStatus } from '../types/change-favorite-flag';
 import { FavoriteOffer } from '../types/favorite-offer';
+import { ServerError } from '../types/server-error';
+import { DetailedError } from '../types/detailed-error';
 
 export const fetchOffers = createAsyncThunk<Offers, undefined, {
   dispatch: AppDispatch;
@@ -32,14 +34,25 @@ export const login = createAsyncThunk<UserData, AuthData, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
+  rejectValue: DetailedError | ServerError;
 }>(
   'user/login',
-  async ({login: email, password}, {dispatch, extra: api}) => {
-    const {data} = await api.post<UserData>(APIRoute.Login, {email, password});
-    const {token} = data;
-    saveToken(token);
-    dispatch(redirectToRoute(AppRoute.Root));
-    return data;
+  async ({login: email, password}, {dispatch, extra: api, rejectWithValue}) => {
+    try {
+      const {data} = await api.post<UserData>(APIRoute.Login, {email, password});
+      const {token} = data;
+      saveToken(token);
+      dispatch(redirectToRoute(AppRoute.Root));
+      return data;
+    } catch (error: unknown) {
+      if (isAxiosError(error)) {
+        return rejectWithValue(error.response?.data as DetailedError);
+      }
+      return rejectWithValue({
+        errorType: 'UNKNOWN_ERROR',
+        message: 'Something went wrong.'
+      });
+    }
   }
 );
 
