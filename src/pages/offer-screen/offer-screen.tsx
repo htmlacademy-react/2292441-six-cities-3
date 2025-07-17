@@ -10,7 +10,7 @@ import BookmarkButton from '../../components/bookmark-button';
 import { useFavorite } from '../../hooks/use-favorite';
 
 function OfferScreen(): JSX.Element {
-  const {city, offers, offer, sortedReviews, nearbyOffers, status, authorizationStatus} = useFullOffer();
+  const {city, offers, offer, images, sortedReviews, nearbyOffers, status, authorizationStatus} = useFullOffer();
   const {isFavorite, clickHandler} = useFavorite(offer);
 
   if (status === RequestStatus.Loading || status === RequestStatus.Idle) {
@@ -26,7 +26,7 @@ function OfferScreen(): JSX.Element {
       <section className="offer">
         <div className="offer__gallery-container container">
           <div className="offer__gallery">
-            {offer.images.map((e, i) => {
+            {images.map((e, i) => {
               const keyValue = `${i}-${e}`;
               return (
                 <div key={keyValue} className="offer__image-wrapper">

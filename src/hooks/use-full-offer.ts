@@ -21,6 +21,12 @@ export const useFullOffer = () => {
   const status = useAppSelector(SelectOfferRequestStatus);
   const authorizationStatus = useAppSelector(SelectAuthorizationStatus);
 
+  let images: string[] = [];
+
+  if (offer) {
+    images = offer.images.length > 6 ? offer.images.slice(0, 6) : offer.images;
+  }
+
   const dispatch = useAppDispatch();
   const {id} = useParams();
   const sortedReviews = [...reviews].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
@@ -36,5 +42,5 @@ export const useFullOffer = () => {
     }
   }, [dispatch, id]);
 
-  return {city, offers, offer, sortedReviews, nearbyOffers, status, authorizationStatus};
+  return {city, offers, offer, images, sortedReviews, nearbyOffers, status, authorizationStatus};
 };
