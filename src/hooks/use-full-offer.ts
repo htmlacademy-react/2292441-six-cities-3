@@ -24,7 +24,7 @@ export const useFullOffer = () => {
   let images: string[] = [];
 
   if (offer) {
-    images = offer.images.length > 6 ? offer.images.slice(0, 6) : offer.images;
+    images = offer.images.slice(0, 6);
   }
 
   const dispatch = useAppDispatch();
