@@ -112,7 +112,8 @@ export const fetchNearbyOffers = createAsyncThunk<Offers, string, {
   'offer/fetchNearbyOffers',
   async (id, {extra: api}) => {
     const {data} = await api.get<Offers>(`${APIRoute.Offers}/${id}/nearby`);
-    return data;
+    const offers = data.slice(0, 3);
+    return offers;
   }
 );
 

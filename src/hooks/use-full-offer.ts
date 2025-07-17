@@ -17,7 +17,7 @@ export const useFullOffer = () => {
   const offers = useAppSelector(SelectCurrentOffers);
   const offer = useAppSelector(SelectOffer);
   const reviews = useAppSelector(SelectReviews);
-  const nearbyOffers = useAppSelector(SelectNearbyOffers);
+  const nearby = useAppSelector(SelectNearbyOffers);
   const status = useAppSelector(SelectOfferRequestStatus);
   const authorizationStatus = useAppSelector(SelectAuthorizationStatus);
 
@@ -42,5 +42,5 @@ export const useFullOffer = () => {
     }
   }, [dispatch, id]);
 
-  return {city, offers, offer, images, sortedReviews, nearbyOffers, status, authorizationStatus};
+  return {city, offers, offer, images, sortedReviews, nearby, status, authorizationStatus};
 };

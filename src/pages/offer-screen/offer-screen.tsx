@@ -8,9 +8,10 @@ import NotFoundScreen from '../not-found-screen';
 import { useFullOffer } from '../../hooks/use-full-offer';
 import BookmarkButton from '../../components/bookmark-button';
 import { useFavorite } from '../../hooks/use-favorite';
+import { Offer } from '../../types/offer';
 
 function OfferScreen(): JSX.Element {
-  const {city, offers, offer, images, sortedReviews, nearbyOffers, status, authorizationStatus} = useFullOffer();
+  const {city, offers, offer, images, sortedReviews, nearby, status, authorizationStatus} = useFullOffer();
   const {isFavorite, clickHandler} = useFavorite(offer);
 
   if (status === RequestStatus.Loading || status === RequestStatus.Idle) {
@@ -20,6 +21,8 @@ function OfferScreen(): JSX.Element {
   if (status === RequestStatus.Failed || !offer) {
     return <NotFoundScreen />;
   }
+
+  const nearbyWithOffer = [...nearby, offers.find((e) => e.id === offer.id) as Offer];
 
   return (
     <main className="page__main page__main--offer">
@@ -118,14 +121,14 @@ function OfferScreen(): JSX.Element {
         <Map
           className='offer__map'
           city={city}
-          offers={offers}
+          offers={nearbyWithOffer}
         />
       </section>
       <div className="container">
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
           <PlacesList
-            offers={nearbyOffers}
+            offers={nearby}
             element='near-places__list'
           />
         </section>
