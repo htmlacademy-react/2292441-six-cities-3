@@ -157,22 +157,33 @@ export const changeFavoriteStatus = createAsyncThunk<Offer, ChangeFavoriteStatus
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
+  rejectValue: ServerError;
 }>(
   'favorites/changeFlag',
-  async ({id, status}, {extra: api}) => {
-    const {data} = await api.post<FavoriteOffer>(`${APIRoute.Favorites}/${id}/${status}`, status);
-    const offer: Offer = {
-      id: data.id,
-      city: data.city,
-      previewImage: data.previewImage,
-      title: data.title,
-      rating: data.rating,
-      type: data.type,
-      price: data.price,
-      isPremium: data.isPremium,
-      isFavorite: data.isFavorite,
-      location: data.location,
-    };
-    return offer;
+  async ({id, status}, {extra: api, rejectWithValue}) => {
+    try {
+      const {data} = await api.post<FavoriteOffer>(`${APIRoute.Favorites}/${id}/${status}`, status);
+      const offer: Offer = {
+        id: data.id,
+        city: data.city,
+        previewImage: data.previewImage,
+        title: data.title,
+        rating: data.rating,
+        type: data.type,
+        price: data.price,
+        isPremium: data.isPremium,
+        isFavorite: data.isFavorite,
+        location: data.location,
+      };
+      return offer;
+    } catch (error: unknown) {
+      if (isAxiosError(error)) {
+        return rejectWithValue(error.response?.data as ServerError);
+      }
+      return rejectWithValue({
+        errorType: 'UNKNOWN_ERROR',
+        message: 'Something went wrong.'
+      });
+    }
   }
 );

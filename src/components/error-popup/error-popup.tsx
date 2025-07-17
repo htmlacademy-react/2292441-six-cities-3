@@ -1,24 +1,41 @@
-import { FormEvent } from 'react';
+import { useEffect } from 'react';
 import { ErrorType } from '../../const';
+import './error-popup.css';
 
 type ErrorPopupProps = {
-  type: ErrorType;
+  type?: ErrorType;
   error: string;
-  cb?: (evt: FormEvent) => void;
+  onClose: (() => void);
 };
 
-function ErrorPopup({type, error, cb}: ErrorPopupProps) {
+function ErrorPopup ({type, error, onClose}: ErrorPopupProps) {
+  useEffect(() => {
+    if (type === ErrorType.Favorites) {
+      const timer = setTimeout(() => {
+        onClose();
+      }, 4000);
+
+      return () => clearTimeout(timer);
+    }
+
+    const keyDownHandler = () => {
+      onClose();
+    };
+
+    window.addEventListener('keydown', keyDownHandler);
+
+    return () => window.removeEventListener('keydown', keyDownHandler);
+  }, [onClose, type]);
+
   return (
-    <>
-      <p style={{color: 'red', margin: '0'}}>{`Error! ${error}`}</p>
-      {type === ErrorType.Login || type === ErrorType.Review ? null :
-        <button
-          onClick={cb}
-          type="button"
-        >
-        Попробовать ещё раз
-        </button>}
-    </>
+    <div className="error-popup-overlay">
+      <div className="error-popup">
+        <p>{`Error! ${error}`}</p>
+        <button className="error-popup-close" onClick={onClose} onKeyDown={onClose}>
+          Close
+        </button>
+      </div>
+    </div>
   );
 }
 

@@ -1,11 +1,13 @@
 /* eslint-disable react-refresh/only-export-components */
 import { memo } from 'react';
 import { useUserReview } from '../../hooks/use-user-review.ts';
-import ErrorPopup from '../error-popup/error-popup.tsx';
-import { ErrorType } from '../../const.ts';
+import ErrorPopup from '../error-popup';
+import { useAppDispatch } from '../../hooks/use-app-dispatch.ts';
+import { resetReviewError } from '../../store/slices/reviews-data/reviews-data.ts';
 
 function ReviewForm(): JSX.Element {
   const {review, handleRadioChange, handleFieldChange, submitHandler, error} = useUserReview();
+  const dispatch = useAppDispatch();
 
   return (
     <form
@@ -54,7 +56,7 @@ function ReviewForm(): JSX.Element {
         </p>
         <button className="reviews__submit form__submit button" type="submit" disabled={review.comment.length < 50}>Submit</button>
       </div>
-      {error ? <ErrorPopup type={ErrorType.Review} error={error} /> : null}
+      {error ? <ErrorPopup error={error} onClose={() => dispatch(resetReviewError())}/> : null}
     </form>
   );
 }

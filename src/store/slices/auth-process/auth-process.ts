@@ -12,7 +12,11 @@ const initialState: AuthProcess = {
 export const authProcess = createSlice({
   name: NameSpace.Auth,
   initialState,
-  reducers: {},
+  reducers: {
+    resetLoginError: (state) => {
+      state.error = null;
+    },
+  },
   extraReducers(builder) {
     builder.
       addCase(checkAuth.fulfilled, (state, action) => {
@@ -23,14 +27,13 @@ export const authProcess = createSlice({
         state.authorizationStatus = AuthorizationStatus.NoAuth;
       }).
       addCase(login.fulfilled, (state, action) => {
-        state.error = null;
         state.authorizationStatus = AuthorizationStatus.Auth;
         state.user = action.payload;
       }).
       addCase(login.rejected, (state, action) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
         if (action.payload) {
-          if ('details' in action.payload) {
+          if ('details' in action.payload && action.payload.details.length) {
             state.error = {
               property: action.payload.details[0].property,
               message: action.payload.details[0].messages.join(' '),
@@ -49,3 +52,5 @@ export const authProcess = createSlice({
       });
   }
 });
+
+export const { resetLoginError } = authProcess.actions;

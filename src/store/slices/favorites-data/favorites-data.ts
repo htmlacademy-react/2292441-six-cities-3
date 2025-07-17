@@ -6,13 +6,17 @@ import { changeFavoriteStatus, fetchFavorites } from '../../api-action';
 const initialState: FavoritesData = {
   favorites: [],
   requestStatus: RequestStatus.Idle,
-  hasError: false,
+  error: null,
 };
 
 export const favoritesData = createSlice({
   name: NameSpace.Favorites,
   initialState,
-  reducers: {},
+  reducers: {
+    resetFavoriteError: (state) => {
+      state.error = null;
+    },
+  },
   extraReducers(builder) {
     builder.
       addCase(fetchFavorites.pending, (state) => {
@@ -33,8 +37,12 @@ export const favoritesData = createSlice({
           state.favorites = state.favorites.filter((e) => e.id !== action.payload.id);
         }
       }).
-      addCase(changeFavoriteStatus.rejected, (state) => {
-        state.hasError = true;
+      addCase(changeFavoriteStatus.rejected, (state, action) => {
+        if (action.payload) {
+          state.error = action.payload.message;
+        }
       });
   },
 });
+
+export const { resetFavoriteError } = favoritesData.actions;

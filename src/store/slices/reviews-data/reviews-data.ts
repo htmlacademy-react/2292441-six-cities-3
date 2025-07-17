@@ -12,7 +12,11 @@ const initialState: ReviewsData = {
 export const reviewsData = createSlice({
   name: NameSpace.Reviews,
   initialState,
-  reducers: {},
+  reducers: {
+    resetReviewError: (state) => {
+      state.error = null;
+    },
+  },
   extraReducers(builder) {
     builder.
       addCase(fetchReviews.pending, (state) => {
@@ -26,7 +30,6 @@ export const reviewsData = createSlice({
         state.requestStatus = RequestStatus.Failed;
       }).
       addCase(postReview.fulfilled, (state, action) => {
-        state.error = null;
         state.reviews.push(action.payload);
       }).
       addCase(postReview.rejected, (state, action) => {
@@ -40,3 +43,5 @@ export const reviewsData = createSlice({
       });
   },
 });
+
+export const { resetReviewError } = reviewsData.actions;

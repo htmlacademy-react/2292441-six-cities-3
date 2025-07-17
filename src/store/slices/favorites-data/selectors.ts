@@ -3,3 +3,4 @@ import { State } from '../../../types/state';
 
 export const SelectFavorites = (state: State) => state[NameSpace.Favorites].favorites;
 export const SelectFavoritesRequestStatus = (state: State) => state[NameSpace.Favorites].requestStatus;
+export const SelectFavoritesError = (state: State) => state[NameSpace.Favorites].error;

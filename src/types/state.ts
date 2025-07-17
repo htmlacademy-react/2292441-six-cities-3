@@ -43,7 +43,7 @@ export type ReviewsData = {
 export type FavoritesData = {
   favorites: Offers;
   requestStatus: RequestStatus;
-  hasError: boolean;
+  error: string| null;
 }
 
 export type State = ReturnType<typeof store.getState>;

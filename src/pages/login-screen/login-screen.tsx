@@ -1,9 +1,11 @@
 import ErrorPopup from '../../components/error-popup';
-import { ErrorType } from '../../const';
+import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { useLogin } from '../../hooks/use-login';
+import { resetLoginError } from '../../store/slices/auth-process/auth-process';
 
 function LoginScreen(): JSX.Element {
   const {loginRef, passwordRef, submitHandler, error} = useLogin();
+  const dispatch = useAppDispatch();
 
   return (
     <main className="page__main page__main--login">
@@ -27,7 +29,7 @@ function LoginScreen(): JSX.Element {
                 required
               />
             </div>
-            {error && error.property === 'email' ? <ErrorPopup type={ErrorType.Login} error={error.message}/> : null}
+            {error && error.property === 'email' ? <ErrorPopup error={error.message} onClose={() => dispatch(resetLoginError())}/> : null}
             <div className="login__input-wrapper form__input-wrapper">
               <label className="visually-hidden">Password</label>
               <input
@@ -39,7 +41,7 @@ function LoginScreen(): JSX.Element {
                 required
               />
             </div>
-            {error && error.property === 'password' ? <ErrorPopup type={ErrorType.Login} error={error.message}/> : null}
+            {error && error.property === 'password' ? <ErrorPopup error={error.message} onClose={() => dispatch(resetLoginError())}/> : null}
             <button className="login__submit form__submit button" type="submit">Sign in</button>
           </form>
         </section>
