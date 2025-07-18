@@ -11,6 +11,7 @@ import { SelectNearbyOffers } from '../store/slices/nearby-data/selectors';
 import { SelectOfferRequestStatus } from '../store/slices/offer-data/selectors';
 import { SelectAuthorizationStatus } from '../store/slices/auth-process/selectors';
 import { setActiveCard } from '../store/slices/main-process/main-process';
+import { Offer, Offers } from '../types/offer';
 
 export const useFullOffer = () => {
   const city = useAppSelector(SelectCity);
@@ -22,9 +23,11 @@ export const useFullOffer = () => {
   const authorizationStatus = useAppSelector(SelectAuthorizationStatus);
 
   let images: string[] = [];
+  let nearbyWithOffer: Offers = [];
 
   if (offer) {
     images = offer.images.slice(0, 6);
+    nearbyWithOffer = [...nearby, offers.find((e) => e.id === offer.id) as Offer];
   }
 
   const dispatch = useAppDispatch();
@@ -42,5 +45,5 @@ export const useFullOffer = () => {
     }
   }, [dispatch, id]);
 
-  return {city, offers, offer, images, sortedReviews, nearby, status, authorizationStatus};
+  return {city, offer, images, sortedReviews, nearby, nearbyWithOffer, status, authorizationStatus};
 };

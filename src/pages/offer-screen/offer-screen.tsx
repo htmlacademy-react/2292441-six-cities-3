@@ -8,10 +8,9 @@ import NotFoundScreen from '../not-found-screen';
 import { useFullOffer } from '../../hooks/use-full-offer';
 import BookmarkButton from '../../components/bookmark-button';
 import { useFavorite } from '../../hooks/use-favorite';
-import { Offer } from '../../types/offer';
 
 function OfferScreen(): JSX.Element {
-  const {city, offers, offer, images, sortedReviews, nearby, status, authorizationStatus} = useFullOffer();
+  const {city, offer, images, sortedReviews, nearby, nearbyWithOffer, status, authorizationStatus} = useFullOffer();
   const {isFavorite, clickHandler} = useFavorite(offer);
 
   if (status === RequestStatus.Loading || status === RequestStatus.Idle) {
@@ -21,8 +20,6 @@ function OfferScreen(): JSX.Element {
   if (status === RequestStatus.Failed || !offer) {
     return <NotFoundScreen />;
   }
-
-  const nearbyWithOffer = [...nearby, offers.find((e) => e.id === offer.id) as Offer];
 
   return (
     <main className="page__main page__main--offer">
