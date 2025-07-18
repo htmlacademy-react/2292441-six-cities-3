@@ -21,12 +21,19 @@ export const fetchOffers = createAsyncThunk<Offers, undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
+  rejectValue: ServerError;
 }>(
   'data/fetchOffers',
-  async (_arg, {dispatch, extra: api}) => {
-    const { data } = await api.get<Offers>(APIRoute.Offers);
-    dispatch(setCity(DEFAULT_CITY));
-    return data;
+  async (_arg, {dispatch, extra: api, rejectWithValue}) => {
+    try {
+      const { data } = await api.get<Offers>(APIRoute.Offers);
+      dispatch(setCity(DEFAULT_CITY));
+      return data;
+    } catch (error: unknown) {
+      const errorData = getErrorData(error);
+
+      return rejectWithValue(errorData);
+    }
   }
 );
 
@@ -34,11 +41,18 @@ export const fetchFavorites = createAsyncThunk<Offers, undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
+  rejectValue: ServerError;
 }>(
   'data/fetchFavorites',
-  async (_arg, {extra: api}) => {
-    const { data } = await api.get<Offers>(APIRoute.Favorites);
-    return data;
+  async (_arg, {extra: api, rejectWithValue}) => {
+    try {
+      const { data } = await api.get<Offers>(APIRoute.Favorites);
+      return data;
+    } catch (error: unknown) {
+      const errorData = getErrorData(error);
+
+      return rejectWithValue(errorData);
+    }
   }
 );
 
@@ -69,11 +83,18 @@ export const logout = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
+  rejectValue: ServerError;
 }>(
   'user/logout',
-  async (_arg, {extra: api}) => {
-    await api.delete(APIRoute.Logout);
-    dropToken();
+  async (_arg, {extra: api, rejectWithValue}) => {
+    try {
+      await api.delete(APIRoute.Logout);
+      dropToken();
+    } catch (error: unknown) {
+      const errorData = getErrorData(error);
+
+      return rejectWithValue(errorData);
+    }
   }
 );
 
@@ -81,11 +102,18 @@ export const fetchOffer = createAsyncThunk<FullOffer, string, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
+  rejectValue: ServerError;
 }>(
   'data/fetchOffer',
-  async (id, {extra: api}) => {
-    const {data} = await api.get<FullOffer>(`${APIRoute.Offers}/${id}`);
-    return data;
+  async (id, {extra: api, rejectWithValue}) => {
+    try {
+      const {data} = await api.get<FullOffer>(`${APIRoute.Offers}/${id}`);
+      return data;
+    } catch (error: unknown) {
+      const errorData = getErrorData(error);
+
+      return rejectWithValue(errorData);
+    }
   }
 );
 
@@ -93,11 +121,18 @@ export const fetchReviews = createAsyncThunk<Reviews, string, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
+  rejectValue: ServerError;
 }>(
   'offer/fetchComments',
-  async (id, {extra: api}) => {
-    const {data} = await api.get<Reviews>(`${APIRoute.Comments}/${id}`);
-    return data;
+  async (id, {extra: api, rejectWithValue}) => {
+    try {
+      const {data} = await api.get<Reviews>(`${APIRoute.Comments}/${id}`);
+      return data;
+    } catch (error: unknown) {
+      const errorData = getErrorData(error);
+
+      return rejectWithValue(errorData);
+    }
   }
 );
 
@@ -105,12 +140,19 @@ export const fetchNearbyOffers = createAsyncThunk<Offers, string, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
+  rejectValue: ServerError;
 }>(
   'offer/fetchNearbyOffers',
-  async (id, {extra: api}) => {
-    const {data} = await api.get<Offers>(`${APIRoute.Offers}/${id}/nearby`);
-    const offers = data.slice(0, 3);
-    return offers;
+  async (id, {extra: api, rejectWithValue}) => {
+    try {
+      const {data} = await api.get<Offers>(`${APIRoute.Offers}/${id}/nearby`);
+      const offers = data.slice(0, 3);
+      return offers;
+    } catch (error: unknown) {
+      const errorData = getErrorData(error);
+
+      return rejectWithValue(errorData);
+    }
   }
 );
 
