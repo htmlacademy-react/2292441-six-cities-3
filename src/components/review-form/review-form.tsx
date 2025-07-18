@@ -4,6 +4,7 @@ import { useUserReview } from '../../hooks/use-user-review.ts';
 import ErrorPopup from '../error-popup';
 import { useAppDispatch } from '../../hooks/use-app-dispatch.ts';
 import { resetReviewError } from '../../store/slices/reviews-data/reviews-data.ts';
+import { REVIEW_LENGTH } from '../../const.ts';
 
 function ReviewForm(): JSX.Element {
   const {review, handleRadioChange, handleFieldChange, submitHandler, error} = useUserReview();
@@ -54,7 +55,17 @@ function ReviewForm(): JSX.Element {
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled={review.comment.length < 50}>Submit</button>
+        <button
+          className="reviews__submit form__submit button"
+          type="submit"
+          disabled={
+            !review.stars ||
+            review.comment.length < REVIEW_LENGTH.min ||
+            review.comment.length > REVIEW_LENGTH.max
+          }
+        >
+            Submit
+        </button>
       </div>
       {error ? <ErrorPopup error={error} onClose={() => dispatch(resetReviewError())}/> : null}
     </form>

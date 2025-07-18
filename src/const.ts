@@ -1,5 +1,10 @@
 import { City } from './types/city';
 
+export const REVIEW_LENGTH = {
+  min: 50,
+  max: 300
+};
+
 export enum AppRoute {
   Root = '/',
   Login = '/login',
