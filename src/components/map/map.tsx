@@ -36,7 +36,7 @@ function Map({offers, className, city}: MapProps): JSX.Element {
   const activeOfferId = useAppSelector(SelectActiveCard);
 
   useEffect(() => {
-    if (map) {
+    if (map && offers) {
       const markerLayer = layerGroup().addTo(map);
       offers.forEach((offer) => {
         const marker = new Marker({
