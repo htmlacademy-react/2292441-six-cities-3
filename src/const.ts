@@ -114,7 +114,10 @@ export enum NameSpace {
 }
 
 export enum ErrorType {
-  Login = 'login',
+  Auth = 'auth',
   Review = 'review',
   Favorites = 'favorites',
+  Nearby = 'nearby',
+  Offers = 'offers',
+  Offer = 'offer',
 }

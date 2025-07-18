@@ -1,37 +1,42 @@
 import { useEffect } from 'react';
 import { ErrorType } from '../../const';
 import './error-popup.css';
+import { useErrorReset } from '../../hooks/use-error-reset';
+import { useAppDispatch } from '../../hooks/use-app-dispatch';
+import { ActionCreatorWithoutPayload } from '@reduxjs/toolkit';
 
 type ErrorPopupProps = {
-  type?: ErrorType;
+  type: ErrorType;
   error: string;
-  onClose: (() => void);
 };
 
-function ErrorPopup ({type, error, onClose}: ErrorPopupProps) {
+function ErrorPopup ({type, error}: ErrorPopupProps) {
+  const action = useErrorReset(type) as ActionCreatorWithoutPayload;
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
     if (type === ErrorType.Favorites) {
       const timer = setTimeout(() => {
-        onClose();
+        dispatch(action());
       }, 4000);
 
       return () => clearTimeout(timer);
     }
 
     const keyDownHandler = () => {
-      onClose();
+      dispatch(action());
     };
 
     window.addEventListener('keydown', keyDownHandler);
 
     return () => window.removeEventListener('keydown', keyDownHandler);
-  }, [onClose, type]);
+  }, [action, type, dispatch]);
 
   return (
     <div className="error-popup-overlay">
       <div className="error-popup">
         <p>{`Error! ${error}`}</p>
-        <button className="error-popup-close" onClick={onClose} onKeyDown={onClose}>
+        <button className="error-popup-close" onClick={() => dispatch(action())} onKeyDown={() => dispatch(action())}>
           Close
         </button>
       </div>

@@ -2,13 +2,10 @@
 import { memo } from 'react';
 import { useUserReview } from '../../hooks/use-user-review.ts';
 import ErrorPopup from '../error-popup';
-import { useAppDispatch } from '../../hooks/use-app-dispatch.ts';
-import { resetReviewError } from '../../store/slices/reviews-data/reviews-data.ts';
-import { REVIEW_LENGTH } from '../../const.ts';
+import { ErrorType, REVIEW_LENGTH } from '../../const.ts';
 
 function ReviewForm(): JSX.Element {
   const {review, handleRadioChange, handleFieldChange, submitHandler, isLoading, error} = useUserReview();
-  const dispatch = useAppDispatch();
 
   return (
     <form
@@ -60,7 +57,6 @@ function ReviewForm(): JSX.Element {
           type="submit"
           disabled={
             isLoading ||
-            !review.stars ||
             review.comment.length < REVIEW_LENGTH.min ||
             review.comment.length > REVIEW_LENGTH.max
           }
@@ -68,7 +64,7 @@ function ReviewForm(): JSX.Element {
             Submit
         </button>
       </div>
-      {error ? <ErrorPopup error={error} onClose={() => dispatch(resetReviewError())}/> : null}
+      {error ? <ErrorPopup error={error} type={ErrorType.Review} /> : null}
     </form>
   );
 }

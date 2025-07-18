@@ -10,8 +10,6 @@ import { useSortedOffers } from '../../hooks/use-sorted-offers';
 import { memo } from 'react';
 import { SelectFavoritesError } from '../../store/slices/favorites-data/selectors';
 import ErrorPopup from '../error-popup';
-import { useAppDispatch } from '../../hooks/use-app-dispatch';
-import { resetFavoriteError } from '../../store/slices/favorites-data/favorites-data';
 
 type PlacesListProps = {
   offers: Offers;
@@ -25,7 +23,6 @@ function PlacesList({offers, sortingOption, element}: PlacesListProps): JSX.Elem
   const isFavorites = element === 'favorites__places';
   const className = isFavorites ? element : `${element} places__list ${element === 'cities__places-list' ? 'tabs__content' : ''}`;
   const error = useAppSelector(SelectFavoritesError);
-  const dispatch = useAppDispatch();
 
   if (status === RequestStatus.Loading) {
     return (
@@ -35,7 +32,7 @@ function PlacesList({offers, sortingOption, element}: PlacesListProps): JSX.Elem
 
   return (
     <div className={className}>
-      {error ? <ErrorPopup type={ErrorType.Favorites} error={error} onClose={() => dispatch(resetFavoriteError())} /> : null}
+      {error ? <ErrorPopup type={ErrorType.Favorites} error={error} /> : null}
       {sortedOffers.map((e) => {
         const keyValue = e.id;
         return (<PlaceCard key={keyValue} parent={element} offer={e} />);
