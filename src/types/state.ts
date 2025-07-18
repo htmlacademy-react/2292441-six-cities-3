@@ -37,6 +37,7 @@ export type OffersData = {
 export type ReviewsData = {
   reviews: Reviews;
   requestStatus: RequestStatus;
+  postStatus: RequestStatus;
   error: string | null;
 };
 
