@@ -29,7 +29,6 @@ function LoginScreen(): JSX.Element {
                 required
               />
             </div>
-            {error && error.property === 'email' ? <ErrorPopup error={error.message} onClose={() => dispatch(resetLoginError())}/> : null}
             <div className="login__input-wrapper form__input-wrapper">
               <label className="visually-hidden">Password</label>
               <input
@@ -41,7 +40,7 @@ function LoginScreen(): JSX.Element {
                 required
               />
             </div>
-            {error && error.property === 'password' ? <ErrorPopup error={error.message} onClose={() => dispatch(resetLoginError())}/> : null}
+            {error ? <ErrorPopup error={error} onClose={() => dispatch(resetLoginError())}/> : null}
             <button className="login__submit form__submit button" type="submit">Sign in</button>
           </form>
         </section>

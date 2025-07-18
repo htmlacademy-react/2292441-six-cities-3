@@ -34,15 +34,9 @@ export const authProcess = createSlice({
         state.authorizationStatus = AuthorizationStatus.NoAuth;
         if (action.payload) {
           if ('details' in action.payload && action.payload.details.length) {
-            state.error = {
-              property: action.payload.details[0].property,
-              message: action.payload.details[0].messages.join(' '),
-            };
+            state.error = action.payload.details[0].messages.join(' ');
           } else {
-            state.error = {
-              property: '',
-              message: action.payload.message,
-            };
+            state.error = action.payload.message;
           }
         }
       }).
