@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
-import { AxiosInstance, isAxiosError } from 'axios';
+import { AxiosInstance } from 'axios';
 import { Offer, Offers } from '../types/offer';
 import { APIRoute, AppRoute, DEFAULT_CITY } from '../const';
 import { redirectToRoute } from './action';
@@ -15,6 +15,7 @@ import { ChangeFavoriteStatus } from '../types/change-favorite-flag';
 import { FavoriteOffer } from '../types/favorite-offer';
 import { ServerError } from '../types/server-error';
 import { DetailedError } from '../types/detailed-error';
+import { getErrorData } from './util/get-error-data';
 
 export const fetchOffers = createAsyncThunk<Offers, undefined, {
   dispatch: AppDispatch;
@@ -57,13 +58,9 @@ export const login = createAsyncThunk<UserData, AuthData, {
       dispatch(redirectToRoute(AppRoute.Root));
       return data;
     } catch (error: unknown) {
-      if (isAxiosError(error)) {
-        return rejectWithValue(error.response?.data as DetailedError);
-      }
-      return rejectWithValue({
-        errorType: 'UNKNOWN_ERROR',
-        message: 'Something went wrong.'
-      });
+      const errorData = getErrorData(error);
+
+      return rejectWithValue(errorData);
     }
   }
 );
@@ -129,13 +126,9 @@ export const postReview = createAsyncThunk<Review, PostCommentProps, {
       const {data} = await api.post<Review>(`${APIRoute.Comments}/${offerId}`, body);
       return data;
     } catch (error: unknown) {
-      if (isAxiosError(error)) {
-        return rejectWithValue(error.response?.data as DetailedError);
-      }
-      return rejectWithValue({
-        errorType: 'UNKNOWN_ERROR',
-        message: 'Something went wrong.'
-      });
+      const errorData = getErrorData(error);
+
+      return rejectWithValue(errorData);
     }
   }
 );
@@ -178,13 +171,9 @@ export const changeFavoriteStatus = createAsyncThunk<Offer, ChangeFavoriteStatus
       };
       return offer;
     } catch (error: unknown) {
-      if (isAxiosError(error)) {
-        return rejectWithValue(error.response?.data as ServerError);
-      }
-      return rejectWithValue({
-        errorType: 'UNKNOWN_ERROR',
-        message: 'Something went wrong.'
-      });
+      const errorData = getErrorData(error);
+
+      return rejectWithValue(errorData);
     }
   }
 );
