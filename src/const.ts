@@ -111,13 +111,16 @@ export enum NameSpace {
   Reviews = 'REVIEWS',
   Nearby = 'NEARBY',
   Favorites = 'FAVORITES',
+  Errors = 'ERRORS'
 }
 
 export enum ErrorType {
-  Auth = 'auth',
-  Review = 'review',
-  Favorites = 'favorites',
-  Nearby = 'nearby',
-  Offers = 'offers',
-  Offer = 'offer',
+  Server = 'SERVER_ERROR',
+  Auth = 'AUTH_ERROR',
+  Review = 'REVIEW_ERROR',
+  Favorites = 'FAVORITES_ERROR',
+  Nearby = 'NEARBY_LIST_ERROR',
+  Offers = 'OFFERS_ERROR',
+  Offer = 'OFFER_ERROR',
+  Unknown = 'UNKNOWN_ERROR',
 }

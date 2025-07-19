@@ -8,7 +8,6 @@ import { ChangeFavoriteStatus } from '../../../types/change-favorite-flag';
 const initialState: OffersData = {
   offers: [],
   requestStatus: RequestStatus.Idle,
-  hasError: false,
 };
 
 export const offersData = createSlice({
@@ -34,7 +33,6 @@ export const offersData = createSlice({
       }).
       addCase(fetchOffers.rejected, (state) => {
         state.requestStatus = RequestStatus.Failed;
-        state.hasError = true;
       });
   },
 });

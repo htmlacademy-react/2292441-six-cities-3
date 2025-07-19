@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
 import { AxiosInstance } from 'axios';
 import { Offer, Offers } from '../types/offer';
-import { APIRoute, AppRoute, DEFAULT_CITY } from '../const';
+import { APIRoute, AppRoute, DEFAULT_CITY, ErrorType } from '../const';
 import { redirectToRoute } from './action';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
@@ -16,6 +16,7 @@ import { FavoriteOffer } from '../types/favorite-offer';
 import { ServerError } from '../types/server-error';
 import { DetailedError } from '../types/detailed-error';
 import { getErrorData } from './util/get-error-data';
+import { addError } from './slices/errors-data/errors-data';
 
 export const fetchOffers = createAsyncThunk<Offers, undefined, {
   dispatch: AppDispatch;
@@ -30,7 +31,8 @@ export const fetchOffers = createAsyncThunk<Offers, undefined, {
       dispatch(setCity(DEFAULT_CITY));
       return data;
     } catch (error: unknown) {
-      const errorData = getErrorData(error);
+      const errorData = getErrorData(error, ErrorType.Offers);
+      dispatch(addError(errorData));
 
       return rejectWithValue(errorData);
     }
@@ -44,12 +46,13 @@ export const fetchFavorites = createAsyncThunk<Offers, undefined, {
   rejectValue: ServerError;
 }>(
   'data/fetchFavorites',
-  async (_arg, {extra: api, rejectWithValue}) => {
+  async (_arg, {dispatch, extra: api, rejectWithValue}) => {
     try {
       const { data } = await api.get<Offers>(APIRoute.Favorites);
       return data;
     } catch (error: unknown) {
-      const errorData = getErrorData(error);
+      const errorData = getErrorData(error, ErrorType.Favorites);
+      dispatch(addError(errorData));
 
       return rejectWithValue(errorData);
     }
@@ -72,7 +75,8 @@ export const login = createAsyncThunk<UserData, AuthData, {
       dispatch(redirectToRoute(AppRoute.Root));
       return data;
     } catch (error: unknown) {
-      const errorData = getErrorData(error);
+      const errorData = getErrorData(error, ErrorType.Auth);
+      dispatch(addError(errorData));
 
       return rejectWithValue(errorData);
     }
@@ -86,12 +90,13 @@ export const logout = createAsyncThunk<void, undefined, {
   rejectValue: ServerError;
 }>(
   'user/logout',
-  async (_arg, {extra: api, rejectWithValue}) => {
+  async (_arg, {dispatch, extra: api, rejectWithValue}) => {
     try {
       await api.delete(APIRoute.Logout);
       dropToken();
     } catch (error: unknown) {
-      const errorData = getErrorData(error);
+      const errorData = getErrorData(error, ErrorType.Auth);
+      dispatch(addError(errorData));
 
       return rejectWithValue(errorData);
     }
@@ -105,12 +110,13 @@ export const fetchOffer = createAsyncThunk<FullOffer, string, {
   rejectValue: ServerError;
 }>(
   'data/fetchOffer',
-  async (id, {extra: api, rejectWithValue}) => {
+  async (id, {dispatch, extra: api, rejectWithValue}) => {
     try {
       const {data} = await api.get<FullOffer>(`${APIRoute.Offers}/${id}`);
       return data;
     } catch (error: unknown) {
-      const errorData = getErrorData(error);
+      const errorData = getErrorData(error, ErrorType.Offer);
+      dispatch(addError(errorData));
 
       return rejectWithValue(errorData);
     }
@@ -124,12 +130,13 @@ export const fetchReviews = createAsyncThunk<Reviews, string, {
   rejectValue: ServerError;
 }>(
   'offer/fetchComments',
-  async (id, {extra: api, rejectWithValue}) => {
+  async (id, {dispatch, extra: api, rejectWithValue}) => {
     try {
       const {data} = await api.get<Reviews>(`${APIRoute.Comments}/${id}`);
       return data;
     } catch (error: unknown) {
-      const errorData = getErrorData(error);
+      const errorData = getErrorData(error, ErrorType.Review);
+      dispatch(addError(errorData));
 
       return rejectWithValue(errorData);
     }
@@ -143,13 +150,14 @@ export const fetchNearbyOffers = createAsyncThunk<Offers, string, {
   rejectValue: ServerError;
 }>(
   'offer/fetchNearbyOffers',
-  async (id, {extra: api, rejectWithValue}) => {
+  async (id, {dispatch, extra: api, rejectWithValue}) => {
     try {
       const {data} = await api.get<Offers>(`${APIRoute.Offers}/${id}/nearby`);
       const offers = data.slice(0, 3);
       return offers;
     } catch (error: unknown) {
-      const errorData = getErrorData(error);
+      const errorData = getErrorData(error, ErrorType.Nearby);
+      dispatch(addError(errorData));
 
       return rejectWithValue(errorData);
     }
@@ -163,12 +171,13 @@ export const postReview = createAsyncThunk<Review, PostCommentProps, {
   rejectValue: DetailedError | ServerError;
 }>(
   'offer/postComment',
-  async ({body, offerId}, {extra: api, rejectWithValue}) => {
+  async ({body, offerId}, {dispatch, extra: api, rejectWithValue}) => {
     try {
       const {data} = await api.post<Review>(`${APIRoute.Comments}/${offerId}`, body);
       return data;
     } catch (error: unknown) {
-      const errorData = getErrorData(error);
+      const errorData = getErrorData(error, ErrorType.Review);
+      dispatch(addError(errorData));
 
       return rejectWithValue(errorData);
     }
@@ -196,7 +205,7 @@ export const changeFavoriteStatus = createAsyncThunk<Offer, ChangeFavoriteStatus
   rejectValue: ServerError;
 }>(
   'favorites/changeFlag',
-  async ({id, status}, {extra: api, rejectWithValue}) => {
+  async ({id, status}, {dispatch, extra: api, rejectWithValue}) => {
     try {
       const {data} = await api.post<FavoriteOffer>(`${APIRoute.Favorites}/${id}/${status}`, status);
       const offer: Offer = {
@@ -213,7 +222,8 @@ export const changeFavoriteStatus = createAsyncThunk<Offer, ChangeFavoriteStatus
       };
       return offer;
     } catch (error: unknown) {
-      const errorData = getErrorData(error);
+      const errorData = getErrorData(error, ErrorType.Favorites);
+      dispatch(addError(errorData));
 
       return rejectWithValue(errorData);
     }

@@ -6,17 +6,12 @@ import { checkAuth, login, logout } from '../../api-action';
 const initialState: AuthProcess = {
   authorizationStatus: AuthorizationStatus.Unknown,
   user: null,
-  error: null,
 };
 
 export const authProcess = createSlice({
   name: NameSpace.Auth,
   initialState,
-  reducers: {
-    resetLoginError: (state) => {
-      state.error = null;
-    },
-  },
+  reducers: {},
   extraReducers(builder) {
     builder.
       addCase(checkAuth.fulfilled, (state, action) => {
@@ -30,15 +25,8 @@ export const authProcess = createSlice({
         state.authorizationStatus = AuthorizationStatus.Auth;
         state.user = action.payload;
       }).
-      addCase(login.rejected, (state, action) => {
+      addCase(login.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
-        if (action.payload) {
-          if ('details' in action.payload && action.payload.details.length) {
-            state.error = action.payload.details[0].messages.join(' ');
-          } else {
-            state.error = action.payload.message;
-          }
-        }
       }).
       addCase(logout.fulfilled, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
@@ -46,5 +34,3 @@ export const authProcess = createSlice({
       });
   }
 });
-
-export const { resetLoginError } = authProcess.actions;

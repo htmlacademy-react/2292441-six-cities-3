@@ -1,42 +1,39 @@
 import { useEffect } from 'react';
 import { ErrorType } from '../../const';
 import './error-popup.css';
-import { useErrorReset } from '../../hooks/use-error-reset';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
-import { ActionCreatorWithoutPayload } from '@reduxjs/toolkit';
+import { useAppSelector } from '../../hooks/use-app-selector';
+import { SelectErrors } from '../../store/slices/errors-data/selectors';
+import { removeError } from '../../store/slices/errors-data/errors-data';
 
-type ErrorPopupProps = {
-  type: ErrorType;
-  error: string;
-};
-
-function ErrorPopup ({type, error}: ErrorPopupProps) {
-  const action = useErrorReset(type) as ActionCreatorWithoutPayload;
+function ErrorPopup () {
   const dispatch = useAppDispatch();
+  const errors = useAppSelector(SelectErrors);
+  const {errorType, message} = errors[0];
 
   useEffect(() => {
-    if (type === ErrorType.Favorites) {
+    if (errorType as ErrorType === ErrorType.Favorites) {
       const timer = setTimeout(() => {
-        dispatch(action());
+        dispatch(removeError());
       }, 4000);
 
       return () => clearTimeout(timer);
     }
 
     const keyDownHandler = () => {
-      dispatch(action());
+      dispatch(removeError());
     };
 
     window.addEventListener('keydown', keyDownHandler);
 
     return () => window.removeEventListener('keydown', keyDownHandler);
-  }, [action, type, dispatch]);
+  }, [errorType, dispatch]);
 
   return (
     <div className="error-popup-overlay">
       <div className="error-popup">
-        <p>{`Error! ${error}`}</p>
-        <button className="error-popup-close" onClick={() => dispatch(action())} onKeyDown={() => dispatch(action())}>
+        <p>{`${errorType}! ${message}`}</p>
+        <button className="error-popup-close" onClick={() => dispatch(removeError())} onKeyDown={() => dispatch(removeError())}>
           Close
         </button>
       </div>

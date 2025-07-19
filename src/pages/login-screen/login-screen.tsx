@@ -1,9 +1,7 @@
-import ErrorPopup from '../../components/error-popup';
-import { ErrorType } from '../../const';
 import { useLogin } from '../../hooks/use-login';
 
 function LoginScreen(): JSX.Element {
-  const {loginRef, passwordRef, submitHandler, error} = useLogin();
+  const {loginRef, passwordRef, submitHandler} = useLogin();
 
   return (
     <main className="page__main page__main--login">
@@ -38,7 +36,6 @@ function LoginScreen(): JSX.Element {
                 required
               />
             </div>
-            {error ? <ErrorPopup error={error} type={ErrorType.Auth}/> : null}
             <button className="login__submit form__submit button" type="submit">Sign in</button>
           </form>
         </section>
