@@ -26,13 +26,13 @@ function ErrorPopup ({errors}: ErrorPopupProps) {
       return () => clearTimeout(timer);
     }
 
-    const keyDownHandler = () => {
+    const handleButtonKeydown = () => {
       dispatch(removeError());
     };
 
-    window.addEventListener('keydown', keyDownHandler);
+    window.addEventListener('keydown', handleButtonKeydown);
 
-    return () => window.removeEventListener('keydown', keyDownHandler);
+    return () => window.removeEventListener('keydown', handleButtonKeydown);
   }, [currentError, dispatch]);
 
   if (!currentError) {

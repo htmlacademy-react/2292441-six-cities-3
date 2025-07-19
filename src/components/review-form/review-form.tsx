@@ -4,14 +4,14 @@ import { useUserReview } from '../../hooks/use-user-review.ts';
 import { REVIEW_LENGTH } from '../../const.ts';
 
 function ReviewForm(): JSX.Element {
-  const {review, handleRadioChange, handleFieldChange, submitHandler, isLoading} = useUserReview();
+  const {review, handleRadioChange, handleFieldChange, handleFormSubmit, isLoading} = useUserReview();
 
   return (
     <form
       className="reviews__form form"
       action="#"
       method="post"
-      onSubmit={submitHandler}
+      onSubmit={handleFormSubmit}
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">

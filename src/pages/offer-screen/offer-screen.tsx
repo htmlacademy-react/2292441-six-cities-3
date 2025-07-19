@@ -11,7 +11,7 @@ import { useFavorite } from '../../hooks/use-favorite';
 
 function OfferScreen(): JSX.Element {
   const {city, offer, images, sortedReviews, nearby, nearbyWithOffer, status, authorizationStatus} = useFullOffer();
-  const {isFavorite, clickHandler} = useFavorite(offer);
+  const {isFavorite, handleButtonClick} = useFavorite(offer);
 
   if (status === RequestStatus.Loading || status === RequestStatus.Idle) {
     return <Spinner />;
@@ -50,7 +50,7 @@ function OfferScreen(): JSX.Element {
               </h1>
               <BookmarkButton
                 isFavorite={isFavorite}
-                clickHandler={clickHandler}
+                handleButtonClick={handleButtonClick}
                 element='offer'
               />
             </div>

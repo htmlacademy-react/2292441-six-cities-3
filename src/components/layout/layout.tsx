@@ -9,7 +9,7 @@ import { SelectErrors } from '../../store/slices/errors-data/selectors';
 
 function Layout(): JSX.Element {
   const MemoizedLink = memo(Link);
-  const {user, favorites, isAuthorized, rootClassName, shouldRenderFooter, shouldRenderUser, logoutHandler} = useLayoutState();
+  const {user, favorites, isAuthorized, rootClassName, shouldRenderFooter, shouldRenderUser, handleLogoutClick} = useLayoutState();
   const errors = useAppSelector(SelectErrors);
 
   return (
@@ -46,7 +46,7 @@ function Layout(): JSX.Element {
                         <MemoizedLink
                           to={AppRoute.Login}
                           className="header__nav-link"
-                          onClick={logoutHandler}
+                          onClick={handleLogoutClick}
                         >
                           <span className="header__signout">Sign out</span>
                         </MemoizedLink>

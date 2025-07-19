@@ -30,11 +30,11 @@ export const useLayoutState = () => {
     shouldRenderFooter = true;
   }
 
-  const logoutHandler = (evt: MouseEvent<HTMLAnchorElement>) => {
+  const handleLogoutClick = (evt: MouseEvent<HTMLAnchorElement>) => {
     evt.preventDefault();
 
     dispatch(logout());
   };
 
-  return {user, favorites, isAuthorized, rootClassName, shouldRenderFooter, shouldRenderUser, logoutHandler};
+  return {user, favorites, isAuthorized, rootClassName, shouldRenderFooter, shouldRenderUser, handleLogoutClick};
 };

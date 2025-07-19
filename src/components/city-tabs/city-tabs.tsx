@@ -4,7 +4,7 @@ import { useCity } from '../../hooks/use-city';
 import { memo } from 'react';
 
 function CityTabs(): JSX.Element {
-  const {currentCity, cityChangeHandler} = useCity();
+  const {currentCity, handleCityClick} = useCity();
 
   return (
     <div className="tabs">
@@ -13,7 +13,7 @@ function CityTabs(): JSX.Element {
           {CITIES.map((city) => (
             <li className="locations__item" key={city.name}>
               <a className={`locations__item-link tabs__item ${(city.name === currentCity.name) ? 'tabs__item--active' : ''}`}
-                onClick={cityChangeHandler(city)}
+                onClick={handleCityClick(city)}
               >
                 <span>{city.name}</span>
               </a>

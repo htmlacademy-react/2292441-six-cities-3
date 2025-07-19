@@ -15,14 +15,14 @@ type PlaceCardProps = {
 function PlaceCard({offer, parent}: PlaceCardProps): JSX.Element {
   const route = `/offer/${offer.id}`;
   const {isMainList, isFavorites, card, imageWrapper} = usePlaceCardClasses(parent);
-  const {activeCardHandler, noActiveCardHandler} = useActiveCard(offer.id);
-  const {isFavorite, clickHandler} = useFavorite(offer);
+  const {handleCardMouseOver, handleCardMouseOut} = useActiveCard(offer.id);
+  const {isFavorite, handleButtonClick} = useFavorite(offer);
 
   return (
     <article
       className={card}
-      onMouseOver={isMainList ? activeCardHandler : undefined}
-      onMouseOut={isMainList ? noActiveCardHandler : undefined}
+      onMouseOver={isMainList ? handleCardMouseOver : undefined}
+      onMouseOut={isMainList ? handleCardMouseOut : undefined}
     >
       {
         offer.isPremium &&
@@ -43,7 +43,7 @@ function PlaceCard({offer, parent}: PlaceCardProps): JSX.Element {
           </div>
           <BookmarkButton
             isFavorite={isFavorite}
-            clickHandler={clickHandler}
+            handleButtonClick={handleButtonClick}
             element='place-card'
           />
         </div>

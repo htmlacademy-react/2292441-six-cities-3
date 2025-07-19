@@ -40,7 +40,7 @@ export const useUserReview = () => {
     setReview({...review, comment: target.value});
   };
 
-  const submitHandler = (evt: FormEvent) => {
+  const handleFormSubmit = (evt: FormEvent) => {
     evt.preventDefault();
 
     dispatch(postReview({
@@ -53,5 +53,5 @@ export const useUserReview = () => {
   };
 
 
-  return {review, handleRadioChange, handleFieldChange, submitHandler, isLoading};
+  return {review, handleRadioChange, handleFieldChange, handleFormSubmit, isLoading};
 };

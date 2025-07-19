@@ -9,10 +9,10 @@ export const useCity = () => {
   const currentCity = useAppSelector(SelectCity);
   const dispatch = useAppDispatch();
 
-  const cityChangeHandler = (city: City) => (evt: MouseEvent<HTMLAnchorElement>) => {
+  const handleCityClick = (city: City) => (evt: MouseEvent<HTMLAnchorElement>) => {
     evt.preventDefault();
     dispatch(setCity(city));
   };
 
-  return {currentCity, cityChangeHandler};
+  return {currentCity, handleCityClick};
 };

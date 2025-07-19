@@ -23,7 +23,7 @@ export const useFavorite = (offer: Offer | FullOffer | null) => {
     }
   }, [offer]);
 
-  const clickHandler = useCallback(() => {
+  const handleButtonClick = useCallback(() => {
     if (!offer) {
       return;
     }
@@ -43,5 +43,5 @@ export const useFavorite = (offer: Offer | FullOffer | null) => {
     }
   }, [authStatus, dispatch, isFavorite, navigate, offer]);
 
-  return {isFavorite, clickHandler};
+  return {isFavorite, handleButtonClick};
 };

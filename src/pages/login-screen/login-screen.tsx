@@ -1,7 +1,7 @@
 import { useLogin } from '../../hooks/use-login';
 
 function LoginScreen(): JSX.Element {
-  const {loginRef, passwordRef, submitHandler} = useLogin();
+  const {loginRef, passwordRef, handleFormSubmit} = useLogin();
 
   return (
     <main className="page__main page__main--login">
@@ -12,7 +12,7 @@ function LoginScreen(): JSX.Element {
             className="login__form form"
             action="#"
             method="post"
-            onSubmit={submitHandler}
+            onSubmit={handleFormSubmit}
           >
             <div className="login__input-wrapper form__input-wrapper">
               <label className="visually-hidden">E-mail</label>

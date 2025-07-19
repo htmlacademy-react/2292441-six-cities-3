@@ -6,13 +6,13 @@ import { setActiveCard } from '../store/slices/main-process/main-process';
 export const useActiveCard = (offerId: Offer['id']) => {
   const dispatch = useAppDispatch();
 
-  const activeCardHandler = () => {
+  const handleCardMouseOver = () => {
     dispatch(setActiveCard(offerId));
   };
 
-  const noActiveCardHandler = () => {
+  const handleCardMouseOut = () => {
     dispatch(setActiveCard(''));
   };
 
-  return {activeCardHandler, noActiveCardHandler};
+  return {handleCardMouseOver, handleCardMouseOut};
 };
