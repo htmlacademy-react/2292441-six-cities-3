@@ -6,10 +6,12 @@ type ReviewsListProps = {
 };
 
 function ReviewsList({reviews}: ReviewsListProps): JSX.Element {
+  const reviewsList = reviews.slice(0, 10);
+
   return (
     <ul className="reviews__list">
       {
-        reviews.map((e, i) => {
+        reviewsList.map((e, i) => {
           const keyValue = `${i}-${e.comment}`;
           return (
             <ReviewItem key={keyValue} review={e}/>

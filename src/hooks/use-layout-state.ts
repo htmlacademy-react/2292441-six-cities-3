@@ -1,15 +1,18 @@
-import { AppRoute } from '../const';
+import { AppRoute, AuthorizationStatus } from '../const';
 import { useAppDispatch } from './use-app-dispatch';
 import { useLocation } from 'react-router-dom';
 import { MouseEvent } from 'react';
 import { logout } from '../store/api-action';
 import { useAppSelector } from './use-app-selector';
 import { SelectUser, SelectAuthorizationStatus } from '../store/slices/auth-process/selectors';
+import { SelectFavorites } from '../store/slices/favorites-data/selectors';
 
 export const useLayoutState = () => {
   const user = useAppSelector(SelectUser);
   const authorizationStatus = useAppSelector(SelectAuthorizationStatus);
+  const favorites = useAppSelector(SelectFavorites);
 
+  const isAuth = authorizationStatus === AuthorizationStatus.Auth;
   const dispatch = useAppDispatch();
   const {pathname} = useLocation();
   const path = pathname as AppRoute;
@@ -33,5 +36,5 @@ export const useLayoutState = () => {
     dispatch(logout());
   };
 
-  return {user, authorizationStatus, rootClassName, shouldRenderFooter, shouldRenderUser, logoutHandler};
+  return {user, favorites, isAuth, rootClassName, shouldRenderFooter, shouldRenderUser, logoutHandler};
 };

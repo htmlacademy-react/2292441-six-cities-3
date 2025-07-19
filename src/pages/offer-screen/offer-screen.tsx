@@ -6,9 +6,12 @@ import PlacesList from '../../components/places-list';
 import Spinner from '../../components/spinner';
 import NotFoundScreen from '../not-found-screen';
 import { useFullOffer } from '../../hooks/use-full-offer';
+import BookmarkButton from '../../components/bookmark-button';
+import { useFavorite } from '../../hooks/use-favorite';
 
 function OfferScreen(): JSX.Element {
-  const {city, offers, offer, sortedReviews, nearbyOffers, status, authorizationStatus} = useFullOffer();
+  const {city, offer, images, sortedReviews, nearby, nearbyWithOffer, status, authorizationStatus} = useFullOffer();
+  const {isFavorite, clickHandler} = useFavorite(offer);
 
   if (status === RequestStatus.Loading || status === RequestStatus.Idle) {
     return <Spinner />;
@@ -23,7 +26,7 @@ function OfferScreen(): JSX.Element {
       <section className="offer">
         <div className="offer__gallery-container container">
           <div className="offer__gallery">
-            {offer.images.map((e, i) => {
+            {images.map((e, i) => {
               const keyValue = `${i}-${e}`;
               return (
                 <div key={keyValue} className="offer__image-wrapper">
@@ -45,16 +48,15 @@ function OfferScreen(): JSX.Element {
               <h1 className="offer__name">
                 {offer.title}
               </h1>
-              <button className="offer__bookmark-button button" type="button">
-                <svg className="offer__bookmark-icon" width="31" height="33">
-                  <use xlinkHref="#icon-bookmark"></use>
-                </svg>
-                <span className="visually-hidden">To bookmarks</span>
-              </button>
+              <BookmarkButton
+                isFavorite={isFavorite}
+                clickHandler={clickHandler}
+                element='offer'
+              />
             </div>
             <div className="offer__rating rating">
               <div className="offer__stars rating__stars">
-                <span style={{width: `${20 * offer.rating}%`}}></span>
+                <span style={{width: `${20 * Math.round(offer.rating)}%`}}></span>
                 <span className="visually-hidden">Rating</span>
               </div>
               <span className="offer__rating-value rating__value">{offer.rating}</span>
@@ -64,10 +66,10 @@ function OfferScreen(): JSX.Element {
                 {offer.type}
               </li>
               <li className="offer__feature offer__feature--bedrooms">
-                {offer.bedrooms} Bedrooms
+                {`${offer.bedrooms} Bedroom${offer.bedrooms > 1 ? 's' : ''}`}
               </li>
               <li className="offer__feature offer__feature--adults">
-                Max {offer.maxAdults} adults
+                {`Max ${offer.maxAdults} adult${offer.maxAdults > 1 ? 's' : ''}`}
               </li>
             </ul>
             <div className="offer__price">
@@ -116,14 +118,15 @@ function OfferScreen(): JSX.Element {
         <Map
           className='offer__map'
           city={city}
-          offers={offers}
+          offers={nearbyWithOffer}
         />
       </section>
       <div className="container">
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
           <PlacesList
-            offers={nearbyOffers}
+            offers={nearby}
+            element='near-places__list'
           />
         </section>
       </div>

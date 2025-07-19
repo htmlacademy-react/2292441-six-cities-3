@@ -1,12 +1,16 @@
 import { Link } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute } from '../../const';
 import { Outlet } from 'react-router-dom';
 import { useLayoutState } from '../../hooks/use-layout-state';
 import { memo } from 'react';
+import ErrorPopup from '../error-popup';
+import { useAppSelector } from '../../hooks/use-app-selector';
+import { SelectErrors } from '../../store/slices/errors-data/selectors';
 
 function Layout(): JSX.Element {
   const MemoizedLink = memo(Link);
-  const {user, authorizationStatus, rootClassName, shouldRenderFooter, shouldRenderUser, logoutHandler} = useLayoutState();
+  const {user, favorites, isAuth, rootClassName, shouldRenderFooter, shouldRenderUser, logoutHandler} = useLayoutState();
+  const errors = useAppSelector(SelectErrors);
 
   return (
     <div className={`page ${rootClassName}`}>
@@ -24,20 +28,20 @@ function Layout(): JSX.Element {
                 <ul className="header__nav-list">
                   <li className="header__nav-item user">
                     <MemoizedLink to={AppRoute.Favorites} className="header__nav-link header__nav-link--profile">
-                      <div className="header__avatar-wrapper user__avatar-wrapper">
+                      <div className="header__avatar-wrapper user__avatar-wrapper" style={{backgroundImage: `url(${user?.avatarUrl})`}}>
                       </div>
                       {
-                        authorizationStatus === AuthorizationStatus.Auth ? (
+                        isAuth ? (
                           <>
                             <span className="header__user-name user__name">{user?.email}</span>
-                            <span className="header__favorite-count">3</span>
+                            <span className="header__favorite-count">{favorites.length}</span>
                           </>
                         ) : <span className='header_login'>Sign in</span>
                       }
                     </MemoizedLink>
                   </li>
                   {
-                    authorizationStatus === AuthorizationStatus.Auth ? (
+                    isAuth ? (
                       <li className="header__nav-item">
                         <MemoizedLink
                           to={AppRoute.Login}
@@ -55,6 +59,7 @@ function Layout(): JSX.Element {
           </div>
         </div>
       </header>
+      {errors ? <ErrorPopup errors={errors}/> : null}
       <Outlet />
       {
         shouldRenderFooter &&

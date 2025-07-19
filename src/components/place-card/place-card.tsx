@@ -3,22 +3,26 @@ import { Link } from 'react-router-dom';
 import { Offer } from '../../types/offer';
 import { useActiveCard } from '../../hooks/use-active-card';
 import { memo } from 'react';
+import BookmarkButton from '../bookmark-button/bookmark-button';
+import { useFavorite } from '../../hooks/use-favorite';
+import { usePlaceCardClasses } from '../../hooks/use-place-card-classes';
 
 type PlaceCardProps = {
   offer: Offer;
-  className: string;
-  isMainPage?: boolean;
+  parent: string;
 };
 
-function PlaceCard({offer, className, isMainPage}: PlaceCardProps): JSX.Element {
+function PlaceCard({offer, parent}: PlaceCardProps): JSX.Element {
   const route = `/offer/${offer.id}`;
+  const {isMainList, isFavorites, card, imgWrapper} = usePlaceCardClasses(parent);
   const {activeCardHandler, noActiveCardHandler} = useActiveCard(offer.id);
+  const {isFavorite, clickHandler} = useFavorite(offer);
 
   return (
     <article
-      className={`${className} place-card`}
-      onMouseOver={isMainPage ? activeCardHandler : undefined}
-      onMouseOut={isMainPage ? noActiveCardHandler : undefined}
+      className={card}
+      onMouseOver={isMainList ? activeCardHandler : undefined}
+      onMouseOut={isMainList ? noActiveCardHandler : undefined}
     >
       {
         offer.isPremium &&
@@ -26,9 +30,9 @@ function PlaceCard({offer, className, isMainPage}: PlaceCardProps): JSX.Element 
           <span>Premium</span>
         </div>
       }
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={imgWrapper}>
         <Link to={route}>
-          <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Place image"/>
+          <img className="place-card__image" src={offer.previewImage} width={isFavorites ? '150' : '260'} height={isFavorites ? '110' : '200'} alt="Place image"/>
         </Link>
       </div>
       <div className="place-card__info">
@@ -37,16 +41,15 @@ function PlaceCard({offer, className, isMainPage}: PlaceCardProps): JSX.Element 
             <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">To bookmarks</span>
-          </button>
+          <BookmarkButton
+            isFavorite={isFavorite}
+            clickHandler={clickHandler}
+            element='place-card'
+          />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${20 * offer.rating}%`}}></span>
+            <span style={{width: `${20 * Math.round(offer.rating)}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
