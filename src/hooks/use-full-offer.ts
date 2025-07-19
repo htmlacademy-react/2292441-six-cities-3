@@ -4,27 +4,37 @@ import { useEffect } from 'react';
 import { fetchOffer, fetchReviews, fetchNearbyOffers } from '../store/api-action';
 import { useAppSelector } from './use-app-selector';
 import { SelectCity } from '../store/slices/main-process/selectors';
-import { SelectCurrentOffers } from '../store/slices/offers-data/selectors';
 import { SelectOffer } from '../store/slices/offer-data/selectors';
 import { SelectReviews } from '../store/slices/reviews-data/selectors';
 import { SelectNearbyOffers } from '../store/slices/nearby-data/selectors';
 import { SelectOfferRequestStatus } from '../store/slices/offer-data/selectors';
 import { SelectAuthorizationStatus } from '../store/slices/auth-process/selectors';
 import { setActiveCard } from '../store/slices/main-process/main-process';
+import { SelectCurrentOffers } from '../store/selectors/select-current-offers';
 
 export const useFullOffer = () => {
   const city = useAppSelector(SelectCity);
-  const offers = useAppSelector(SelectCurrentOffers);
   const offer = useAppSelector(SelectOffer);
+  const offers = useAppSelector(SelectCurrentOffers);
   const reviews = useAppSelector(SelectReviews);
-  const nearbyOffers = useAppSelector(SelectNearbyOffers);
+  const nearby = useAppSelector(SelectNearbyOffers);
   const status = useAppSelector(SelectOfferRequestStatus);
   const authorizationStatus = useAppSelector(SelectAuthorizationStatus);
+
+  let images: string[] = [];
+  let nearbyWithOffer = [...nearby];
+  const currentOffer = offers.find((e) => e.id === offer?.id);
+
+  if (offer) {
+    images = offer.images.slice(0, 6);
+    if (currentOffer) {
+      nearbyWithOffer = [...nearby, currentOffer];
+    }
+  }
 
   const dispatch = useAppDispatch();
   const {id} = useParams();
   const sortedReviews = [...reviews].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-
 
   useEffect(() => {
     if (id) {
@@ -37,5 +47,5 @@ export const useFullOffer = () => {
     }
   }, [dispatch, id]);
 
-  return {city, offers, offer, sortedReviews, nearbyOffers, status, authorizationStatus};
+  return {city, offer, images, sortedReviews, nearby, nearbyWithOffer, status, authorizationStatus};
 };

@@ -4,7 +4,7 @@ import { City } from '../../types/city';
 import { Offers } from '../../types/offer';
 import { useMap } from '../../hooks/use-map';
 import { layerGroup, Marker, Icon, LatLng } from 'leaflet';
-import { URL_MARKER_DEFAULT, URL_MARKER_ACTIVE } from '../../const';
+import { MapMarkerUrl } from '../../const';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { SelectActiveCard } from '../../store/slices/main-process/selectors';
 
@@ -16,7 +16,7 @@ type MapProps = {
 
 const customDefaultMarker = new Icon(
   {
-    iconUrl: URL_MARKER_DEFAULT,
+    iconUrl: MapMarkerUrl.Default,
     iconSize: [27, 39],
     iconAnchor: [13.5, 39]
   }
@@ -24,7 +24,7 @@ const customDefaultMarker = new Icon(
 
 const customActiveMarker = new Icon(
   {
-    iconUrl: URL_MARKER_ACTIVE,
+    iconUrl: MapMarkerUrl.Active,
     iconSize: [27, 39],
     iconAnchor: [13.5, 39]
   }

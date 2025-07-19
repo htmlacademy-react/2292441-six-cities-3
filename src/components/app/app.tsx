@@ -12,13 +12,14 @@ import { useEffect } from 'react';
 import { checkAuth, fetchOffers } from '../../store/api-action';
 import browserHistory from '../../browser-history';
 import HistoryRouter from '../history-route';
+import PublicRoute from '../public-route';
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(checkAuth());
     dispatch(fetchOffers());
+    dispatch(checkAuth());
   }, [dispatch]);
 
   return (
@@ -34,13 +35,17 @@ function App(): JSX.Element {
           />
           <Route
             path={AppRoute.Login}
-            element={<LoginScreen />}
+            element={
+              <PublicRoute>
+                <LoginScreen />
+              </PublicRoute>
+            }
           />
           <Route
             path={AppRoute.Favorites}
             element={
               <PrivateRoute>
-                <FavoritesScreen offers={[]} />
+                <FavoritesScreen />
               </PrivateRoute>
             }
           />

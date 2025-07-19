@@ -7,12 +7,12 @@ export const useSort = (getSortingOption: (option: SortingOption) => void) => {
   const { isOn, off, toggle } = useBoolean(false);
   const [currentOption, setCurrentOption] = useState(SORTING_OPTIONS[0] as SortingOption);
 
-  const optionChangeHandler = (option: SortingOption) => {
+  const handleOptionClick = (option: SortingOption) => {
     setCurrentOption(option);
     getSortingOption(option);
   };
 
-  const renderOptionListHandler = () => {
+  const handleFormClick = () => {
     toggle();
   };
 
@@ -33,5 +33,5 @@ export const useSort = (getSortingOption: (option: SortingOption) => void) => {
     }
   }, [isOn, off]);
 
-  return {isOn, currentOption, optionChangeHandler, renderOptionListHandler};
+  return {isOn, currentOption, handleOptionClick, handleFormClick};
 };

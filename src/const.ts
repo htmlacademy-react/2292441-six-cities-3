@@ -1,6 +1,11 @@
 import { City } from './types/city';
 
-export const DEFAULT_CITY = 'Paris';
+const CITIES_ZOOM = 13;
+
+export const REVIEW_LENGTH = {
+  min: 50,
+  max: 300
+};
 
 export enum AppRoute {
   Root = '/',
@@ -21,7 +26,7 @@ export const CITIES: City[] = [
     location: {
       latitude: 48.8529682000,
       longitude: 2.3499021000,
-      zoom: 11,
+      zoom: CITIES_ZOOM,
     }
   },
   {
@@ -29,7 +34,7 @@ export const CITIES: City[] = [
     location: {
       latitude: 50.9412781000,
       longitude: 6.9582817000,
-      zoom: 11,
+      zoom: CITIES_ZOOM,
     }
   },
   {
@@ -37,7 +42,7 @@ export const CITIES: City[] = [
     location: {
       latitude: 50.8467322000,
       longitude: 4.3499989000,
-      zoom: 11,
+      zoom: CITIES_ZOOM,
     }
   },
   {
@@ -45,7 +50,7 @@ export const CITIES: City[] = [
     location: {
       latitude: 52.3675964307,
       longitude: 4.9041366576,
-      zoom: 11,
+      zoom: CITIES_ZOOM,
     }
   },
   {
@@ -53,7 +58,7 @@ export const CITIES: City[] = [
     location: {
       latitude: 53.5510846000,
       longitude: 9.9936818000,
-      zoom: 11,
+      zoom: CITIES_ZOOM,
     }
   },
   {
@@ -61,24 +66,17 @@ export const CITIES: City[] = [
     location: {
       latitude: 51.2277411000,
       longitude: 6.7734556000,
-      zoom: 11,
+      zoom: CITIES_ZOOM,
     }
   }
 ];
 
-export const URL_MARKER_DEFAULT = '../../public/img/pin.svg';
+export const DEFAULT_CITY = CITIES[0];
 
-export const URL_MARKER_ACTIVE = '../../public/img/pin-active.svg';
-
-export const MAIN_PLACES_LIST_CLASSES = {
-  listClass: 'cities__places-list',
-  itemClass: 'cities__card'
-};
-
-export const NEAR_PLACES_LIST_CLASSES = {
-  listClass: 'near-places__list',
-  itemClass: 'near-places__card'
-};
+export enum MapMarkerUrl {
+  Default = '/img/pin.svg',
+  Active = '/img/pin-active.svg',
+}
 
 export const SORTING_OPTIONS = [
   'Popular',
@@ -115,4 +113,22 @@ export enum NameSpace {
   Offer = 'OFFER',
   Reviews = 'REVIEWS',
   Nearby = 'NEARBY',
+  Favorites = 'FAVORITES',
+  Errors = 'ERRORS'
+}
+
+export enum ErrorType {
+  Server = 'SERVER_ERROR',
+  Auth = 'AUTH_ERROR',
+  Review = 'REVIEW_ERROR',
+  Favorites = 'FAVORITES_ERROR',
+  Nearby = 'NEARBY_LIST_ERROR',
+  Offers = 'OFFERS_ERROR',
+  Offer = 'OFFER_ERROR',
+  Unknown = 'UNKNOWN_ERROR',
+}
+
+export enum MapTileLayer {
+  UrlPattern = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+  Attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
 }

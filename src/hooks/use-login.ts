@@ -7,7 +7,7 @@ export const useLogin = () => {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
-  const submitHandler = (evt: FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
     if (loginRef.current !== null && passwordRef.current !== null) {
@@ -18,5 +18,5 @@ export const useLogin = () => {
     }
   };
 
-  return {loginRef, passwordRef, submitHandler};
+  return {loginRef, passwordRef, handleFormSubmit};
 };
