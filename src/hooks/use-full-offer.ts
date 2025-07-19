@@ -37,7 +37,9 @@ export const useFullOffer = () => {
   const sortedReviews = [...reviews].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   useEffect(() => {
-    if (id) {
+    let isMounted = true;
+
+    if (id && isMounted) {
       Promise.all([
         dispatch(fetchOffer(id)),
         dispatch(fetchReviews(id)),
@@ -45,6 +47,10 @@ export const useFullOffer = () => {
         dispatch(setActiveCard(id))
       ]);
     }
+
+    return () => {
+      isMounted = false;
+    };
   }, [dispatch, id]);
 
   return {city, offer, images, sortedReviews, nearby, nearbyWithOffer, status, authorizationStatus};
