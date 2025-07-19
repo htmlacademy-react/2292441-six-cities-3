@@ -11,10 +11,10 @@ function ReviewsList({reviews}: ReviewsListProps): JSX.Element {
   return (
     <ul className="reviews__list">
       {
-        reviewsList.map((e, i) => {
-          const keyValue = `${i}-${e.comment}`;
+        reviewsList.map((review, i) => {
+          const keyValue = `${i}-${review.comment}`;
           return (
-            <ReviewItem key={keyValue} review={e}/>
+            <ReviewItem key={keyValue} review={review}/>
           );
         })
       }

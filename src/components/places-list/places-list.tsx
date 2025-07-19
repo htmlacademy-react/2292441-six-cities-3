@@ -29,9 +29,9 @@ function PlacesList({offers, sortingOption, element}: PlacesListProps): JSX.Elem
 
   return (
     <div className={className}>
-      {sortedOffers.map((e) => {
-        const keyValue = e.id;
-        return (<PlaceCard key={keyValue} parent={element} offer={e} />);
+      {sortedOffers.map((offer) => {
+        const keyValue = offer.id;
+        return (<PlaceCard key={keyValue} parent={element} offer={offer} />);
       })}
     </div>
   );

@@ -26,11 +26,11 @@ function OfferScreen(): JSX.Element {
       <section className="offer">
         <div className="offer__gallery-container container">
           <div className="offer__gallery">
-            {images.map((e, i) => {
-              const keyValue = `${i}-${e}`;
+            {images.map((image, i) => {
+              const keyValue = `${i}-${image}`;
               return (
                 <div key={keyValue} className="offer__image-wrapper">
-                  <img className="offer__image" src={e} alt="Photo studio"/>
+                  <img className="offer__image" src={image} alt="Photo studio"/>
                 </div>
               );
             })}
@@ -80,9 +80,9 @@ function OfferScreen(): JSX.Element {
               <h2 className="offer__inside-title">What&apos;s inside</h2>
               <ul className="offer__inside-list">
                 {
-                  offer.goods && offer.goods.map((e) => (
-                    <li className="offer__inside-item" key={e}>
-                      {e}
+                  offer.goods && offer.goods.map((good) => (
+                    <li className="offer__inside-item" key={good}>
+                      {good}
                     </li>
                   ))
                 }

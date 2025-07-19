@@ -6,17 +6,17 @@ export const usePlaceCardClasses = (parent: string) => {
   const getClasses = () => {
     switch (parent) {
       case 'cities__places-list':
-        return {card: 'cities__card place-card', imgWrapper: 'cities__image-wrapper place-card__image-wrapper'};
+        return {card: 'cities__card place-card', imageWrapper: 'cities__image-wrapper place-card__image-wrapper'};
       case 'near-places__list':
-        return {card: 'near-places__card place-card', imgWrapper: 'near-places__image-wrapper place-card__image-wrapper'};
+        return {card: 'near-places__card place-card', imageWrapper: 'near-places__image-wrapper place-card__image-wrapper'};
       case 'favorites__places':
-        return {card: 'favorites__card place-card', imgWrapper: 'favorites__image-wrapper place-card__image-wrapper'};
+        return {card: 'favorites__card place-card', imageWrapper: 'favorites__image-wrapper place-card__image-wrapper'};
       default:
-        return {card: '', imgWrapper: ''};
+        return {card: '', imageWrapper: ''};
     }
   };
 
-  const {card, imgWrapper} = getClasses();
+  const {card, imageWrapper} = getClasses();
 
-  return {isMainList, isNearList, isFavorites, card, imgWrapper};
+  return {isMainList, isNearList, isFavorites, card, imageWrapper};
 };

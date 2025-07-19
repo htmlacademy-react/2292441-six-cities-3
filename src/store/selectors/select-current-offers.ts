@@ -4,5 +4,5 @@ import { SelectCity } from '../slices/main-process/selectors';
 
 export const SelectCurrentOffers = createSelector(
   [SelectCity, SelectOffers],
-  (city, offers) => offers.filter((e) => e.city.name === city.name)
+  (city, offers) => offers.filter((offer) => offer.city.name === city.name)
 );

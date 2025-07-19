@@ -12,7 +12,7 @@ export const useLayoutState = () => {
   const authorizationStatus = useAppSelector(SelectAuthorizationStatus);
   const favorites = useAppSelector(SelectFavorites);
 
-  const isAuth = authorizationStatus === AuthorizationStatus.Auth;
+  const isAuthorized = authorizationStatus === AuthorizationStatus.Auth;
   const dispatch = useAppDispatch();
   const {pathname} = useLocation();
   const path = pathname as AppRoute;
@@ -36,5 +36,5 @@ export const useLayoutState = () => {
     dispatch(logout());
   };
 
-  return {user, favorites, isAuth, rootClassName, shouldRenderFooter, shouldRenderUser, logoutHandler};
+  return {user, favorites, isAuthorized, rootClassName, shouldRenderFooter, shouldRenderUser, logoutHandler};
 };

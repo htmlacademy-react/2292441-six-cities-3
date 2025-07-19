@@ -12,12 +12,12 @@ function FavoritesList({favorites}: FavoritesListProps): JSX.Element {
 
   return (
     <ul className="favorites__list">
-      {sortedFavorites.map((e, i) => {
+      {sortedFavorites.map((list, i) => {
         const keyValue = i;
         return (
-          (!e.length) ? null :
-            <FavoritesLocation key={keyValue} city={e[0].city}>
-              <PlacesList offers={e} element='favorites__places'/>
+          (!list.length) ? null :
+            <FavoritesLocation key={keyValue} city={list[0].city}>
+              <PlacesList offers={list} element='favorites__places'/>
             </FavoritesLocation>);
       })}
     </ul>

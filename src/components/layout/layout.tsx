@@ -9,7 +9,7 @@ import { SelectErrors } from '../../store/slices/errors-data/selectors';
 
 function Layout(): JSX.Element {
   const MemoizedLink = memo(Link);
-  const {user, favorites, isAuth, rootClassName, shouldRenderFooter, shouldRenderUser, logoutHandler} = useLayoutState();
+  const {user, favorites, isAuthorized, rootClassName, shouldRenderFooter, shouldRenderUser, logoutHandler} = useLayoutState();
   const errors = useAppSelector(SelectErrors);
 
   return (
@@ -31,7 +31,7 @@ function Layout(): JSX.Element {
                       <div className="header__avatar-wrapper user__avatar-wrapper" style={{backgroundImage: `url(${user?.avatarUrl})`}}>
                       </div>
                       {
-                        isAuth ? (
+                        isAuthorized ? (
                           <>
                             <span className="header__user-name user__name">{user?.email}</span>
                             <span className="header__favorite-count">{favorites.length}</span>
@@ -41,7 +41,7 @@ function Layout(): JSX.Element {
                     </MemoizedLink>
                   </li>
                   {
-                    isAuth ? (
+                    isAuthorized ? (
                       <li className="header__nav-item">
                         <MemoizedLink
                           to={AppRoute.Login}

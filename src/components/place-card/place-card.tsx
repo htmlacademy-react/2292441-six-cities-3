@@ -14,7 +14,7 @@ type PlaceCardProps = {
 
 function PlaceCard({offer, parent}: PlaceCardProps): JSX.Element {
   const route = `/offer/${offer.id}`;
-  const {isMainList, isFavorites, card, imgWrapper} = usePlaceCardClasses(parent);
+  const {isMainList, isFavorites, card, imageWrapper} = usePlaceCardClasses(parent);
   const {activeCardHandler, noActiveCardHandler} = useActiveCard(offer.id);
   const {isFavorite, clickHandler} = useFavorite(offer);
 
@@ -30,7 +30,7 @@ function PlaceCard({offer, parent}: PlaceCardProps): JSX.Element {
           <span>Premium</span>
         </div>
       }
-      <div className={imgWrapper}>
+      <div className={imageWrapper}>
         <Link to={route}>
           <img className="place-card__image" src={offer.previewImage} width={isFavorites ? '150' : '260'} height={isFavorites ? '110' : '200'} alt="Place image"/>
         </Link>
