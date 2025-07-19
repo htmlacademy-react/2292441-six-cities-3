@@ -6,7 +6,7 @@ import { ErrorType } from '../../const';
 export const getErrorData = (error: unknown, type: ErrorType): ServerError => {
   if (isAxiosError(error)) {
     if (error.response) {
-      if ('details' in error.response.data) {
+      if ('details' in error.response.data && type !== ErrorType.Favorites) {
         const detailedData = error.response.data as DetailedError;
         return {errorType: type, message: detailedData.details[0].messages.join(' ')};
       }

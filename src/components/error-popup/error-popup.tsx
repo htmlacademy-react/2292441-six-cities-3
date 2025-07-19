@@ -18,7 +18,9 @@ function ErrorPopup ({errors}: ErrorPopupProps) {
       return;
     }
 
-    if (currentError.errorType as ErrorType === ErrorType.Favorites) {
+    let isMounted = true;
+
+    if (currentError.errorType as ErrorType === ErrorType.Favorites && isMounted) {
       const timer = setTimeout(() => {
         dispatch(removeError());
       }, 4000);
@@ -32,7 +34,10 @@ function ErrorPopup ({errors}: ErrorPopupProps) {
 
     window.addEventListener('keydown', handleButtonKeydown);
 
-    return () => window.removeEventListener('keydown', handleButtonKeydown);
+    return () => {
+      window.removeEventListener('keydown', handleButtonKeydown);
+      isMounted = false;
+    };
   }, [currentError, dispatch]);
 
   if (!currentError) {
