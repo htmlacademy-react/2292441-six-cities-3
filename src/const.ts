@@ -1,5 +1,7 @@
 import { City } from './types/city';
 
+const CITIES_ZOOM = 13;
+
 export const REVIEW_LENGTH = {
   min: 50,
   max: 300
@@ -24,7 +26,7 @@ export const CITIES: City[] = [
     location: {
       latitude: 48.8529682000,
       longitude: 2.3499021000,
-      zoom: 11,
+      zoom: CITIES_ZOOM,
     }
   },
   {
@@ -32,7 +34,7 @@ export const CITIES: City[] = [
     location: {
       latitude: 50.9412781000,
       longitude: 6.9582817000,
-      zoom: 11,
+      zoom: CITIES_ZOOM,
     }
   },
   {
@@ -40,7 +42,7 @@ export const CITIES: City[] = [
     location: {
       latitude: 50.8467322000,
       longitude: 4.3499989000,
-      zoom: 11,
+      zoom: CITIES_ZOOM,
     }
   },
   {
@@ -48,7 +50,7 @@ export const CITIES: City[] = [
     location: {
       latitude: 52.3675964307,
       longitude: 4.9041366576,
-      zoom: 11,
+      zoom: CITIES_ZOOM,
     }
   },
   {
@@ -56,7 +58,7 @@ export const CITIES: City[] = [
     location: {
       latitude: 53.5510846000,
       longitude: 9.9936818000,
-      zoom: 11,
+      zoom: CITIES_ZOOM,
     }
   },
   {
@@ -64,7 +66,7 @@ export const CITIES: City[] = [
     location: {
       latitude: 51.2277411000,
       longitude: 6.7734556000,
-      zoom: 11,
+      zoom: CITIES_ZOOM,
     }
   }
 ];
