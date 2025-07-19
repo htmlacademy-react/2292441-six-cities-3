@@ -56,6 +56,7 @@ function ReviewForm(): JSX.Element {
           type="submit"
           disabled={
             isLoading ||
+            !review.stars ||
             review.comment.length < REVIEW_LENGTH.min ||
             review.comment.length > REVIEW_LENGTH.max
           }
