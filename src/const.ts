@@ -73,9 +73,10 @@ export const CITIES: City[] = [
 
 export const DEFAULT_CITY = CITIES[0];
 
-export const URL_MARKER_DEFAULT = '../../public/img/pin.svg';
-
-export const URL_MARKER_ACTIVE = '../../public/img/pin-active.svg';
+export enum MapMarkerUrl {
+  Default = '/img/pin.svg',
+  Active = '/img/pin-active.svg',
+}
 
 export const SORTING_OPTIONS = [
   'Popular',
@@ -125,4 +126,9 @@ export enum ErrorType {
   Offers = 'OFFERS_ERROR',
   Offer = 'OFFER_ERROR',
   Unknown = 'UNKNOWN_ERROR',
+}
+
+export enum MapTileLayer {
+  UrlPattern = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+  Attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
 }
