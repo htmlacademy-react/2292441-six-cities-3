@@ -4,30 +4,32 @@ import { useEffect } from 'react';
 import { fetchOffer, fetchReviews, fetchNearbyOffers } from '../store/api-action';
 import { useAppSelector } from './use-app-selector';
 import { SelectCity } from '../store/slices/main-process/selectors';
-import { SelectCurrentOffers } from '../store/selectors/select-current-offers';
 import { SelectOffer } from '../store/slices/offer-data/selectors';
 import { SelectReviews } from '../store/slices/reviews-data/selectors';
 import { SelectNearbyOffers } from '../store/slices/nearby-data/selectors';
 import { SelectOfferRequestStatus } from '../store/slices/offer-data/selectors';
 import { SelectAuthorizationStatus } from '../store/slices/auth-process/selectors';
 import { setActiveCard } from '../store/slices/main-process/main-process';
-import { Offer, Offers } from '../types/offer';
+import { SelectCurrentOffers } from '../store/selectors/select-current-offers';
 
 export const useFullOffer = () => {
   const city = useAppSelector(SelectCity);
-  const offers = useAppSelector(SelectCurrentOffers);
   const offer = useAppSelector(SelectOffer);
+  const offers = useAppSelector(SelectCurrentOffers);
   const reviews = useAppSelector(SelectReviews);
   const nearby = useAppSelector(SelectNearbyOffers);
   const status = useAppSelector(SelectOfferRequestStatus);
   const authorizationStatus = useAppSelector(SelectAuthorizationStatus);
 
   let images: string[] = [];
-  let nearbyWithOffer: Offers = [];
+  let nearbyWithOffer = [...nearby];
+  const currentOffer = offers.find((e) => e.id === offer?.id);
 
   if (offer) {
     images = offer.images.slice(0, 6);
-    nearbyWithOffer = [...nearby, offers.find((e) => e.id === offer.id) as Offer];
+    if (currentOffer) {
+      nearbyWithOffer = [...nearby, currentOffer];
+    }
   }
 
   const dispatch = useAppDispatch();
