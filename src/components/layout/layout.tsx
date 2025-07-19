@@ -3,10 +3,14 @@ import { AppRoute } from '../../const';
 import { Outlet } from 'react-router-dom';
 import { useLayoutState } from '../../hooks/use-layout-state';
 import { memo } from 'react';
+import ErrorPopup from '../error-popup';
+import { useAppSelector } from '../../hooks/use-app-selector';
+import { SelectErrors } from '../../store/slices/errors-data/selectors';
 
 function Layout(): JSX.Element {
   const MemoizedLink = memo(Link);
   const {user, favorites, isAuth, rootClassName, shouldRenderFooter, shouldRenderUser, logoutHandler} = useLayoutState();
+  const errors = useAppSelector(SelectErrors);
 
   return (
     <div className={`page ${rootClassName}`}>
@@ -55,6 +59,7 @@ function Layout(): JSX.Element {
           </div>
         </div>
       </header>
+      {errors ? <ErrorPopup errors={errors}/> : null}
       <Outlet />
       {
         shouldRenderFooter &&

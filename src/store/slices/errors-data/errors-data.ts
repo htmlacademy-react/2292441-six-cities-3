@@ -16,11 +16,8 @@ export const errorsData = createSlice({
     },
     removeError: (state) => {
       state.errors.shift();
-    },
-    clearErrors: (state) => {
-      state.errors = [];
     }
   }
 });
 
-export const {addError, removeError, clearErrors} = errorsData.actions;
+export const {addError, removeError} = errorsData.actions;

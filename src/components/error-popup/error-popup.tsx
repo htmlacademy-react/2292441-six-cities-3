@@ -2,17 +2,23 @@ import { useEffect } from 'react';
 import { ErrorType } from '../../const';
 import './error-popup.css';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
-import { useAppSelector } from '../../hooks/use-app-selector';
-import { SelectErrors } from '../../store/slices/errors-data/selectors';
 import { removeError } from '../../store/slices/errors-data/errors-data';
+import { ServerError } from '../../types/server-error';
 
-function ErrorPopup () {
+type ErrorPopupProps = {
+  errors: ServerError[];
+};
+
+function ErrorPopup ({errors}: ErrorPopupProps) {
   const dispatch = useAppDispatch();
-  const errors = useAppSelector(SelectErrors);
-  const {errorType, message} = errors[0];
+  const currentError = errors[0];
 
   useEffect(() => {
-    if (errorType as ErrorType === ErrorType.Favorites) {
+    if (!currentError) {
+      return;
+    }
+
+    if (currentError.errorType as ErrorType === ErrorType.Favorites) {
       const timer = setTimeout(() => {
         dispatch(removeError());
       }, 4000);
@@ -27,12 +33,17 @@ function ErrorPopup () {
     window.addEventListener('keydown', keyDownHandler);
 
     return () => window.removeEventListener('keydown', keyDownHandler);
-  }, [errorType, dispatch]);
+  }, [currentError, dispatch]);
+
+  if (!currentError) {
+    return null;
+  }
 
   return (
     <div className="error-popup-overlay">
       <div className="error-popup">
-        <p>{`${errorType}! ${message}`}</p>
+        <p>{`${currentError.errorType}! ${currentError.message}`}</p>
+        <p></p>
         <button className="error-popup-close" onClick={() => dispatch(removeError())} onKeyDown={() => dispatch(removeError())}>
           Close
         </button>
