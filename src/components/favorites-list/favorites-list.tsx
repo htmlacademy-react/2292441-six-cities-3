@@ -1,18 +1,26 @@
-import FavoriteCard from '../favorite-card';
+import { useSortedFavorites } from '../../hooks/use-sorted-favorites';
 import { Offers } from '../../types/offer';
+import FavoritesLocation from '../favorites-location';
+import PlacesList from '../places-list/places-list';
 
 type FavoritesListProps = {
-  offers: Offers;
+  favorites: Offers;
 };
 
-function FavoritesList({offers}: FavoritesListProps): JSX.Element {
+function FavoritesList({favorites}: FavoritesListProps): JSX.Element {
+  const sortedFavorites = useSortedFavorites(favorites);
+
   return (
-    <>
-      {offers.map((e) => {
-        const keyValue = e.id;
-        return <FavoriteCard key={keyValue} offer={e}/>;
+    <ul className="favorites__list">
+      {sortedFavorites.map((list, i) => {
+        const keyValue = i;
+        return (
+          (!list.length) ? null :
+            <FavoritesLocation key={keyValue} city={list[0].city}>
+              <PlacesList offers={list} element='favorites__places'/>
+            </FavoritesLocation>);
       })}
-    </>
+    </ul>
   );
 }
 

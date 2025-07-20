@@ -9,14 +9,14 @@ type PlacesSortingProps = {
 };
 
 function PlacesSorting({getSortingOption}: PlacesSortingProps): JSX.Element {
-  const {isOn, currentOption, optionChangeHandler, renderOptionListHandler} = useSort(getSortingOption);
+  const {isOn, currentOption, handleOptionClick, handleFormClick} = useSort(getSortingOption);
 
   return(
     <form
       className="places__sorting"
       action="#"
       method="get"
-      onClick={renderOptionListHandler}
+      onClick={handleFormClick}
     >
       <span className="places__sorting-caption">Sort by</span>
       <span className="places__sorting-type" tabIndex={0}>
@@ -32,7 +32,7 @@ function PlacesSorting({getSortingOption}: PlacesSortingProps): JSX.Element {
               key={option}
               className={ `places__option ${(option === currentOption) ? 'places__option--active' : ''}`}
               tabIndex={0}
-              onClick={() => optionChangeHandler(option)}
+              onClick={() => handleOptionClick(option)}
             >{option}
             </li>
           ))

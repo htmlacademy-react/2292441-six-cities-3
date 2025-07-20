@@ -1,6 +1,6 @@
 import { City } from './city';
 import { Location } from './location';
-import { User } from './user';
+import { Host } from './host';
 
 export type FullOffer = {
   id: string;
@@ -15,7 +15,7 @@ export type FullOffer = {
   isPremium: boolean;
   isFavorite: boolean;
   goods: string[] | undefined;
-  host: User;
+  host: Host;
   description: string;
   location: Location;
 };
