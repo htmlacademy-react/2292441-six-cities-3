@@ -5,18 +5,18 @@ import { useMemo, useState } from 'react';
 import CityTabs from '../../components/city-tabs';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import PlacesSorting from '../../components/places-sorting';
-import { SelectCity } from '../../store/slices/main-process/selectors';
-import { SelectCurrentOffers } from '../../store/selectors/select-current-offers';
+import { selectCity } from '../../store/slices/main-process/selectors';
+import { selectCurrentOffers } from '../../store/selectors/select-current-offers';
 import { SortingOption } from '../../types/sorting-option';
 import { useCallback } from 'react';
 import PlacesListEmpty from '../../components/places-list-empty';
-import { SelectOffersRequestStatus } from '../../store/slices/offers-data/selectors';
+import { selectOffersRequestStatus } from '../../store/slices/offers-data/selectors';
 
 function MainScreen(): JSX.Element {
-  const city = useAppSelector(SelectCity);
-  const offers = useAppSelector(SelectCurrentOffers);
+  const city = useAppSelector(selectCity);
+  const offers = useAppSelector(selectCurrentOffers);
   const memoizedOffers = useMemo(() => offers, [offers]);
-  const status = useAppSelector(SelectOffersRequestStatus);
+  const status = useAppSelector(selectOffersRequestStatus);
   const isListEmpty = status === RequestStatus.Success && !offers.length;
   const [selectedSort, setSelectedSort] = useState(SORTING_OPTIONS[0] as SortingOption);
   const selectSortHandler = useCallback(setSelectedSort, [setSelectedSort]);

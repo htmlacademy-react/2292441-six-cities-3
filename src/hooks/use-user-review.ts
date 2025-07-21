@@ -3,13 +3,13 @@ import { useAppDispatch } from './use-app-dispatch';
 import { postReview } from '../store/api-action';
 import { FullOffer } from '../types/full-offer';
 import { useAppSelector } from './use-app-selector';
-import { SelectOffer } from '../store/slices/offer-data/selectors';
-import { SelectReviewsPostStatus } from '../store/slices/reviews-data/selectors';
+import { selectOffer } from '../store/slices/offer-data/selectors';
+import { selectReviewsPostStatus } from '../store/slices/reviews-data/selectors';
 import { RequestStatus } from '../const';
 
 export const useUserReview = () => {
-  const offer = useAppSelector(SelectOffer) as FullOffer;
-  const postStatus = useAppSelector(SelectReviewsPostStatus);
+  const offer = useAppSelector(selectOffer) as FullOffer;
+  const postStatus = useAppSelector(selectReviewsPostStatus);
   const prevPostStatus = useRef(postStatus);
   const dispatch = useAppDispatch();
 

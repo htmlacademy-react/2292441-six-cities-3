@@ -4,13 +4,13 @@ import { useLocation } from 'react-router-dom';
 import { MouseEvent } from 'react';
 import { logout } from '../store/api-action';
 import { useAppSelector } from './use-app-selector';
-import { SelectUser, SelectAuthorizationStatus } from '../store/slices/auth-process/selectors';
-import { SelectFavorites } from '../store/slices/favorites-data/selectors';
+import { selectUser, selectAuthorizationStatus } from '../store/slices/auth-process/selectors';
+import { selectFavorites } from '../store/slices/favorites-data/selectors';
 
 export const useLayoutState = () => {
-  const user = useAppSelector(SelectUser);
-  const authorizationStatus = useAppSelector(SelectAuthorizationStatus);
-  const favorites = useAppSelector(SelectFavorites);
+  const user = useAppSelector(selectUser);
+  const authorizationStatus = useAppSelector(selectAuthorizationStatus);
+  const favorites = useAppSelector(selectFavorites);
 
   const isAuthorized = authorizationStatus === AuthorizationStatus.Auth;
   const dispatch = useAppDispatch();

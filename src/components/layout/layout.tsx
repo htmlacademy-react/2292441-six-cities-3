@@ -5,12 +5,12 @@ import { useLayoutState } from '../../hooks/use-layout-state';
 import { memo } from 'react';
 import ErrorPopup from '../error-popup';
 import { useAppSelector } from '../../hooks/use-app-selector';
-import { SelectErrors } from '../../store/slices/errors-data/selectors';
+import { selectErrors } from '../../store/slices/errors-data/selectors';
 
 function Layout(): JSX.Element {
   const MemoizedLink = memo(Link);
   const {user, favorites, isAuthorized, rootClassName, shouldRenderFooter, shouldRenderUser, handleLogoutClick} = useLayoutState();
-  const errors = useAppSelector(SelectErrors);
+  const errors = useAppSelector(selectErrors);
 
   return (
     <div className={`page ${rootClassName}`}>
