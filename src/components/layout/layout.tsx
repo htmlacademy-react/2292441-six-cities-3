@@ -28,7 +28,7 @@ function Layout(): JSX.Element {
                 <ul className="header__nav-list">
                   <li className="header__nav-item user">
                     <MemoizedLink to={AppRoute.Favorites} className="header__nav-link header__nav-link--profile">
-                      <div className="header__avatar-wrapper user__avatar-wrapper" style={{backgroundImage: `url(${user?.avatarUrl})`}}>
+                      <div className="header__avatar-wrapper user__avatar-wrapper" style={{backgroundImage: `url(${ user ? user.avatarUrl : '../img/avatar.svg'})`}}>
                       </div>
                       {
                         isAuthorized ? (
