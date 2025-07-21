@@ -16,6 +16,7 @@ type PlaceCardProps = {
 function PlaceCard({offer, parent}: PlaceCardProps): JSX.Element {
   const route = `/offer/${offer.id}`;
   const ratingWidth = getRatingStyle(offer.rating);
+  const type = offer.type.charAt(0).toUpperCase() + offer.type.slice(1);
   const {isMainList, isFavorites, card, imageWrapper} = usePlaceCardClasses(parent);
   const {handleCardMouseOver, handleCardMouseOut} = useActiveCard(offer.id);
   const {isFavorite, handleButtonClick} = useFavorite(offer);
@@ -58,7 +59,7 @@ function PlaceCard({offer, parent}: PlaceCardProps): JSX.Element {
         <h2 className="place-card__name">
           <Link to={route}>{offer.title}</Link>
         </h2>
-        <p className="place-card__type">{offer.type}</p>
+        <p className="place-card__type">{type}</p>
       </div>
     </article>
   );
