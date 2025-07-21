@@ -1,10 +1,11 @@
 /* eslint-disable react-refresh/only-export-components */
 import { memo } from 'react';
 import { useUserReview } from '../../hooks/use-user-review.ts';
-import { REVIEW_LENGTH } from '../../const.ts';
+import { ReviewLength } from '../../const.ts';
 
 function ReviewForm(): JSX.Element {
   const {review, handleRadioChange, handleFieldChange, handleFormSubmit, isLoading} = useUserReview();
+  const commentLength = review.comment.length as ReviewLength;
 
   return (
     <form
@@ -57,8 +58,8 @@ function ReviewForm(): JSX.Element {
           disabled={
             isLoading ||
             !review.stars ||
-            review.comment.length < REVIEW_LENGTH.min ||
-            review.comment.length > REVIEW_LENGTH.max
+            commentLength < ReviewLength.min ||
+            commentLength > ReviewLength.max
           }
         >
             Submit
