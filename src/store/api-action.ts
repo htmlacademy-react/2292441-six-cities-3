@@ -17,6 +17,9 @@ import { ServerError } from '../types/server-error';
 import { DetailedError } from '../types/detailed-error';
 import { getErrorData } from './util/get-error-data';
 import { addError } from './slices/errors-data/errors-data';
+import { applyFavorites, resetCards } from './slices/offers-data/offers-data';
+import { resetNearbyOffers } from './slices/nearby-data/nearby-data';
+import { resetOffer } from './slices/offer-data/offer-data';
 
 export const fetchOffers = createAsyncThunk<Offers, undefined, {
   dispatch: AppDispatch;
@@ -49,6 +52,8 @@ export const fetchFavorites = createAsyncThunk<Offers, undefined, {
   async (_arg, {dispatch, extra: api, rejectWithValue}) => {
     try {
       const { data } = await api.get<Offers>(APIRoute.Favorites);
+      const ids = data.map((offer) => offer.id);
+      dispatch(applyFavorites(ids));
       return data;
     } catch (error: unknown) {
       const errorData = getErrorData(error, ErrorType.Favorites);
@@ -94,6 +99,9 @@ export const logout = createAsyncThunk<void, undefined, {
     try {
       await api.delete(APIRoute.Logout);
       dropToken();
+      dispatch(resetCards());
+      dispatch(resetOffer());
+      dispatch(resetNearbyOffers());
     } catch (error: unknown) {
       const errorData = getErrorData(error, ErrorType.Auth);
       dispatch(addError(errorData));
