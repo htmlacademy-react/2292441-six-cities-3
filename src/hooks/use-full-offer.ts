@@ -3,32 +3,32 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { fetchOffer, fetchReviews, fetchNearbyOffers } from '../store/api-action';
 import { useAppSelector } from './use-app-selector';
-import { SelectCity } from '../store/slices/main-process/selectors';
-import { SelectOffer } from '../store/slices/offer-data/selectors';
-import { SelectReviews } from '../store/slices/reviews-data/selectors';
-import { SelectNearbyOffers } from '../store/slices/nearby-data/selectors';
-import { SelectOfferRequestStatus } from '../store/slices/offer-data/selectors';
-import { SelectAuthorizationStatus } from '../store/slices/auth-process/selectors';
+import { selectCity } from '../store/slices/main-process/selectors';
+import { selectOffer } from '../store/slices/offer-data/selectors';
+import { selectReviews } from '../store/slices/reviews-data/selectors';
+import { selectNearbyOffers } from '../store/slices/nearby-data/selectors';
+import { selectOfferRequestStatus } from '../store/slices/offer-data/selectors';
+import { selectAuthorizationStatus } from '../store/slices/auth-process/selectors';
 import { setActiveCard } from '../store/slices/main-process/main-process';
-import { SelectCurrentOffers } from '../store/selectors/select-current-offers';
+import { selectCurrentOffers } from '../store/selectors/select-current-offers';
 
 export const useFullOffer = () => {
-  const city = useAppSelector(SelectCity);
-  const offer = useAppSelector(SelectOffer);
-  const offers = useAppSelector(SelectCurrentOffers);
-  const reviews = useAppSelector(SelectReviews);
-  const nearby = useAppSelector(SelectNearbyOffers);
-  const status = useAppSelector(SelectOfferRequestStatus);
-  const authorizationStatus = useAppSelector(SelectAuthorizationStatus);
+  const city = useAppSelector(selectCity);
+  const offer = useAppSelector(selectOffer);
+  const offers = useAppSelector(selectCurrentOffers);
+  const reviews = useAppSelector(selectReviews);
+  const nearby = useAppSelector(selectNearbyOffers);
+  const status = useAppSelector(selectOfferRequestStatus);
+  const authorizationStatus = useAppSelector(selectAuthorizationStatus);
 
   let images: string[] = [];
-  let nearbyWithOffer = [...nearby];
+  let offersToRender = [...nearby];
   const currentOffer = offers.find((e) => e.id === offer?.id);
 
   if (offer) {
     images = offer.images.slice(0, 6);
     if (currentOffer) {
-      nearbyWithOffer = [...nearby, currentOffer];
+      offersToRender = [...nearby, currentOffer];
     }
   }
 
@@ -53,5 +53,5 @@ export const useFullOffer = () => {
     };
   }, [dispatch, id]);
 
-  return {city, offer, images, sortedReviews, nearby, nearbyWithOffer, status, authorizationStatus};
+  return {city, offer, images, sortedReviews, nearby, offersToRender, status, authorizationStatus};
 };

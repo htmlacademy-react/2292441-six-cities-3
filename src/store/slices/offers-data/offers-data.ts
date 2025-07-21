@@ -15,9 +15,21 @@ export const offersData = createSlice({
   initialState,
   reducers: {
     refreshCards: (state, action: PayloadAction<ChangeFavoriteStatus>) => {
-      state.offers.map((e) => {
-        if (e.id === action.payload.id) {
-          e.isFavorite = Boolean(action.payload.status);
+      state.offers.map((offer) => {
+        if (offer.id === action.payload.id) {
+          offer.isFavorite = Boolean(action.payload.status);
+        }
+      });
+    },
+    resetCards: (state) => {
+      state.offers.map((offer) => {
+        offer.isFavorite = false;
+      });
+    },
+    applyFavorites: (state, action: PayloadAction<string[]>) => {
+      state.offers.map((offer) => {
+        if (action.payload.includes(offer.id)) {
+          offer.isFavorite = true;
         }
       });
     },
@@ -37,4 +49,4 @@ export const offersData = createSlice({
   },
 });
 
-export const {refreshCards} = offersData.actions;
+export const {refreshCards, resetCards, applyFavorites} = offersData.actions;

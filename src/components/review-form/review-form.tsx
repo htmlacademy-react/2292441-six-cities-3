@@ -1,10 +1,11 @@
 /* eslint-disable react-refresh/only-export-components */
 import { memo } from 'react';
 import { useUserReview } from '../../hooks/use-user-review.ts';
-import { REVIEW_LENGTH } from '../../const.ts';
+import { ReviewLength } from '../../const.ts';
 
 function ReviewForm(): JSX.Element {
   const {review, handleRadioChange, handleFieldChange, handleFormSubmit, isLoading} = useUserReview();
+  const commentLength = review.comment.length as ReviewLength;
 
   return (
     <form
@@ -49,7 +50,7 @@ function ReviewForm(): JSX.Element {
       <textarea className="reviews__textarea form__textarea" value={review.comment} id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" onChange={handleFieldChange} disabled={isLoading}></textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
-          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
+          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">{ReviewLength.min} characters</b>.
         </p>
         <button
           className="reviews__submit form__submit button"
@@ -57,8 +58,8 @@ function ReviewForm(): JSX.Element {
           disabled={
             isLoading ||
             !review.stars ||
-            review.comment.length < REVIEW_LENGTH.min ||
-            review.comment.length > REVIEW_LENGTH.max
+            commentLength < ReviewLength.min ||
+            commentLength > ReviewLength.max
           }
         >
             Submit

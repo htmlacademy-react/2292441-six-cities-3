@@ -3,13 +3,13 @@ import { SORTING_OPTIONS } from '../const';
 import { SortingOption } from '../types/sorting-option';
 import { useEffect, useState } from 'react';
 
-export const useSort = (getSortingOption: (option: SortingOption) => void) => {
+export const useSort = (onSortChange: (option: SortingOption) => void) => {
   const { isOn, off, toggle } = useBoolean(false);
   const [currentOption, setCurrentOption] = useState(SORTING_OPTIONS[0] as SortingOption);
 
   const handleOptionClick = (option: SortingOption) => {
     setCurrentOption(option);
-    getSortingOption(option);
+    onSortChange(option);
   };
 
   const handleFormClick = () => {
@@ -18,17 +18,17 @@ export const useSort = (getSortingOption: (option: SortingOption) => void) => {
 
   useEffect(() => {
     if (isOn) {
-      const escKeyDownHandler = (evt: KeyboardEvent) => {
+      const handleFormKeyDown = (evt: KeyboardEvent) => {
         if (evt.key === 'Escape') {
           evt.preventDefault();
           off();
         }
       };
 
-      document.addEventListener('keydown', () => escKeyDownHandler);
+      document.addEventListener('keydown', handleFormKeyDown);
 
       return () => {
-        document.removeEventListener('keydown', () => escKeyDownHandler);
+        document.removeEventListener('keydown', handleFormKeyDown);
       };
     }
   }, [isOn, off]);

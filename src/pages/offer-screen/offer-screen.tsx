@@ -8,9 +8,10 @@ import NotFoundScreen from '../not-found-screen';
 import { useFullOffer } from '../../hooks/use-full-offer';
 import BookmarkButton from '../../components/bookmark-button';
 import { useFavorite } from '../../hooks/use-favorite';
+import { getRatingStyle } from '../../util/get-rating-style';
 
 function OfferScreen(): JSX.Element {
-  const {city, offer, images, sortedReviews, nearby, nearbyWithOffer, status, authorizationStatus} = useFullOffer();
+  const {city, offer, images, sortedReviews, nearby, offersToRender, status, authorizationStatus} = useFullOffer();
   const {isFavorite, handleButtonClick} = useFavorite(offer);
 
   if (status === RequestStatus.Loading || status === RequestStatus.Idle) {
@@ -20,6 +21,8 @@ function OfferScreen(): JSX.Element {
   if (status === RequestStatus.Failed || !offer) {
     return <NotFoundScreen />;
   }
+
+  const ratingWidth = getRatingStyle(offer.rating);
 
   return (
     <main className="page__main page__main--offer">
@@ -56,7 +59,7 @@ function OfferScreen(): JSX.Element {
             </div>
             <div className="offer__rating rating">
               <div className="offer__stars rating__stars">
-                <span style={{width: `${20 * Math.round(offer.rating)}%`}}></span>
+                <span style={{width: `${ratingWidth}%`}}></span>
                 <span className="visually-hidden">Rating</span>
               </div>
               <span className="offer__rating-value rating__value">{offer.rating}</span>
@@ -118,7 +121,7 @@ function OfferScreen(): JSX.Element {
         <Map
           className='offer__map'
           city={city}
-          offers={nearbyWithOffer}
+          offers={offersToRender}
         />
       </section>
       <div className="container">

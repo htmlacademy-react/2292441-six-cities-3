@@ -5,12 +5,12 @@ import { useLayoutState } from '../../hooks/use-layout-state';
 import { memo } from 'react';
 import ErrorPopup from '../error-popup';
 import { useAppSelector } from '../../hooks/use-app-selector';
-import { SelectErrors } from '../../store/slices/errors-data/selectors';
+import { selectErrors } from '../../store/slices/errors-data/selectors';
 
 function Layout(): JSX.Element {
   const MemoizedLink = memo(Link);
   const {user, favorites, isAuthorized, rootClassName, shouldRenderFooter, shouldRenderUser, handleLogoutClick} = useLayoutState();
-  const errors = useAppSelector(SelectErrors);
+  const errors = useAppSelector(selectErrors);
 
   return (
     <div className={`page ${rootClassName}`}>
@@ -28,7 +28,7 @@ function Layout(): JSX.Element {
                 <ul className="header__nav-list">
                   <li className="header__nav-item user">
                     <MemoizedLink to={AppRoute.Favorites} className="header__nav-link header__nav-link--profile">
-                      <div className="header__avatar-wrapper user__avatar-wrapper" style={{backgroundImage: `url(${user?.avatarUrl})`}}>
+                      <div className="header__avatar-wrapper user__avatar-wrapper" style={{backgroundImage: `url(${ user ? user.avatarUrl : '../img/avatar.svg'})`}}>
                       </div>
                       {
                         isAuthorized ? (

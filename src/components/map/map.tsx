@@ -6,7 +6,7 @@ import { useMap } from '../../hooks/use-map';
 import { layerGroup, Marker, Icon, LatLng } from 'leaflet';
 import { MapMarkerUrl } from '../../const';
 import { useAppSelector } from '../../hooks/use-app-selector';
-import { SelectActiveCard } from '../../store/slices/main-process/selectors';
+import { selectActiveCard } from '../../store/slices/main-process/selectors';
 
 type MapProps = {
   city: City;
@@ -33,7 +33,7 @@ const customActiveMarker = new Icon(
 function Map({offers, className, city}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap({mapRef, city});
-  const activeOfferId = useAppSelector(SelectActiveCard);
+  const activeOfferId = useAppSelector(selectActiveCard);
 
   useEffect(() => {
     if (map) {

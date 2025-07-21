@@ -11,7 +11,13 @@ const initialState: NearbyData = {
 export const nearbyData = createSlice({
   name: NameSpace.Nearby,
   initialState,
-  reducers: {},
+  reducers: {
+    resetNearbyOffers: (state) => {
+      state.nearbyOffers.map((offer) => {
+        offer.isFavorite = false;
+      });
+    },
+  },
   extraReducers(builder) {
     builder.
       addCase(fetchNearbyOffers.pending, (state) => {
@@ -26,3 +32,5 @@ export const nearbyData = createSlice({
       });
   },
 });
+
+export const {resetNearbyOffers} = nearbyData.actions;

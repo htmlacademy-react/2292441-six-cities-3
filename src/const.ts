@@ -1,11 +1,15 @@
 import { City } from './types/city';
 
+export const MAX_REVIEWS = 10;
+
+export const MAX_RATING = 5;
+
 const CITIES_ZOOM = 13;
 
-export const REVIEW_LENGTH = {
-  min: 50,
-  max: 300
-};
+export enum ReviewLength {
+  min = 50,
+  max = 300
+}
 
 export enum AppRoute {
   Root = '/',

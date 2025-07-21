@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useAppSelector } from '../hooks/use-app-selector';
-import { SelectAuthorizationStatus } from '../store/slices/auth-process/selectors';
+import { selectAuthorizationStatus } from '../store/slices/auth-process/selectors';
 import { AppRoute, AuthorizationStatus } from '../const';
 import { useAppDispatch } from '../hooks/use-app-dispatch';
 import { changeFavoriteStatus } from '../store/api-action';
@@ -11,7 +11,7 @@ import { FullOffer } from '../types/full-offer';
 import { Offer } from '../types/offer';
 
 export const useFavorite = (offer: Offer | FullOffer | null) => {
-  const authStatus = useAppSelector(SelectAuthorizationStatus);
+  const authStatus = useAppSelector(selectAuthorizationStatus);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 

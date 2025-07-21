@@ -6,6 +6,7 @@ import { memo } from 'react';
 import BookmarkButton from '../bookmark-button/bookmark-button';
 import { useFavorite } from '../../hooks/use-favorite';
 import { usePlaceCardClasses } from '../../hooks/use-place-card-classes';
+import { getRatingStyle } from '../../util/get-rating-style';
 
 type PlaceCardProps = {
   offer: Offer;
@@ -14,6 +15,8 @@ type PlaceCardProps = {
 
 function PlaceCard({offer, parent}: PlaceCardProps): JSX.Element {
   const route = `/offer/${offer.id}`;
+  const ratingWidth = getRatingStyle(offer.rating);
+  const type = offer.type.charAt(0).toUpperCase() + offer.type.slice(1);
   const {isMainList, isFavorites, card, imageWrapper} = usePlaceCardClasses(parent);
   const {handleCardMouseOver, handleCardMouseOut} = useActiveCard(offer.id);
   const {isFavorite, handleButtonClick} = useFavorite(offer);
@@ -49,14 +52,14 @@ function PlaceCard({offer, parent}: PlaceCardProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${20 * Math.round(offer.rating)}%`}}></span>
+            <span style={{width: `${ratingWidth}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
           <Link to={route}>{offer.title}</Link>
         </h2>
-        <p className="place-card__type">{offer.type}</p>
+        <p className="place-card__type">{type}</p>
       </div>
     </article>
   );
