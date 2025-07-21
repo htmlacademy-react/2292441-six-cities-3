@@ -18,17 +18,17 @@ export const useSort = (onSortChange: (option: SortingOption) => void) => {
 
   useEffect(() => {
     if (isOn) {
-      const escKeyDownHandler = (evt: KeyboardEvent) => {
+      const handleFormKeyDown = (evt: KeyboardEvent) => {
         if (evt.key === 'Escape') {
           evt.preventDefault();
           off();
         }
       };
 
-      document.addEventListener('keydown', () => escKeyDownHandler);
+      document.addEventListener('keydown', handleFormKeyDown);
 
       return () => {
-        document.removeEventListener('keydown', () => escKeyDownHandler);
+        document.removeEventListener('keydown', handleFormKeyDown);
       };
     }
   }, [isOn, off]);
