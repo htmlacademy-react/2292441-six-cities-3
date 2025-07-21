@@ -17,7 +17,7 @@ import { ServerError } from '../types/server-error';
 import { DetailedError } from '../types/detailed-error';
 import { getErrorData } from './util/get-error-data';
 import { addError } from './slices/errors-data/errors-data';
-import { applyFavorites, resetCards } from './slices/offers-data/offers-data';
+import { applyFavorites, resetOffers } from './slices/offers-data/offers-data';
 import { resetNearbyOffers } from './slices/nearby-data/nearby-data';
 import { resetOffer } from './slices/offer-data/offer-data';
 
@@ -99,7 +99,7 @@ export const logout = createAsyncThunk<void, undefined, {
     try {
       await api.delete(APIRoute.Logout);
       dropToken();
-      dispatch(resetCards());
+      dispatch(resetOffers());
       dispatch(resetOffer());
       dispatch(resetNearbyOffers());
     } catch (error: unknown) {

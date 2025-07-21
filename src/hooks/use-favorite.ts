@@ -5,7 +5,7 @@ import { AppRoute, AuthorizationStatus } from '../const';
 import { useAppDispatch } from '../hooks/use-app-dispatch';
 import { changeFavoriteStatus } from '../store/api-action';
 import { ChangeFavoriteStatus } from '../types/change-favorite-flag';
-import { refreshCards } from '../store/slices/offers-data/offers-data';
+import { refreshOffers } from '../store/slices/offers-data/offers-data';
 import { useNavigate } from 'react-router-dom';
 import { FullOffer } from '../types/full-offer';
 import { Offer } from '../types/offer';
@@ -37,7 +37,7 @@ export const useFavorite = (offer: Offer | FullOffer | null) => {
       };
 
       dispatch(changeFavoriteStatus(data));
-      dispatch(refreshCards(data));
+      dispatch(refreshOffers(data));
     } else {
       navigate(AppRoute.Login);
     }
