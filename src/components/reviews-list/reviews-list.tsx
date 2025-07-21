@@ -1,3 +1,4 @@
+import { MAX_REVIEWS } from '../../const';
 import { Reviews } from '../../types/review';
 import ReviewItem from '../review/review-item';
 
@@ -6,7 +7,7 @@ type ReviewsListProps = {
 };
 
 function ReviewsList({reviews}: ReviewsListProps): JSX.Element {
-  const reviewsList = reviews.slice(0, 10);
+  const reviewsList = reviews.slice(0, MAX_REVIEWS);
 
   return (
     <ul className="reviews__list">

@@ -1,5 +1,9 @@
 import { City } from './types/city';
 
+export const MAX_REVIEWS = 10;
+
+export const MAX_RATING = 5;
+
 const CITIES_ZOOM = 13;
 
 export enum ReviewLength {
