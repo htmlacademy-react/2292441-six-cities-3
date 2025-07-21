@@ -32,7 +32,7 @@ function MainScreen(): JSX.Element {
               <>
                 <h2 className="visually-hidden">Places</h2>
                 <b className="places__found">{offers.length} places to stay in {city.name}</b>
-                <PlacesSorting getSortingOption={selectSortHandler}/>
+                <PlacesSorting onSortChange={selectSortHandler}/>
                 <PlaceList
                   offers={memoizedOffers}
                   sortingOption={selectedSort}

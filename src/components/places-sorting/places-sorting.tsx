@@ -5,11 +5,11 @@ import { useSort } from '../../hooks/use-sort';
 import { memo } from 'react';
 
 type PlacesSortingProps = {
-  getSortingOption: (option: SortingOption) => void;
+  onSortChange: (option: SortingOption) => void;
 };
 
-function PlacesSorting({getSortingOption}: PlacesSortingProps): JSX.Element {
-  const {isOn, currentOption, handleOptionClick, handleFormClick} = useSort(getSortingOption);
+function PlacesSorting({onSortChange}: PlacesSortingProps): JSX.Element {
+  const {isOn, currentOption, handleOptionClick, handleFormClick} = useSort(onSortChange);
 
   return(
     <form
