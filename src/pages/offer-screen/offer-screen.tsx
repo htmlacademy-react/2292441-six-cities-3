@@ -10,7 +10,7 @@ import BookmarkButton from '../../components/bookmark-button';
 import { useFavorite } from '../../hooks/use-favorite';
 
 function OfferScreen(): JSX.Element {
-  const {city, offer, images, sortedReviews, nearby, nearbyWithOffer, status, authorizationStatus} = useFullOffer();
+  const {city, offer, images, sortedReviews, nearby, offersToRender, status, authorizationStatus} = useFullOffer();
   const {isFavorite, handleButtonClick} = useFavorite(offer);
 
   if (status === RequestStatus.Loading || status === RequestStatus.Idle) {
@@ -118,7 +118,7 @@ function OfferScreen(): JSX.Element {
         <Map
           className='offer__map'
           city={city}
-          offers={nearbyWithOffer}
+          offers={offersToRender}
         />
       </section>
       <div className="container">

@@ -22,13 +22,13 @@ export const useFullOffer = () => {
   const authorizationStatus = useAppSelector(selectAuthorizationStatus);
 
   let images: string[] = [];
-  let nearbyWithOffer = [...nearby];
+  let offersToRender = [...nearby];
   const currentOffer = offers.find((e) => e.id === offer?.id);
 
   if (offer) {
     images = offer.images.slice(0, 6);
     if (currentOffer) {
-      nearbyWithOffer = [...nearby, currentOffer];
+      offersToRender = [...nearby, currentOffer];
     }
   }
 
@@ -53,5 +53,5 @@ export const useFullOffer = () => {
     };
   }, [dispatch, id]);
 
-  return {city, offer, images, sortedReviews, nearby, nearbyWithOffer, status, authorizationStatus};
+  return {city, offer, images, sortedReviews, nearby, offersToRender, status, authorizationStatus};
 };
