@@ -14,14 +14,14 @@ export const offersData = createSlice({
   name: NameSpace.Offers,
   initialState,
   reducers: {
-    refreshCards: (state, action: PayloadAction<ChangeFavoriteStatus>) => {
+    refreshOffers: (state, action: PayloadAction<ChangeFavoriteStatus>) => {
       state.offers.map((offer) => {
         if (offer.id === action.payload.id) {
           offer.isFavorite = Boolean(action.payload.status);
         }
       });
     },
-    resetCards: (state) => {
+    resetOffers: (state) => {
       state.offers.map((offer) => {
         offer.isFavorite = false;
       });
@@ -49,4 +49,4 @@ export const offersData = createSlice({
   },
 });
 
-export const {refreshCards, resetCards, applyFavorites} = offersData.actions;
+export const {refreshOffers, resetOffers, applyFavorites} = offersData.actions;
